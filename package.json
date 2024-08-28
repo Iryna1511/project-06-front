@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://iryna1511.github.io/project-06-front/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
