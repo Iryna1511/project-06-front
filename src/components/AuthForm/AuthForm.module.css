@@ -1,5 +1,33 @@
+.containerBackground {
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-size: fill;
+  background-position: center;
+  z-index: -1;
+}
+
+.wrap_section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.containerImageBottle {
+  width: 926px;
+  height: 680px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .wrap_form {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 384px;
   height: 395px;
 }
