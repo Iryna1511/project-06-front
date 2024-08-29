@@ -22,6 +22,7 @@ const signUpValidationSchema = yup.object().shape({
 
 const AuthForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [action, setAction] = useState("Sign Up");
   const emailFieldId = useId();
   const passwordFieldId = useId();
   const repeatPasswordFieldId = useId();
@@ -42,24 +43,26 @@ const AuthForm = () => {
       >
         {({ errors, touched }) => (
           <Form className={css.form}>
-            <h2 className={css.title}>Sign Up</h2>
+            <h2 className={css.title}>{action}</h2>
 
-            <label className={css.label} htmlFor={emailFieldId}>
-              Enter your email
-            </label>
-            <Field
-              className={css.field}
-              type='email'
-              name='email'
-              id={emailFieldId}
-              placeholder='Email'
-            />
-            {touched.email && errors.email && <div>{errors.email}</div>}
-
-            <label className={css.label} htmlFor={passwordFieldId}>
-              Enter your password
-            </label>
             <div>
+              <label className={css.label} htmlFor={emailFieldId}>
+                Enter your email
+              </label>
+              <Field
+                className={css.field}
+                type='email'
+                name='email'
+                id={emailFieldId}
+                placeholder='Email'
+              />
+              {touched.email && errors.email && <div>{errors.email}</div>}
+            </div>
+
+            <div>
+              <label className={css.label} htmlFor={passwordFieldId}>
+                Enter your password
+              </label>
               <Field
                 className={css.field}
                 type={showPassword ? "text" : "password"}
@@ -73,41 +76,49 @@ const AuthForm = () => {
               >
                 {showPassword ? <PiEyeSlash /> : <PiEyeLight />}
               </div>
+
+              {touched.password && errors.password && (
+                <div>{errors.password}</div>
+              )}
             </div>
 
-            {touched.password && errors.password && (
-              <div>{errors.password}</div>
-            )}
+            {action === "Sign In" ? (
+              <div></div>
+            ) : (
+              <div>
+                <label className={css.label} htmlFor={repeatPasswordFieldId}>
+                  Repeat password
+                </label>
+                <Field
+                  className={css.field}
+                  type={showPassword ? "text" : "password"}
+                  name='repeatPassword'
+                  id={repeatPasswordFieldId}
+                  placeholder='Repeat password'
+                />
 
-            <label className={css.label} htmlFor={repeatPasswordFieldId}>
-              Repeat password
-            </label>
-
-            <div>
-              <Field
-                className={css.field}
-                type={showPassword ? "text" : "password"}
-                name='repeatPassword'
-                id={repeatPasswordFieldId}
-                placeholder='Repeat password'
-              />
-
-              <div
-                className={css.iconWrapper}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <PiEyeSlash /> : <PiEyeLight />}
+                <div
+                  className={css.iconWrapper}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <PiEyeSlash /> : <PiEyeLight />}
+                </div>
+                {touched.repeatPassword && errors.repeatPassword && (
+                  <div>{errors.repeatPassword}</div>
+                )}
               </div>
-            </div>
-
-            {touched.repeatPassword && errors.repeatPassword && (
-              <div>{errors.repeatPassword}</div>
             )}
 
             <button className={css.button} type='submit'>
-              Sign Up
+              {action}
             </button>
-            <p>Sign in</p>
+            <div
+              onClick={() =>
+                setAction(action === "Sign In" ? "Sign Up" : "Sign In")
+              }
+            >
+              {action === "Sign Up" ? "Sign In" : "Sign Up"}
+            </div>
           </Form>
         )}
       </Formik>
