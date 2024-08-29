@@ -1,0 +1,26 @@
+:root {
+  --black: #2f2f2f;
+  --white: #ffffff;
+  --blue: #407bff;
+  --light-blue: #ecf2ff;
+  --medium-blue: #9ebbff;
+  --red: #ef5050;
+  --orange: #ff9d43;
+  --soft-blue: #d7e3ff;
+}
+
+/*  ---------- COMMON STYLES------- */
+/*  ---------- MOBILE STYLES------- */
+
+.pageContainer {
+  background-image: url("../../img/bgMobileMainPage.png");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.infoContainer {
+  padding-left: 20px;
+  padding-right: 20px;
+}
