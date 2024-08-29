@@ -1,0 +1,39 @@
+.container {
+  border-radius: 10px;
+  padding: 24px 16px;
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
+  background: var(--light-blue);
+  color: var(--black);
+}
+
+.title {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  margin-bottom: 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.itemsText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.circle {
+  min-width: 8px;
+  min-height: 8px;
+  background-color: var(--blue);
+  border-radius: 100%;
+  margin-right: 8px;
+}
