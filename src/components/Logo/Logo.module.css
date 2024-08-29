@@ -1,0 +1,14 @@
+.logoLink {
+    display: flex;
+    flex-direction: row;
+}
+
+.textOfLogo {
+    color: #407BFF;
+    padding-left: 4px;
+    font-weight: 700;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 12px;
+}
+
