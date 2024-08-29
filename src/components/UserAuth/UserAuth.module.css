@@ -1,0 +1,59 @@
+.userSection {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+}
+
+.LoinedUser {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+.settings {
+    color: #407BFF;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.nameOfUser {
+    color: #2F2F2F;
+    font-weight: 400;
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+.FotoOfUser {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+
+.avatarLetter {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ccc;
+}
+
+.modal {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 200px;
+    border-radius: 4px;
+}
