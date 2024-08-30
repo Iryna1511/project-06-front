@@ -6,14 +6,6 @@
   margin-bottom: 40px;
 }
 
-/* .titlesContainer {
-} */
-
-/* .benefitsContainer {
-  display: flex;
-  flex-direction: column;
-} */
-
 .title {
   font-weight: 700;
   font-size: 28px;
@@ -72,9 +64,14 @@
   background: var(--blue);
 }
 
-/* svg {
-  display: block;
-} */
+.button:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+
+.button:active {
+  box-shadow: none;
+  outline: none;
+}
 
 /*  ---------- TABLET STYLES------- */
 @media screen and (min-width: 768px) {
