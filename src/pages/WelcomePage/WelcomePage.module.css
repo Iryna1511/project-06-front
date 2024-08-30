@@ -13,14 +13,44 @@
 /*  ---------- MOBILE STYLES------- */
 
 .pageContainer {
-  background-image: url("../../img/bgMobileMainPage.png");
+  background-image: url("../../../public/img-bg-welcome/welcome-bg-mobile@1x.png");
   background-size: cover;
   background-position: center;
-  width: 100vw;
-  height: 100vh;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  /* height: 100vh; */
 }
 
 .infoContainer {
-  padding-left: 20px;
-  padding-right: 20px;
+  /* padding-bottom: 40px; */
+  padding: 24px 20px 40px 20px; /* тимчасові падінги, потім підлаштуються під маржин всієї сторінки */
+}
+
+/*  ---------- TABLET STYLES------- */
+@media screen and (min-width: 768px) {
+  .pageContainer {
+    background-image: url("../../../public/img-bg-welcome/welcome-bg-tablet@1x.png");
+  }
+
+  .infoContainer {
+    padding: 40px 32px 50px 32px;
+  }
+}
+
+/*  ---------- DESKTOP STYLES------- */
+
+@media screen and (min-width: 1440px) {
+  .pageContainer {
+    /* background-attachment: fixed; */
+
+    background-position: bottom;
+    background-image: url("../../../public/img-bg-welcome/welcome-bg-desktop@1x.png");
+  }
+
+  .infoContainer {
+    display: flex;
+    gap: 80px;
+    padding: 80px 212px 294px 216px;
+  }
 }

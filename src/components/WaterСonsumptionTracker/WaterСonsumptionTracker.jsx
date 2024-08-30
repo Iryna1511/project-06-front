@@ -12,20 +12,20 @@ export default function WaterСonsumptionTracker() {
       <div className={css.benefitsContainer}>
         <h3 className={css.listTitle}>Tracker Benefits</h3>
         <ul className={css.list}>
-          <li className={css.item}>
-            <svg className={css.icon} width="32" height="32">
+          <li className={css.listItem}>
+            <svg className={css.icon}>
               <use href="icons.svg#icon-calendar"></use>
             </svg>
             <p className={css.itemText}>Habit drive</p>
           </li>
-          <li className={css.item}>
-            <svg className={css.icon} width="32" height="32">
+          <li className={css.listItem}>
+            <svg className={css.icon}>
               <use href="icons.svg#icon-presentation-chart-bar"></use>
             </svg>
             <p className={css.itemText}>View statistics</p>
           </li>
-          <li className={css.item}>
-            <svg className={css.icon} width="32" height="32">
+          <li className={css.listItem}>
+            <svg className={css.icon}>
               <use href="icons.svg#icon-wrench-screwdriver"></use>
             </svg>
             <p className={css.itemText}>Personal rate setting</p>
