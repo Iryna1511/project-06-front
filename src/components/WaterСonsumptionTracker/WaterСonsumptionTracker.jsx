@@ -1,4 +1,9 @@
 import css from "./WaterСonsumptionTracker.module.css";
+import { Link } from "react-router-dom";
+
+// const handleClick = () => {
+//   alert("I'm a button!");
+// };
 
 export default function WaterСonsumptionTracker() {
   return (
@@ -32,9 +37,11 @@ export default function WaterСonsumptionTracker() {
           </li>
         </ul>
       </div>
-      <button className={css.button} type="button">
-        Try tracker
-      </button>
+      <nav>
+        <Link to="/signup" className={css.button}>
+          Try tracker
+        </Link>
+      </nav>
     </div>
   );
 }
