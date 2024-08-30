@@ -1,0 +1,159 @@
+
+  .modal-content {
+    background-color: white;
+    width: 232px;
+    padding: 32px 24px;
+    gap: 24px;
+    border-radius: 10px;
+    position: fixed; 
+    left: 50%; 
+    top: 80px; 
+    transform: translateX(-50%); 
+    opacity: 1; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+  .modal-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+ 
+  .modal-title {
+    font-family: Roboto;
+    font-size: 26px;
+    font-weight: 500; 
+    color: #2F2F2F;
+    gap: 4px;
+  }
+  
+  .modal-close {
+    padding: 0;
+    color: #407BFF; 
+    background: transparent;
+    width: 24px;
+    height: 24px;
+   gap: 6px;
+  }
+
+  h2 {
+   font-weight: 500;
+    display: flex;
+    font-size: 18px;
+    line-height: 20px;
+    color: #2F2F2F;
+    margin: 0;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .modal-buttons button {
+    width: 232px;
+    height: 36px;
+    padding: 8px 30px;
+    border-radius: 10px;
+  }
+  
+  .logout-button {
+    background: #EF5050;
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 16px;
+    order: 1;
+    border-color: transparent; 
+    box-shadow: 0px 4px 10px 0px rgba(64, 123, 255, 0.34);
+  }
+
+  .cancel-button {
+    background: #D7E3FF;
+    color: #407BFF;
+    font-family: Roboto;
+    font-size: 16px;
+    order: 2; 
+    border-color: transparent;
+  }
+
+
+@media screen and (min-width: 768px) {
+  .modal-content {
+    width: 544px;
+    padding: 32px 24px;
+    gap: 24px;
+    border-radius: 10px; 
+    background-color: white; 
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 50%; 
+    top: 200px; 
+    transform: translateX(-50%); 
+    opacity: 1; 
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-title{
+    font-family: Roboto;
+   font-size: 26px;
+  }
+  .modal-close {
+    padding: 0;
+    color: #407BFF; 
+    background: transparent;
+    width: 24px;
+    height: 24px;
+  }
+  h2 {
+    font-weight: 500;
+     display: flex;
+     font-size: 18px;
+     line-height: 20px;
+     color: #2F2F2F;
+     margin: 0;
+   }
+   .modal-buttons {
+    display: flex;
+    gap: 24px;
+    justify-content: flex-end;
+    flex-direction: row;
+  }
+  .modal-buttons button {
+    width: 160px;
+    height: 44px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .logout-button {
+    background: #EF5050;
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 18px;
+    border-color: transparent; 
+    box-shadow: 0px 4px 10px 0px rgba(64, 123, 255, 0.34);
+  }
+  .cancel-button {
+    background: #D7E3FF;
+    color: #407BFF;
+    font-family: Roboto;
+    font-size: 16px;
+    border-color: transparent;
+    order: 1;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .modal-buttons {
+    display: flex;
+    gap: 24px;
+    justify-content: flex-start;
+    flex-direction: row;
+    
+  }
+}
