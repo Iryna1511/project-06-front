@@ -33,6 +33,7 @@ function App() {
 
 export default App;
 
+
 // Підготовлені приватні і публічні маршрути
 
 /* <Route
@@ -53,3 +54,4 @@ export default App;
             <PrivateRoute component={<HomePage />} redirectTo="/sighin" />
           }
         />  */
+
