@@ -67,6 +67,7 @@ form {
 .genderradiobutton {
   display: flex;
   gap: 8px;
+  margin: 12px 0 24px;
   margin: 12px 0 52px;
 }
 
@@ -148,21 +149,6 @@ label {
   cursor: pointer;
 }
 
-@media (min-width: 768px) and (max-width: 1440px) {
-  .wrapperForNameAndPassword {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .modalcontent {
-    width: 704px;
-  }
-
-  .genderradiobutton {
-    margin: 12px 0 24px;
-  }
-}
-
 @media (min-width: 320px) and (max-width: 767px) {
   .wrapperForNameAndPassword {
     display: flex;
@@ -181,6 +167,21 @@ label {
 
   .saveButton {
     width: 100%;
+  }
+
+  .genderradiobutton {
+    margin: 12px 0 24px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1440px) {
+  .wrapperForNameAndPassword {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modalcontent {
+    width: 704px;
   }
 
   .genderradiobutton {
