@@ -1,15 +1,70 @@
 import { useState, useEffect } from "react";
 import styles from "./ModalSettings.module.css";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi"; // Додано іконку для показу пароля
+import { RxCross1 } from "react-icons/rx"; // Імпорт іконки
 
 export default function ModalSetting() {
   const [showModalSetting, setShowModalSetting] = useState(false);
 
+  // Об'єднаний стан для всіх полів вводу
+  const [formData, setFormData] = useState({
+    name: "Jhon Cena",
+    email: "JhonCena@gmail.com",
+    oldPassword: "Password",
+    newPassword: "Password",
+    repeatPassword: "Password",
+  });
+
+  // Стан для типів полів пароля
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    oldPassword: false,
+    newPassword: false,
+    repeatPassword: false,
+  });
+
   useEffect(() => {
     console.log("showModalSetting:", showModalSetting); // Перевірка зміни стану
+
+    const handleEscapeKey = (event) => {
+      if (event.key === "Escape") {
+        setShowModalSetting(false);
+      }
+    };
+    document.addEventListener("keydown", handleEscapeKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKey);
+    };
   }, [showModalSetting]);
 
   const handleClose = () => setShowModalSetting(false);
+
+  const handleOutsideClick = (event) => {
+    if (event.target.classList.contains(styles.modal)) {
+      handleClose();
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const togglePasswordVisibility = (field) => {
+    setPasswordVisibility({
+      ...passwordVisibility,
+      [field]: !passwordVisibility[field],
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data Submitted: ", formData);
+    // Тут можна додати логіку для обробки форми, наприклад, API-запит
+  };
 
   return (
     <div>
@@ -17,13 +72,13 @@ export default function ModalSetting() {
         Відкрити модальне вікно
       </button>
       {showModalSetting && (
-        <div className={styles.modal}>
+        <div className={styles.modal} onClick={handleOutsideClick}>
           <div className={styles.modalcontent}>
             <span className={styles.close} onClick={handleClose}>
-              &times;
+              <RxCross1 className={styles.cross} />
             </span>
-            <h2 className={styles.titleOfModalSettings}>Settings</h2>
-            <form>
+            <h2 className={styles.titleOfModalSettings}>Setting</h2>
+            <form onSubmit={handleSubmit}>
               <div className={styles.wrapperForBlokOfPhoto}>
                 <label className={styles.yourPhoto}>
                   <span className={styles.titels}>Your photo</span>
@@ -33,15 +88,15 @@ export default function ModalSetting() {
                       alt="Foto of user"
                       className={styles.fotoOfUser}
                     />
-                    <MdOutlineFileUpload
-                      className={styles.iconOfUploadAPhoto}
-                    />
-                    <p className={styles.textUploadAPhoto}>Upload a photo</p>
+                    <div className={styles.uploadButton}>
+                      <MdOutlineFileUpload
+                        className={styles.iconOfUploadAPhoto}
+                      />
+                      <p className={styles.textUploadAPhoto}>Upload a photo</p>
+                    </div>
                   </div>
                 </label>
               </div>
-
-
 
               <div className={styles.wrapperForNameAndPassword}>
                 <div className={styles.wrapperForBlockOne}>
@@ -73,61 +128,113 @@ export default function ModalSetting() {
 
                   <label>
                     <span className={styles.titels}>Your name</span>
-                    <input
-                      type="text"
-                      name="name"
-                      value="Jhon Cena"
-                      className={styles.textInputArea}
-                    />
+                    <div className={styles.wrapperForInput}>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        className={styles.textInputArea}
+                      />
+                    </div>
                   </label>
                   <label>
                     <span className={styles.titels}>E-mail</span> <br />
-                    <input
-                      className={styles.textInputArea}
-                      type="email"
-                      name="email"
-                      value="JhonCena@gmail.com"
-                    />
+                    <div className={styles.wrapperForInput}>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className={styles.textInputArea}
+                      />
+                    </div>
                   </label>
                 </div>
 
-
-
-
-
                 <div className={styles.wrapperForPasswordField}>
+                  <span className={styles.titels}>Password</span>
                   <label>
-                    <span className={styles.titels}>Password</span> <br />
-                    <span className={styles.titelsOutdatedPassword}>Outdated password:</span>
-                    <input
-                      type="text"
-                      name="name"
-                      value="Password"
-                      className={styles.textInputArea}
-                    />
+                    <span className={styles.titelsOutdatedPassword}>
+                      Outdated password:
+                    </span>
+                    <div className={styles.wrapperForInput}>
+                      <input
+                        type={
+                          passwordVisibility.oldPassword ? "text" : "password"
+                        }
+                        name="oldPassword"
+                        value={formData.oldPassword}
+                        onChange={handleInputChange}
+                        className={styles.textInputAreaPassword}
+                      />
+                      <span
+                        onClick={() => togglePasswordVisibility("oldPassword")}
+                      >
+                        {passwordVisibility.oldPassword ? (
+                          <HiOutlineEye />
+                        ) : (
+                          <HiOutlineEyeOff />
+                        )}
+                      </span>
+                    </div>
                   </label>
                   <label>
                     <span>New Password:</span> <br />
-                    <input
-                      type="text"
-                      name="name"
-                      value="Password"
-                      className={styles.textInputArea}
-                    />
+                    <div className={styles.wrapperForInput}>
+                      <input
+                        type={
+                          passwordVisibility.newPassword ? "text" : "password"
+                        }
+                        name="newPassword"
+                        value={formData.newPassword}
+                        onChange={handleInputChange}
+                        className={styles.textInputAreaPassword}
+                      />
+                      <span
+                        onClick={() => togglePasswordVisibility("newPassword")}
+                      >
+                        {passwordVisibility.newPassword ? (
+                          <HiOutlineEye />
+                        ) : (
+                          <HiOutlineEyeOff />
+                        )}
+                      </span>
+                    </div>
                   </label>
                   <label>
                     <span>Repeat new password:</span>
-                    <input
-                      type="text"
-                      name="name"
-                      value="Password"
-                      className={styles.textInputArea}
-                    />
+                    <div className={styles.wrapperForInput}>
+                      <input
+                        type={
+                          passwordVisibility.repeatPassword
+                            ? "text"
+                            : "password"
+                        }
+                        name="repeatPassword"
+                        value={formData.repeatPassword}
+                        onChange={handleInputChange}
+                        className={styles.textInputAreaPassword}
+                      />
+                      <span
+                        onClick={() =>
+                          togglePasswordVisibility("repeatPassword")
+                        }
+                      >
+                        {passwordVisibility.repeatPassword ? (
+                          <HiOutlineEye />
+                        ) : (
+                          <HiOutlineEyeOff />
+                        )}
+                      </span>
+                    </div>
                   </label>
                 </div>
               </div>
 
-              <button type="submit" className={styles.saveButton}>Save</button>
+              <button type="submit" className={styles.saveButton}>
+                Save
+              </button>
             </form>
           </div>
         </div>

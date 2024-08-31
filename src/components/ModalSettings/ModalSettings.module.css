@@ -1,161 +1,189 @@
 .modal {
-    display: block;
-    /* Показуємо модальне вікно, якщо стан активний */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modalcontent {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 70%;
-    max-width: 70%;
-    border-radius: 8px;
-    /* Додаємо заокруглення */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Додаємо тінь */
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 1008px;
+  max-width: 65%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-
 .fotoOfUser {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
 
 .titleOfModalSettings {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .uploadAPhoto {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 24px;
 }
 
-.textUploadAPhoto {
-    font-weight: 500;
-    font-size: 18px;
-    color: #407BFF;
-}
-
+.textUploadAPhoto,
 .iconOfUploadAPhoto {
-    color: #407BFF;
+  font-size: 18px;
+  color: #407bff;
+  font-weight: 500;
 }
 
 .genderradiobutton {
-    display: flex;
-    flex-direction: row;
-    margin-top: 12px;
-    gap: 8px;
-    margin-bottom: 52px;
-}
-
-.wrapperForRadioButton {
-    display: flex;
-    flex-direction: row;
-    margin-right: 8px;
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 52px;
 }
 
 .genderInput {
-    margin-right: 8px;
-}
-
-.genderInput {
-    cursor: pointer;
-    border: 1px solid #407BFF;
-}
-
-.genderInput:hover {
-    accent-color: #407BFF;
+  cursor: pointer;
+  accent-color: #407bff;
 }
 
 label {
-    margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
-.titels {
-    font-weight: 500;
-    font-size: 18px;
+.titels,
+.labelTitle {
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .textInputArea {
-    border: 1px solid #D7E3FF;
-    color: #407BFF;
-    outline: none;
-    width: 392px;
-    padding: 8px;
-    margin-top: 6px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+  color: #407bff;
+  outline: none;
+  border: 0;
 }
 
-.textInputArea:focus {
-    border: 2px solid #D7E3FF;
-    color: #407BFF;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-    outline: none;
+.textInputAreaPassword {
+  color: #9ebbff;
+  outline: none;
+  border: 0;
+}
+
+.wrapperForInput {
+  border: 1px solid #d7e3ff;
+  width: 392px;
+  padding: 8px;
+  margin: 6px 0 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapperForInput:focus-within {
+  border: 2px solid #407bff;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .wrapperForNameAndPassword {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
+  display: flex;
+  gap: 24px;
 }
 
 .saveButton {
-    width: 11%;
-    padding: 8px 30px 8px 30px;
-    border-radius: 10px;
-    background-color: #407BFF;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-left: auto;
+  width: 160px;
+  height: 44px;
+  padding: 8px 30px;
+  border-radius: 10px;
+  background-color: #407bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
 }
 
-.wrapperForPasswordField {
+.wrapperForPasswordField,
+.wrapperForBlockOne {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eyeIcon,
+.cross {
+  color: #407bff;
+  cursor: pointer;
+}
+
+.uploadButton {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) and (max-width: 1440px) {
+  .wrapperForNameAndPassword {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+  }
+
+  .modalcontent {
+    width: 704px;
+  }
+
+  .genderradiobutton {
+    margin: 12px 0 24px;
+  }
 }
 
-.wrapperForBlockOne {
+@media (min-width: 320px) and (max-width: 767px) {
+  .wrapperForNameAndPassword {
     display: flex;
-        flex-direction: column;
-}
+    flex-direction: column;
+  }
 
-.titelsPassword {
-    font-weight: 500;
-    font-size: 18px;
-}
+  .modalcontent {
+    width: 280px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
 
+  .wrapperForInput {
+    width: 256px;
+  }
+
+  .saveButton {
+    width: 100%;
+  }
+
+  .genderradiobutton {
+    margin: 12px 0 24px;
+  }
+}
