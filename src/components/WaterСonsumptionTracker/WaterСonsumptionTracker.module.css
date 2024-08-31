@@ -6,15 +6,6 @@
   margin-bottom: 40px;
 }
 
-/* .titlesContainer {
-} */
-
-.benefitsContainer {
-  display: flex;
-  flex-direction: column;
-  /* gap: 24px; */
-}
-
 .title {
   font-weight: 700;
   font-size: 28px;
@@ -34,19 +25,11 @@
   margin-bottom: 12px;
 }
 
-.item {
+.listItem {
   display: flex;
   gap: 8px;
   align-items: center;
 }
-
-/* .item::before {
-  content: url("../../img/icons.svg#icon-ellipse");
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-} */
 
 .itemText {
   margin: 0;
@@ -64,26 +47,83 @@
 .icon {
   width: 34px;
   height: 34px;
-  stroke: #407bff;
-  fill: #407bff;
 }
 
 .button {
+  display: inline-block;
   border-radius: 10px;
-  padding: 8px 0px;
+  padding: 8px 16px;
   color: var(--white);
   font-weight: 500;
   font-size: 16px;
   line-height: 1.25;
   text-align: center;
   width: 280px;
-  height: 36px;
   border: none;
 
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   background: var(--blue);
 }
 
-svg {
-  display: block;
+.button:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+
+.button:active {
+  box-shadow: none;
+  outline: none;
+}
+
+/*  ---------- TABLET STYLES------- */
+@media screen and (min-width: 768px) {
+  .container {
+    margin-bottom: 60px;
+  }
+
+  .title {
+    font-size: 36px;
+    line-height: 1.17;
+  }
+
+  .secondaryTitle {
+    font-size: 26px;
+  }
+
+  .list {
+    flex-direction: row;
+    /* justify-content: space-between; */
+    gap: 16px;
+  }
+
+  .listItem {
+    width: 224px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .button {
+    padding: 10px 30px;
+    font-size: 18px;
+    line-height: 1.33;
+    width: 336px;
+  }
+}
+
+/*  ---------- DESKTOP STYLES------- */
+
+@media screen and (min-width: 1440px) {
+  .container {
+    margin-bottom: 0;
+  }
+
+  .listItem {
+    gap: 10px;
+  }
+
+  .list {
+    flex-direction: column;
+  }
 }
