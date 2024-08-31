@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useId } from "react";
 import * as yup from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import css from "./AuthForm.module.css";
 import { PiEyeLight } from "react-icons/pi";
 import { PiEyeSlash } from "react-icons/pi";
@@ -38,106 +38,140 @@ const AuthForm = () => {
     <>
       <div
         className={css.containerBackground}
-        style={{ backgroundImage: "url(/public/BackgroundMainPage.png)" }}
+        style={{
+          backgroundImage: "url(/img-sign-pages/signpage-d-bg-1x-min.png)",
+        }}
       >
         {" "}
-      </div>
+        <div className={css.wrap_section}>
+          <div className={css.containerImageBottle}>
+            <img src='/img-sign-pages/bottle-d-1x-min.png' />
+          </div>
 
-      <div className={css.wrap_section}>
-        <div className={css.containerImageBottle}>
-          <img src='/public/Frame.png' />
-        </div>
+          <div className={css.wrap_form}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={signUpValidationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ errors, touched }) => (
+                <Form className={css.form}>
+                  <h2 className={css.title}>{action}</h2>
 
-        <div className={css.wrap_form}>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={signUpValidationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ errors, touched }) => (
-              <Form className={css.form}>
-                <h2 className={css.title}>{action}</h2>
-
-                <div>
-                  <label className={css.label} htmlFor={emailFieldId}>
-                    Enter your email
-                  </label>
-                  <Field
-                    className={css.field}
-                    type='email'
-                    name='email'
-                    id={emailFieldId}
-                    placeholder='Email'
-                  />
-                  {touched.email && errors.email && <div>{errors.email}</div>}
-                </div>
-
-                <div>
-                  <label className={css.label} htmlFor={passwordFieldId}>
-                    Enter your password
-                  </label>
-                  <Field
-                    className={css.field}
-                    type={showPassword ? "text" : "password"}
-                    name='password'
-                    id={passwordFieldId}
-                    placeholder='Password'
-                  />
-                  <div
-                    className={css.iconWrapper}
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <PiEyeSlash /> : <PiEyeLight />}
-                  </div>
-
-                  {touched.password && errors.password && (
-                    <div>{errors.password}</div>
-                  )}
-                </div>
-
-                {action === "Sign In" ? (
-                  <div></div>
-                ) : (
                   <div>
-                    <label
-                      className={css.label}
-                      htmlFor={repeatPasswordFieldId}
-                    >
-                      Repeat password
+                    <label className={css.label} htmlFor={emailFieldId}>
+                      Enter your email
                     </label>
                     <Field
-                      className={css.field}
-                      type={showPassword ? "text" : "password"}
-                      name='repeatPassword'
-                      id={repeatPasswordFieldId}
-                      placeholder='Repeat password'
+                      className={`${css.field} ${
+                        errors.email && touched.email ? css.errorField : ""
+                      }`}
+                      type='email'
+                      name='email'
+                      id={emailFieldId}
+                      placeholder='Email'
                     />
+                    <ErrorMessage
+                      name='email'
+                      component='div'
+                      className={css.errorText}
+                    />
+                    {/* {touched.email && errors.email && <div>{errors.email}</div>} */}
+                  </div>
 
+                  <div className={css.inputWrapper}>
+                    <label className={css.label} htmlFor={passwordFieldId}>
+                      Enter your password
+                    </label>
+                    <Field
+                      className={`${css.field} ${
+                        touched.password && errors.password
+                          ? css.errorField
+                          : ""
+                      }`}
+                      type={showPassword ? "text" : "password"}
+                      name='password'
+                      id={passwordFieldId}
+                      placeholder='Password'
+                    />
                     <div
                       className={css.iconWrapper}
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword ? <PiEyeSlash /> : <PiEyeLight />}
+                      {showPassword ? (
+                        <PiEyeSlash className={css.icon} />
+                      ) : (
+                        <PiEyeLight className={css.icon} />
+                      )}
                     </div>
-                    {touched.repeatPassword && errors.repeatPassword && (
-                      <div>{errors.repeatPassword}</div>
-                    )}
+                    <ErrorMessage
+                      name='password'
+                      component='div'
+                      className={css.errorText}
+                    />
+                    {/* {touched.password && errors.password && (
+                      <div>{errors.password}</div>
+                    )} */}
                   </div>
-                )}
 
-                <button className={css.button} type='submit'>
-                  {action}
-                </button>
-                <div
-                  onClick={() =>
-                    setAction(action === "Sign In" ? "Sign Up" : "Sign In")
-                  }
-                >
-                  {action === "Sign Up" ? "Sign In" : "Sign Up"}
-                </div>
-              </Form>
-            )}
-          </Formik>
+                  {action === "Sign In" ? (
+                    <div></div>
+                  ) : (
+                    <div className={css.inputWrapper}>
+                      <label
+                        className={css.label}
+                        htmlFor={repeatPasswordFieldId}
+                      >
+                        Repeat password
+                      </label>
+                      <Field
+                        className={`${css.field} ${
+                          touched.password && errors.password
+                            ? css.errorField
+                            : ""
+                        }`}
+                        type={showPassword ? "text" : "password"}
+                        name='repeatPassword'
+                        id={repeatPasswordFieldId}
+                        placeholder='Repeat password'
+                      />
+
+                      <div
+                        className={css.iconWrapper}
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <PiEyeSlash className={css.icon} />
+                        ) : (
+                          <PiEyeLight className={css.icon} />
+                        )}
+                      </div>
+
+                      <ErrorMessage
+                        name='repeatPassword'
+                        component='div'
+                        className={css.errorText}
+                      />
+                      {/* {touched.repeatPassword && errors.repeatPassword && (
+                        <div>{errors.repeatPassword}</div>
+                      )} */}
+                    </div>
+                  )}
+
+                  <button className={css.btn} type='submit'>
+                    {action}
+                  </button>
+                  <div
+                    onClick={() =>
+                      setAction(action === "Sign In" ? "Sign Up" : "Sign In")
+                    }
+                  >
+                    {action === "Sign Up" ? "Sign In" : "Sign Up"}
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
         </div>
       </div>
     </>
