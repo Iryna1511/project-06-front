@@ -5,9 +5,7 @@ import { lazy, Suspense } from "react";
 // import RestrictedRoute from "./RestrictedRoute.jsx";
 // import PrivateRoute from "./PrivateRoute";
 
-// import Header from "../src/components/Header/Header.jsx";
-//цей хедер буде рендеритись на різних сторінках
-
+import SharedLayout from "./components/SharedLayout/SharedLayout.jsx";
 const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage/WelcomePage"));
 const SighinPage = lazy(() => import("./pages/SigninPage/SigninPage.jsx"));
@@ -21,10 +19,12 @@ function App() {
     <Suspense fallback={<div>Loading...</div>}>
       {/* тимчасова заглушка для лоудера */}
       <Routes>
-        <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/signin" element={<SighinPage />} />
-        <Route path="/signup" element={<SighupPage />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<SharedLayout />}>
+          <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/signin" element={<SighinPage />} />
+          <Route path="/signup" element={<SighupPage />} />
+          <Route path="/home" element={<HomePage />} />
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
@@ -32,7 +32,6 @@ function App() {
 }
 
 export default App;
-
 
 // Підготовлені приватні і публічні маршрути
 
@@ -54,4 +53,3 @@ export default App;
             <PrivateRoute component={<HomePage />} redirectTo="/sighin" />
           }
         />  */
-
