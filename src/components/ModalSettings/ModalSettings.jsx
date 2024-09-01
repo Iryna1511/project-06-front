@@ -11,6 +11,7 @@ export default function ModalSetting({ isOpen, closeModal }) {
     oldPassword: "Password",
     newPassword: "Password",
     repeatPassword: "Password",
+    gender: "Man", // Додаємо поле гендерної ідентичності
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -45,6 +46,13 @@ export default function ModalSetting({ isOpen, closeModal }) {
     });
   };
 
+  const handleGenderChange = (e) => {
+    setFormData({
+      ...formData,
+      gender: e.target.value,
+    });
+  };
+
   const togglePasswordVisibility = (field) => {
     setPasswordVisibility({
       ...passwordVisibility,
@@ -56,6 +64,9 @@ export default function ModalSetting({ isOpen, closeModal }) {
     e.preventDefault();
     console.log("Form Data Submitted: ", formData);
     // Логіка для обробки форми, наприклад, API-запит
+
+    // Закриваємо модальне вікно після сабміту форми
+    closeModal();
   };
 
   return (
@@ -99,6 +110,8 @@ export default function ModalSetting({ isOpen, closeModal }) {
                           id="genderWoman"
                           name="gender"
                           value="Woman"
+                          checked={formData.gender === "Woman"}
+                          onChange={handleGenderChange}
                         />
                         <label htmlFor="genderWoman">Woman</label>
                       </div>
@@ -109,6 +122,8 @@ export default function ModalSetting({ isOpen, closeModal }) {
                           id="genderMan"
                           name="gender"
                           value="Man"
+                          checked={formData.gender === "Man"}
+                          onChange={handleGenderChange}
                         />
                         <label htmlFor="genderMan">Man</label>
                       </div>
