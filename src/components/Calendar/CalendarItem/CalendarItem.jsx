@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { React } from 'react';
 import DaysGeneralStats from './DaysGeneralStats';
 import s from './CalendarItem.module.css';
 

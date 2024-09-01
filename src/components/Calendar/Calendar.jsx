@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { React }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectNotesPerMonth } from '../../redux/water/waterSlice';
 import { monthNames } from '../../constans/monthNames';
