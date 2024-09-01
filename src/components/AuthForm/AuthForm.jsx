@@ -1,11 +1,14 @@
+import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import { useId } from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import css from "./AuthForm.module.css";
+
 import { PiEyeLight } from "react-icons/pi";
 import { PiEyeSlash } from "react-icons/pi";
 
+import css from "./AuthForm.module.css";
+import { login, register } from "../../redux/auth/operations.js";
 //<PiEyeLight />
 // <PiEyeSlash />
 
@@ -21,6 +24,8 @@ const signUpValidationSchema = yup.object().shape({
 });
 
 const AuthForm = () => {
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
   const [action, setAction] = useState("Sign Up");
   const emailFieldId = useId();
@@ -29,9 +34,43 @@ const AuthForm = () => {
 
   const initialValues = { email: "", password: "", repeatPassword: "" };
 
-  const handleSubmit = (values, actions) => {
-    console.log(values);
-    actions.resetForm();
+  // const handleSubmit = (values, actions) => {
+  //   const { repeatPassword, ...loginValues } = values;
+
+  //   switch (action) {
+  //     case "Sign Up":
+  //       dispatch(register(loginValues))
+  //         .unwrap()
+  //         .catch(alert("Registration error!"));
+  //       break;
+  //     case "Sign In":
+  //       dispatch(login(loginValues));
+  //       break;
+  //     default:
+  //       break;
+  //   }
+
+  //   actions.resetForm();
+  // };
+
+  const handleSubmit = async (values, actions) => {
+    const { repeatPassword, ...loginValues } = values;
+
+    try {
+      switch (action) {
+        case "Sign Up":
+          await dispatch(register(loginValues)).unwrap();
+          break;
+        case "Sign In":
+          await dispatch(login(loginValues)).unwrap();
+          break;
+        default:
+          break;
+      }
+      actions.resetForm();
+    } catch (error) {
+      setErrorMessage(error); // Встановлюємо повідомлення про помилку
+    }
   };
 
   return (
