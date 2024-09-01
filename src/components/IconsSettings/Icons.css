@@ -1,0 +1,16 @@
+.icon-black {
+    fill: none;
+    stroke: #2f2f2f;
+}
+
+.icon-blue {
+    background: transparent;
+    fill: none;
+    stroke: #407BFF;
+}
+
+.icon-white {
+    background: transparent;
+    fill: none;
+    stroke: #ffffff;
+}

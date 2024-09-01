@@ -1,0 +1,198 @@
+.BoxModal {
+padding: 0 12px 24px;
+}
+
+.normaFormula {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.normaFormula span {
+    color: #407bff;
+}
+
+
+.normaForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.normaTitleModal {
+    margin-bottom: 16px;
+    color: #2f2f2f;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+.normaParagraph {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: #2f2f2f;
+}
+
+.normaExplanation {
+    display: flex;
+    padding: 10px;
+    margin-bottom: 24px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.33;
+    border-radius: 10px;
+    border: 1px solid #D7E3FF;
+    color: #2f2f2f;
+}
+
+.normaExplanation span {
+    color: #2f2f2f;
+}
+
+.normaFormRadio {
+    gap: 16px;
+}
+
+.normaFormRadio span {
+    margin-right: 24px;
+    font-size: 16px;
+}
+
+.normaInputRadio {
+    opacity: 0;
+    position: absolute;
+}
+
+.normaInputRadio+span {
+    display: inline-block;
+    padding-left: 25px;
+    position: relative;
+    cursor: pointer;
+}
+
+.normaInputRadio+span:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #407BFF;
+    background-color: #FFFFFF;
+}
+
+.normaInputRadio+span:after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    top: 50%;
+    left: 4px;
+    transform: translate(0, -50%);
+    opacity: 0;
+}
+
+.normaInputRadio:checked+span:after {
+    opacity: 1;
+}
+
+.normaInput {
+    border: 1px solid #D7E3FF;
+    border-radius: 6px;
+    display: flex;
+    padding: 12px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 8px;
+    color: #407BFF;
+    background-color: #FFFFFF;
+}
+
+.normaInput::placeholder {
+    color: #407BFF;
+}
+
+.normaInput:hover {
+    color: #2f2f2f;
+    border: 1px solid #D7E3FF;
+}
+
+.normaInput:focus {
+    outline: none;
+    border: 1px solid #D7E3FF;
+}
+
+.normaInput:not(:placeholder-shown) {
+    color: #407BFF;
+}
+
+.normaInput[type='number']::-webkit-outer-spin-button,
+.normaInput[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.normaFormResult {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.normaFormResult strong {
+    font-size: 18px;
+    font-weight: 700;
+    color: #407BFF;
+}
+
+
+
+.normaButtonSave {
+
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 30px;
+    font-size: 18px;
+    width: 100%;
+    height: 44px;
+    margin-left: auto;
+
+}
+
+@media screen and (min-width: 768px) {
+    .BoxModal {
+        width: 704px;
+        padding: 0 24px 32px;
+    }
+
+    .normaButtonSave {
+        width: 160px;
+    }
+
+    .normaFormula {
+        flex-direction: row;
+        gap: 24px;
+    }
+
+    .normaFormResult {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .BoxModal {
+        width: 592px;
+    }
+}
+
+
