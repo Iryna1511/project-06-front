@@ -1,79 +1,210 @@
+/* @media (max-width: 767px) { */
 .containerBackground {
-  width: 100%;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
   position: absolute;
-  background-size: fill;
-  background-position: center;
-  z-index: -1;
+  width: 100%;
+  height: 582px;
+  left: 0;
+  top: 109px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 0 20px;
 }
 
 .wrap_section {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 66px;
 }
 
 .containerImageBottle {
-  width: 926px;
-  height: 680px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  order: 2;
 }
+
 .wrap_form {
+  order: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 384px;
-  height: 395px;
-}
-.title {
-  font-weight: 500px;
-  font-size: 26px;
-  line-height: 1.23em;
-  color: 2F2F2F;
 }
 
 .form {
+  width: 100%;
+  height: 100%;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-direction: column;
 }
 
+.title {
+  color: rgb(47, 47, 47);
+  font-family: Roboto;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0%;
+  text-align: left;
+}
+
 .label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8;
+  padding: 0px;
+
+  color: rgb(47, 47, 47);
+  font-family: Roboto;
   font-size: 18px;
   font-weight: 400;
-  line-height: 1.33em;
-  color: 2F2F2F;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: left;
+}
+.errorText {
+  color: rgb(239, 80, 80);
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0%;
+  text-align: left;
+}
+
+.errorField {
+  color: rgb(239, 80, 80) !important;
+  border: 1px solid rgb(239, 80, 80) !important; /* Використання !important для переважання інших стилів */
 }
 
 .field {
-  border: 1px solid #d7e3ff;
-  border-radius: 6px;
-  padding: 12px 10px;
-  width: 384px;
-  height: 44px;
+  width: 100%;
+  height: 40px;
 
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.25em;
-  color: #9ebbff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10;
+  padding: 12px 10px 12px 10px;
+
+  box-sizing: border-box;
+  /* Secondary color / 5 */
+  border: 1px solid rgb(215, 227, 255);
+  border-radius: 6px;
+
+  /* Primery Color/White */
+  background: rgb(255, 255, 255);
+
+  &::placeholder {
+    color: rgb(158, 187, 255);
+    opacity: 1;
+  }
+}
+.inputWrapper {
+  position: relative;
+  margin-bottom: 0px;
 }
 
-.button {
+.iconWrapper {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  cursor: pointer;
+}
+
+.icon {
+  color: rgb(64, 123, 255);
+}
+
+.btn {
+  box-shadow: 0px 4px 8px 0px rgba(64, 123, 255, 0.34);
+  background: rgb(64, 123, 255);
   border-radius: 10px;
   padding: 10px 30px;
-  width: 384px;
-  height: 44px;
-  background-color: #407bff;
-
-  font-weight: 500px;
+  width: 100%;
+  height: 36px;
+  border: none;
+  font-weight: 500;
   font-size: 18px;
   line-height: 1.33em;
   text-align: center;
   color: #ffffff;
+}
+/* } */
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .wrap_section {
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: row; */
+  }
+
+  .containerImageBottle {
+    /* Frame */
+    position: absolute;
+    width: 736px;
+    height: 548px;
+    left: 112px;
+    top: 116px;
+  }
+
+  .wrap_form {
+    position: absolute;
+    width: 336px;
+    height: 312px;
+    left: 32px;
+    top: 104px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wrap_section {
+    /* Background element Main Page */
+    position: absolute;
+    width: 1404px;
+    height: 582px;
+    left: 18px;
+    top: 109px;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .containerImageBottle {
+    /* Frame */
+    position: absolute;
+    width: 916px;
+    height: 680px;
+    left: -51px;
+    top: 80px;
+  }
+
+  .wrap_form {
+    /* Sign In */
+    position: static;
+    width: 384px;
+    height: 32px;
+    /* Auto layout */
+
+    gap: 16;
+    padding: 0px;
+
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 16px 0px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
