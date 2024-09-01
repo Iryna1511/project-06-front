@@ -1,26 +1,24 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    margin-left: 7%;
-    margin-right: 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.largeScreen {
-    @media (min-width: 1440px) {
-       
-    }
+@media (min-width: 768px) and (max-width: 1439px) {
+  .header {
+    padding-top: 16px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
 }
 
-.mediumScreen {
-    @media (min-width: 768px) and (max-width: 1439px) {
-        
-    }
-}
-
-.smallScreen {
-    @media (max-width: 767px) {
-        
-    }
+@media (min-width: 1440px) {
+  .header {
+    padding-top: 12px;
+    margin-left: 112px;
+    margin-right: 112px;
+  }
 }
