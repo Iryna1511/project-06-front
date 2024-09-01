@@ -6,12 +6,12 @@ import { RxCross1 } from "react-icons/rx";
 
 export default function ModalSetting({ isOpen, closeModal }) {
   const [formData, setFormData] = useState({
-    name: "Jhon Cena",
-    email: "JhonCena@gmail.com",
-    oldPassword: "Password",
-    newPassword: "Password",
-    repeatPassword: "Password",
-    gender: "Man", // Додаємо поле гендерної ідентичності
+    name: "",
+    email: "",
+    oldPassword: "",
+    newPassword: "",
+    repeatPassword: "",
+    gender: "", // Поле гендерної ідентичності
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -20,18 +20,57 @@ export default function ModalSetting({ isOpen, closeModal }) {
     repeatPassword: false,
   });
 
+  // Виконуємо запит на бекенд при відкритті модального вікна
   useEffect(() => {
-    const handleEscapeKey = (event) => {
-      if (event.key === "Escape") {
-        closeModal();
-      }
-    };
-    document.addEventListener("keydown", handleEscapeKey);
+    if (isOpen) {
+      fetch("https://water-tracker-06.onrender.com/users/66d2e3a18c42147b871bcdcc")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            const { name, email, gender } = data.data;
+            setFormData((prevData) => ({
+              ...prevData,
+              name: name,
+              email: email,
+              gender: gender === "female" ? "Woman" : "Man", // Мапінг гендеру на відповідні значення
+            }));
+          } else {
+            console.error("Failed to fetch user data");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, [isOpen]);
 
-    return () => {
-      document.removeEventListener("keydown", handleEscapeKey);
-    };
-  }, [closeModal]);
+  useEffect(() => {
+  if (isOpen) {
+    console.log("Modal is open, attempting to fetch data...");
+    fetch("https://water-tracker-06.onrender.com/users/66d2e3a18c42147b871bcdcc")
+      .then((response) => {
+        console.log("Response received:", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data received:", data);
+        if (data.status === 200) {
+          const { name, email, gender } = data.data;
+          setFormData((prevData) => ({
+            ...prevData,
+            name: name,
+            email: email,
+            gender: gender === "female" ? "Woman" : "Man", // Мапінг гендеру на відповідні значення
+          }));
+        } else {
+          console.error("Failed to fetch user data, status:", data.status);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  }
+}, [isOpen]);
 
   const handleOutsideClick = (event) => {
     if (event.target.classList.contains(styles.modal)) {
@@ -60,14 +99,39 @@ export default function ModalSetting({ isOpen, closeModal }) {
     });
   };
 
-  const handleSubmit = (e) => {
+ const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted: ", formData);
-    // Логіка для обробки форми, наприклад, API-запит
+    
+    // Створюємо об'єкт з даними, які потрібно відправити на бекенд
+    const updatedData = {
+        name: formData.name,
+        email: formData.email,
+        gender: formData.gender === "Woman" ? "female" : "male", // Мапінг назад на значення для бекенду
+        // Ви можете додати поля oldPassword, newPassword і repeatPassword, якщо потрібно
+    };
 
-    // Закриваємо модальне вікно після сабміту форми
-    closeModal();
-  };
+    // Виконуємо PUT або PATCH запит на оновлення даних користувача
+    fetch("https://water-tracker-06.onrender.com/users/66d2e3a18c42147b871bcdcc", {
+        method: "PUT", // або "PATCH"
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.status === 200) {
+            console.log("User data successfully updated:", data);
+            // Закриваємо модальне вікно після успішного сабміту форми
+            closeModal();
+        } else {
+            console.error("Failed to update user data");
+        }
+    })
+    .catch((error) => {
+        console.error("Error updating user data:", error);
+    });
+};
 
   return (
     <div>
