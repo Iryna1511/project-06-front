@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Logo from "../Logo/Logo.jsx";
 import UserAuth from "../UserAuth/UserAuth.jsx";
 
+
 export default function Header() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");

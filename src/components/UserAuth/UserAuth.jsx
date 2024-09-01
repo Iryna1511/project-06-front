@@ -2,12 +2,29 @@ import { useState } from "react";
 import { PiUserCircleThin } from "react-icons/pi";
 import { SlArrowDown } from "react-icons/sl";
 import styles from "./UserAuth.module.css";
+import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
+import ModalSetting from "../ModalSettings/ModalSettings.jsx";
 
-export default function UserAuth({ isUserLoggedIn, userName, userPhoto, userEmail }) {
+export default function UserAuth({
+  isUserLoggedIn,
+  userName,
+  userPhoto,
+  userEmail,
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const openSettingModal = () => {
+    setIsModalOpen(false); // Закриваємо UserLogoModal перед відкриттям SettingModal
+    setIsSettingModalOpen(true);
+  };
+
+  const closeSettingModal = () => {
+    setIsSettingModalOpen(false);
   };
 
   const getAvatarContent = () => {
@@ -41,14 +58,20 @@ export default function UserAuth({ isUserLoggedIn, userName, userPhoto, userEmai
           </div>
           {isModalOpen && (
             <div className={styles.modal}>
-              <p>Modal content will go here</p>
+              <UserLogoModal openSettingModal={openSettingModal} />
             </div>
+          )}
+          {isSettingModalOpen && (
+            <ModalSetting
+              isOpen={isSettingModalOpen}
+              closeModal={closeSettingModal}
+            />
           )}
         </>
       ) : (
-        <div className={styles.userSection}>
+        <div className={styles.userSectionUnregistredUser}>
           <button className={styles.signInButton}>Sign In</button>
-          <div className={styles.userIcon}>
+          <div className={styles.userIconWrapper}>
             <PiUserCircleThin className={styles.userIcon} />
           </div>
         </div>
