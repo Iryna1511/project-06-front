@@ -1,0 +1,44 @@
+.calendar_item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+.date {
+    border-radius: 20px;
+    padding: 7px 6px;
+    width: 32px;
+    height: 32px;
+    background-color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1.28571;
+    text-align: center;
+    color: var(--black-color);
+    border: 1px solid var(--white-color);
+}
+
+.orange_border {
+    border-color: #ff9d43;
+}
+
+.percent {
+    font-size: 10px;
+    line-height: 1.6;
+    text-align: center;
+    color: #9ebbff;
+
+    @media screen and (min-width:768px) {
+        font-size: 13px;
+        line-height: 1.53846;
+    }
+
+    @media screen and (min-width:1440px) {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+}
