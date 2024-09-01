@@ -1,0 +1,34 @@
+
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 8px;
+}
+
+.modalItem {
+display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.PiGear {
+    color: #407BFF;
+    width: 18px;
+    height: 18px;
+}
+
+.TbLogout {
+    color: #407BFF;
+    width: 18px;
+        height: 18px;
+}
+
+.text {
+    color: #407BFF;
+    font-size: 18px;
+}
