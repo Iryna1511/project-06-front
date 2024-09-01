@@ -54,6 +54,32 @@
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    width: 200px;
-    border-radius: 4px;
+    width: 160px;
+    border-radius: 8px;
+    margin-top: 8px;
 }
+
+.userSectionUnregistredUser {
+    display: flex;
+        flex-direction: row;
+        cursor: pointer;
+    align-items: center;
+    gap: 8px;
+}
+
+.signInButton {
+    color: #407BFF;
+    border: 0px;
+    background-color: transparent;
+    font-size: 18px;
+}
+
+.userIconWrapper{
+
+}
+
+.userIcon {
+    width: 28px;
+    height: 28px;
+}
+
