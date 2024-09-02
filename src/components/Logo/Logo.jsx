@@ -9,8 +9,8 @@ export default function Logo() {
       <a href="/" className={styles.logoLink}>
         <img src={logo} alt="LogoOfTheHeader" />
         <div className={styles.textOfLogo}>
-          Tracker <br />
-          of water
+          TRACKER <br />
+          OF WATER 
         </div>
       </a>
     </>
