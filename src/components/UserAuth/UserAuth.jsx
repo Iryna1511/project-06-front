@@ -4,6 +4,7 @@ import { SlArrowDown } from "react-icons/sl";
 import styles from "./UserAuth.module.css";
 import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import ModalSetting from "../ModalSettings/ModalSettings.jsx";
+import Logout from "../Logout/Logout.jsx";
 
 export default function UserAuth({
   isUserLoggedIn,
@@ -13,18 +14,28 @@ export default function UserAuth({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
   const openSettingModal = () => {
-    setIsModalOpen(false); // Закриваємо UserLogoModal перед відкриттям SettingModal
+    setIsModalOpen(false);
     setIsSettingModalOpen(true);
   };
 
   const closeSettingModal = () => {
     setIsSettingModalOpen(false);
+  };
+
+  const openLogoutModal = () => {
+    setIsModalOpen(false);
+    setIsLogoutModalOpen(true);
+  };
+
+  const closeLogoutModal = () => {
+    setIsLogoutModalOpen(false);
   };
 
   const getAvatarContent = () => {
@@ -58,7 +69,10 @@ export default function UserAuth({
           </div>
           {isModalOpen && (
             <div className={styles.modal}>
-              <UserLogoModal openSettingModal={openSettingModal} />
+              <UserLogoModal
+                openSettingModal={openSettingModal}
+                openLogoutModal={openLogoutModal}
+              />
             </div>
           )}
           {isSettingModalOpen && (
@@ -66,6 +80,9 @@ export default function UserAuth({
               isOpen={isSettingModalOpen}
               closeModal={closeSettingModal}
             />
+          )}
+          {isLogoutModalOpen && (
+            <Logout isOpen={isLogoutModalOpen} closeModal={closeLogoutModal} />
           )}
         </>
       ) : (
