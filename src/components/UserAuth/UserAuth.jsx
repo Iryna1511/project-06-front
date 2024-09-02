@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Імпортуємо useNavigate
 import { PiUserCircleThin } from "react-icons/pi";
 import { SlArrowDown } from "react-icons/sl";
 import { logout } from "../../redux/auth/operations"; // Операція для виходу
@@ -7,17 +8,16 @@ import styles from "./UserAuth.module.css";
 import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import ModalSetting from "../ModalSettings/ModalSettings.jsx";
 import Logout from "../Logout/Logout.jsx";
-import AuthForm from "../AuthForm/AuthForm.jsx"; // Імпортуємо AuthForm
 
 export default function UserAuth() {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Ініціалізуємо useNavigate
 
   const { user, isLoggedIn } = useSelector((state) => state.auth);
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); // Додаємо стан для AuthForm
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -35,12 +35,6 @@ export default function UserAuth() {
 
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
 
-  const openAuthModal = () => {
-    setIsAuthModalOpen(true);
-  };
-
-  const closeAuthModal = () => setIsAuthModalOpen(false);
-
   const handleLogout = () => {
     dispatch(logout()); // Вихід користувача
     closeLogoutModal();
@@ -55,6 +49,10 @@ export default function UserAuth() {
       return <div className={styles.avatarLetter}>{initial}</div>;
     }
     return <PiUserCircleThin className={styles.defaultAvatar} />;
+  };
+
+  const handleSignInClick = () => {
+    navigate("/signin"); // Перенаправляємо на сторінку Sign In
   };
 
   return (
@@ -92,20 +90,12 @@ export default function UserAuth() {
         </>
       ) : (
         <div className={styles.userSectionUnregistredUser}>
-          <button
-            className={styles.signInButton}
-            onClick={openAuthModal} // Відкриваємо AuthForm при кліку
-          >
+          <button className={styles.signInButton} onClick={handleSignInClick}>
             Sign In
           </button>
           <div className={styles.userIconWrapper}>
             <PiUserCircleThin className={styles.userIcon} />
           </div>
-        </div>
-      )}
-      {isAuthModalOpen && (
-        <div className={styles.authModal}>
-          <AuthForm closeModal={closeAuthModal} /> {/* Передаємо функцію закриття */}
         </div>
       )}
     </div>

@@ -28,7 +28,7 @@ export default function ModalSetting({ isOpen, closeModal }) {
   useEffect(() => {
     if (isOpen) {
       fetch(
-        "https://water-tracker-06.onrender.com/users/66d488ef67e4e90c7ed4097d" // Замініть на ID користувача
+        "https://water-tracker-06.onrender.com/users/66d618a5be807c71f00e51d3" // Замініть на ID користувача
       )
         .then((response) => response.json())
         .then((data) => {
@@ -113,12 +113,12 @@ export default function ModalSetting({ isOpen, closeModal }) {
     }
 
     fetch(
-      "https://water-tracker-06.onrender.com/users/66d488ef67e4e90c7ed4097d", // Замініть на ID користувача
+      "https://water-tracker-06.onrender.com/users/66d618a5be807c71f00e51d3", // Замініть на ID користувача
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 8eyh4dmu38buSy/yLdaG/TnY4XBV2dDbKgHCWH6E`, // Використайте свіжий токен
+          Authorization: `Bearer 1HFrCK6DJ8NaUDad652zhx5i0bGizIqgt0TV0bO0`, // Використайте свіжий токен
         },
         body: JSON.stringify(updatedData),
       }
