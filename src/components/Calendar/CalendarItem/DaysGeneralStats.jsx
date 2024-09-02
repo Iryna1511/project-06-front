@@ -1,5 +1,4 @@
-import { React } from 'react';
-import { forwardRef, useCallback } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import s from './DaysGeneralStats.module.css';
 
 const positionMobile = {

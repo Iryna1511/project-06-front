@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authApi } from '../../axiosConfig/authAPI.js';
-import { monthNames } from "../../constans/monthNames"; 
+import { monthNames } from '../../constans/monthNames.js';
 
 export const addWaterThunk = createAsyncThunk(
   'addWater',
