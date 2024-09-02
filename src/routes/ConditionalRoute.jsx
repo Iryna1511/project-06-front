@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth"; // Тимчасове повернення статусу авторизації
+import { useAuth } from "../hooks/useAuth"; // Тимчасове повернення статусу авторизації
 
 export default function ConditionalRoute() {
   const isAuthenticated = useAuth();

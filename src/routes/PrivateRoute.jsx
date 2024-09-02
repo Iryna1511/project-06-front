@@ -10,7 +10,7 @@
 // }
 
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth.jsx"; // Тимчасове повернення статусу авторизації
+import { useAuth } from "../hooks/useAuth.jsx"; // Тимчасове повернення статусу авторизації
 
 export default function PrivateRoute({
   component: Component,
