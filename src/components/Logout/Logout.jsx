@@ -1,16 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { FaTimes } from 'react-icons/fa';
 import css from './LogOut.module.css';
+import { logout } from '../../redux/auth/operations';
 
 const Logout = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const dispatch = useDispatch();
 
   const closeModal = () => setIsOpen(false);
 
-  const handleLogout = () => {
-    console.log('Logged out!');
-    setIsOpen(false);
+  const handleLogout = async () => {
+    try {
+      await dispatch(logout()).unwrap();
+      setIsOpen(false); 
+      console.log('ggg');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Optionally, show an error message to the user
+    }
   };
+
+  // Handle backdrop click and Escape key press
+  useEffect(() => {
+    const handleBackdropClick = (event) => {
+      if (event.target.classList.contains(css.modalOverlay)) {
+        closeModal();
+      }
+    };
+
+    const handleEscapePress = (event) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    document.addEventListener('click', handleBackdropClick);
+    document.addEventListener('keydown', handleEscapePress);
+
+    return () => {
+      document.removeEventListener('click', handleBackdropClick);
+      document.removeEventListener('keydown', handleEscapePress);
+    };
+  }, []);
 
   return (
     <div>
