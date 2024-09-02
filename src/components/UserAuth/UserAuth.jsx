@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Імпортуємо useNavigate
+import { useNavigate } from "react-router-dom";
 import { PiUserCircleThin } from "react-icons/pi";
 import { SlArrowDown } from "react-icons/sl";
-import { logout } from "../../redux/auth/operations"; // Операція для виходу
+import { logout } from "../../redux/auth/operations";
 import styles from "./UserAuth.module.css";
 import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import ModalSetting from "../ModalSettings/ModalSettings.jsx";
@@ -11,7 +11,7 @@ import Logout from "../Logout/Logout.jsx";
 
 export default function UserAuth() {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Ініціалізуємо useNavigate
+  const navigate = useNavigate();
 
   const { user, isLoggedIn } = useSelector((state) => state.auth);
 
@@ -36,15 +36,15 @@ export default function UserAuth() {
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
 
   const handleLogout = () => {
-    dispatch(logout()); // Вихід користувача
+    dispatch(logout());
     closeLogoutModal();
   };
 
   const getAvatarContent = () => {
-    if (user.photoUrl) {
+    if (user?.photoUrl) {
       return <img src={user.photoUrl} alt="Avatar" className={styles.FotoOfUser} />;
     }
-    if (user.name || user.email) {
+    if (user?.name || user?.email) {
       const initial = (user.name || user.email).charAt(0).toUpperCase();
       return <div className={styles.avatarLetter}>{initial}</div>;
     }
@@ -52,7 +52,7 @@ export default function UserAuth() {
   };
 
   const handleSignInClick = () => {
-    navigate("/signin"); // Перенаправляємо на сторінку Sign In
+    navigate("/signin");
   };
 
   return (
@@ -60,7 +60,7 @@ export default function UserAuth() {
       {isLoggedIn ? (
         <>
           <div className={styles.LoinedUser} onClick={toggleModal}>
-            <span className={styles.nameOfUser}>{user.name || user.email}</span>
+            <span className={styles.nameOfUser}>{user?.name || user?.email}</span>
             {getAvatarContent()}
             <button className={styles.settings}>
               <SlArrowDown />
@@ -84,7 +84,7 @@ export default function UserAuth() {
             <Logout
               isOpen={isLogoutModalOpen}
               closeModal={closeLogoutModal}
-              handleLogout={handleLogout} // Додаємо функцію виходу
+              handleLogout={handleLogout}
             />
           )}
         </>
