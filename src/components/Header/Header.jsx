@@ -9,11 +9,13 @@ export default function Header() {
   const dispatch = useDispatch();
   const { user, isLoggedIn, token } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (token && !user?.email) {
-      dispatch(fetchUserProfile());
-    }
-  }, [dispatch, token, user?.email]);
+ useEffect(() => {
+  console.log("Header token:", token);
+  console.log("Header user:", user);
+  if (token && !user?.email) {
+    dispatch(fetchUserProfile());
+  }
+}, [dispatch, token, user?.email]);
 
   return (
     <header className={styles.header}>

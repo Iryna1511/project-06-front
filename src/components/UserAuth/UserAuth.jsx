@@ -13,7 +13,7 @@ export default function UserAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user, isLoggedIn } = useSelector((state) => state.auth);
+  const { user, isLoggedIn, token } = useSelector((state) => state.auth);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
@@ -42,7 +42,9 @@ export default function UserAuth() {
 
   const getAvatarContent = () => {
     if (user?.photoUrl) {
-      return <img src={user.photoUrl} alt="Avatar" className={styles.FotoOfUser} />;
+      return (
+        <img src={user.photoUrl} alt="Avatar" className={styles.FotoOfUser} />
+      );
     }
     if (user?.name || user?.email) {
       const initial = (user.name || user.email).charAt(0).toUpperCase();
@@ -54,13 +56,15 @@ export default function UserAuth() {
   const handleSignInClick = () => {
     navigate("/signin");
   };
-
+console.log("User ID:", user?._id);
   return (
     <div className={styles.userSection}>
       {isLoggedIn ? (
         <>
           <div className={styles.LoinedUser} onClick={toggleModal}>
-            <span className={styles.nameOfUser}>{user?.name || user?.email}</span>
+            <span className={styles.nameOfUser}>
+              {user?.name || user?.email}
+            </span>
             {getAvatarContent()}
             <button className={styles.settings}>
               <SlArrowDown />
@@ -78,6 +82,8 @@ export default function UserAuth() {
             <ModalSetting
               isOpen={isSettingModalOpen}
               closeModal={closeSettingModal}
+              userId={user?._id}
+              token={token}
             />
           )}
           {isLogoutModalOpen && (

@@ -1,59 +1,66 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import styles from "./ModalSettings.module.css";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
 
-export default function ModalSetting({ isOpen, closeModal }) {
+export default function ModalSetting({ isOpen, closeModal, userId, token }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    outdatedPassword: "", // Заміна oldPassword на outdatedPassword
+    outdatedPassword: "",
     newPassword: "",
     repeatPassword: "",
-    gender: "", 
+    gender: "",
   });
   const [initialData, setInitialData] = useState({
     name: "",
     email: "",
-    gender: "", 
+    gender: "",
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
-    outdatedPassword: false, // Заміна oldPassword на outdatedPassword
+    outdatedPassword: false,
     newPassword: false,
     repeatPassword: false,
   });
 
-  useEffect(() => {
-    if (isOpen) {
-      fetch(
-        "https://water-tracker-06.onrender.com/users/66d618a5be807c71f00e51d3" // Замініть на ID користувача
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === 200) {
-            const { name, email, gender } = data.data;
-            setFormData((prevData) => ({
-              ...prevData,
-              name: name,
-              email: email,
-              gender: gender === "female" ? "Woman" : "Man", 
-            }));
-            setInitialData({
-              name: name,
-              email: email,
-              gender: gender === "female" ? "Woman" : "Man",
-            });
-          } else {
-            console.error("Failed to fetch user data");
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
-    }
-  }, [isOpen]);
+useEffect(() => {
+
+  console.log("ModalSetting token:", token);
+  console.log("ModalSetting userId:", userId);
+  if (isOpen && userId) {
+    fetch(`https://water-tracker-06.onrender.com/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          const { name, email, gender } = data.data;
+          setFormData((prevData) => ({
+            ...prevData,
+            name: name,
+            email: email,
+            gender: gender === "female" ? "Woman" : "Man",
+          }));
+          setInitialData({
+            name: name,
+            email: email,
+            gender: gender === "female" ? "Woman" : "Man",
+          });
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  } else if (isOpen) {
+    console.error("User ID is undefined");
+  }
+}, [isOpen, userId, token]);
 
   const handleOutsideClick = (event) => {
     if (event.target.classList.contains(styles.modal)) {
@@ -111,6 +118,10 @@ export default function ModalSetting({ isOpen, closeModal }) {
       console.log("No changes detected");
       return;
     }
+    if (!userId) {
+  console.error("User ID is undefined");
+  return;
+}
 
     fetch(
       "https://water-tracker-06.onrender.com/users/66d618a5be807c71f00e51d3", // Замініть на ID користувача
