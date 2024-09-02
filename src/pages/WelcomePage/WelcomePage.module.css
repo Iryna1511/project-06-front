@@ -9,7 +9,6 @@
   --soft-blue: #d7e3ff;
 }
 
-/*  ---------- COMMON STYLES------- */
 /*  ---------- MOBILE STYLES------- */
 
 .pageContainer {
@@ -19,14 +18,10 @@
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
-  /* height: 100vh; */
-  padding-left: 20px; /* тимчасові падінги, потім підлаштуються під маржин всієї сторінки */
-  padding-right: 20px;
 }
 
 .infoContainer {
-  /* padding-bottom: 40px; */
-  padding: 24px 0 40px 0; /* тимчасові падінги, потім підлаштуються під маржин всієї сторінки */
+  padding: 24px 20px 40px 20px;
 }
 
 /*  ---------- TABLET STYLES------- */
@@ -38,7 +33,7 @@
   }
 
   .infoContainer {
-    padding: 40px 0 50px 0;
+    padding: 24px 20px 40px 20px;
   }
 }
 
@@ -46,17 +41,17 @@
 
 @media screen and (min-width: 1440px) {
   .pageContainer {
-    /* background-attachment: fixed; */
-    background-size: contain;
-    background-position: bottom;
-    background-image: url("../../../public/img-bg-welcome/welcome-bg-desktop@1x.png");
+    background: url("../../../public/img-bg-welcome/welcome-bg-desktop2@1x.png")
+        center / cover no-repeat,
+      url("../../../public/img-bg-welcome/welcome-bg-desktop@1x.png") bottom
+        center / contain no-repeat;
     padding-left: 112px;
     padding-right: 112px;
   }
 
   .infoContainer {
     display: flex;
-    gap: 80px;
+    justify-content: space-between;
     padding: 80px 104px 294px 98px;
   }
 }
