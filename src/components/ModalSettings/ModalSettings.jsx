@@ -6,31 +6,54 @@ import { RxCross1 } from "react-icons/rx";
 
 export default function ModalSetting({ isOpen, closeModal }) {
   const [formData, setFormData] = useState({
-    name: "Jhon Cena",
-    email: "JhonCena@gmail.com",
-    oldPassword: "Password",
-    newPassword: "Password",
-    repeatPassword: "Password",
+    name: "",
+    email: "",
+    outdatedPassword: "", // Заміна oldPassword на outdatedPassword
+    newPassword: "",
+    repeatPassword: "",
+    gender: "", 
+  });
+  const [initialData, setInitialData] = useState({
+    name: "",
+    email: "",
+    gender: "", 
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
-    oldPassword: false,
+    outdatedPassword: false, // Заміна oldPassword на outdatedPassword
     newPassword: false,
     repeatPassword: false,
   });
 
   useEffect(() => {
-    const handleEscapeKey = (event) => {
-      if (event.key === "Escape") {
-        closeModal();
-      }
-    };
-    document.addEventListener("keydown", handleEscapeKey);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscapeKey);
-    };
-  }, [closeModal]);
+    if (isOpen) {
+      fetch(
+        "https://water-tracker-06.onrender.com/users/66d488ef67e4e90c7ed4097d" // Замініть на ID користувача
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            const { name, email, gender } = data.data;
+            setFormData((prevData) => ({
+              ...prevData,
+              name: name,
+              email: email,
+              gender: gender === "female" ? "Woman" : "Man", 
+            }));
+            setInitialData({
+              name: name,
+              email: email,
+              gender: gender === "female" ? "Woman" : "Man",
+            });
+          } else {
+            console.error("Failed to fetch user data");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, [isOpen]);
 
   const handleOutsideClick = (event) => {
     if (event.target.classList.contains(styles.modal)) {
@@ -45,6 +68,13 @@ export default function ModalSetting({ isOpen, closeModal }) {
     });
   };
 
+  const handleGenderChange = (e) => {
+    setFormData({
+      ...formData,
+      gender: e.target.value,
+    });
+  };
+
   const togglePasswordVisibility = (field) => {
     setPasswordVisibility({
       ...passwordVisibility,
@@ -54,8 +84,61 @@ export default function ModalSetting({ isOpen, closeModal }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted: ", formData);
-    // Логіка для обробки форми, наприклад, API-запит
+
+    if (formData.newPassword !== formData.repeatPassword) {
+      console.error("New passwords do not match");
+      return;
+    }
+
+    const updatedData = {};
+    if (formData.name !== initialData.name) {
+      updatedData.name = formData.name;
+    }
+    if (formData.email !== initialData.email) {
+      updatedData.email = formData.email;
+    }
+    if (formData.gender !== initialData.gender) {
+      updatedData.gender = formData.gender === "Woman" ? "female" : "male";
+    }
+    if (formData.outdatedPassword) { // Заміна oldPassword на outdatedPassword
+      updatedData.outdatedPassword = formData.outdatedPassword;
+    }
+    if (formData.newPassword) {
+      updatedData.newPassword = formData.newPassword;
+    }
+
+    if (Object.keys(updatedData).length === 0) {
+      console.log("No changes detected");
+      return;
+    }
+
+    fetch(
+      "https://water-tracker-06.onrender.com/users/66d488ef67e4e90c7ed4097d", // Замініть на ID користувача
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer 8eyh4dmu38buSy/yLdaG/TnY4XBV2dDbKgHCWH6E`, // Використайте свіжий токен
+        },
+        body: JSON.stringify(updatedData),
+      }
+    )
+      .then((response) => {
+        console.log("Response status:", response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Response data:", data);
+        if (data.status === 200) {
+          console.log("User data successfully updated:", data);
+          closeModal();
+        } else {
+          console.error("Failed to update user data");
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating user data:", error);
+      });
   };
 
   return (
@@ -99,6 +182,8 @@ export default function ModalSetting({ isOpen, closeModal }) {
                           id="genderWoman"
                           name="gender"
                           value="Woman"
+                          checked={formData.gender === "Woman"}
+                          onChange={handleGenderChange}
                         />
                         <label htmlFor="genderWoman">Woman</label>
                       </div>
@@ -109,6 +194,8 @@ export default function ModalSetting({ isOpen, closeModal }) {
                           id="genderMan"
                           name="gender"
                           value="Man"
+                          checked={formData.gender === "Man"}
+                          onChange={handleGenderChange}
                         />
                         <label htmlFor="genderMan">Man</label>
                       </div>
@@ -150,17 +237,17 @@ export default function ModalSetting({ isOpen, closeModal }) {
                     <div className={styles.wrapperForInput}>
                       <input
                         type={
-                          passwordVisibility.oldPassword ? "text" : "password"
+                          passwordVisibility.outdatedPassword ? "text" : "password"
                         }
-                        name="oldPassword"
-                        value={formData.oldPassword}
+                        name="outdatedPassword" // Заміна oldPassword на outdatedPassword
+                        value={formData.outdatedPassword}
                         onChange={handleInputChange}
                         className={styles.textInputAreaPassword}
                       />
                       <span
-                        onClick={() => togglePasswordVisibility("oldPassword")}
+                        onClick={() => togglePasswordVisibility("outdatedPassword")} // Заміна oldPassword на outdatedPassword
                       >
-                        {passwordVisibility.oldPassword ? (
+                        {passwordVisibility.outdatedPassword ? (
                           <HiOutlineEye className={styles.eyeIcon} />
                         ) : (
                           <HiOutlineEyeOff className={styles.eyeIcon} />

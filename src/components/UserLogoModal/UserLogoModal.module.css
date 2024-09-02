@@ -2,8 +2,7 @@
 .modalContent {
     display: flex;
     flex-direction: column;
-    padding: 15px;
-    gap: 8px;
+    gap: 16px;
 }
 
 .modalItem {
@@ -30,5 +29,5 @@ display: flex;
 
 .text {
     color: #407BFF;
-    font-size: 18px;
+    font-size: 16px;
 }
