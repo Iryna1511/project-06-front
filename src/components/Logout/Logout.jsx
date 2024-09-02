@@ -1,16 +1,7 @@
-import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import css from './LogOut.module.css';
 
-const Logout = () => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const closeModal = () => setIsOpen(false);
-
-  const handleLogout = () => {
-    console.log('Logged out!');
-    setIsOpen(false);
-  };
+const Logout = ({ isOpen, closeModal, handleLogout }) => {
 
   return (
     <div>
