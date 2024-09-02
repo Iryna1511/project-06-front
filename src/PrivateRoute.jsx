@@ -8,3 +8,15 @@
 //   const isLoggedIn = useSelector(selectIsLoggedIn);
 //   return isLoggedIn ? component : <Navigate to={redirectTo} />;
 // }
+
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./hooks/useAuth.jsx"; // Тимчасове повернення статусу авторизації
+
+export default function PrivateRoute({
+  component: Component,
+  redirectTo = "/signin",
+}) {
+  const isLoggedIn = useAuth();
+
+  return isLoggedIn ? Component : <Navigate to={redirectTo} replace />;
+}

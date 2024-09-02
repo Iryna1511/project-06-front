@@ -6,5 +6,5 @@ export default function HomePage() {
   return <div className={css.pageContainer}>
     <Calendar />
   </div>;
-  
+ 
 }
