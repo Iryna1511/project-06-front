@@ -26,11 +26,8 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
   });
 
 useEffect(() => {
-
-  console.log("ModalSetting token:", token);
-  console.log("ModalSetting userId:", userId);
-  if (isOpen && userId) {
-    fetch(`https://water-tracker-06.onrender.com/users/${userId}`, {
+  if (isOpen) {
+    fetch(`https://water-tracker-06.onrender.com/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -57,8 +54,6 @@ useEffect(() => {
       .catch((error) => {
         console.error("Error fetching user data:", error);
       });
-  } else if (isOpen) {
-    console.error("User ID is undefined");
   }
 }, [isOpen, userId, token]);
 
@@ -124,12 +119,12 @@ useEffect(() => {
 }
 
     fetch(
-      "https://water-tracker-06.onrender.com/users/66d618a5be807c71f00e51d3", // Замініть на ID користувача
+      `https://water-tracker-06.onrender.com/user`, // Замініть на ID користувача
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 1HFrCK6DJ8NaUDad652zhx5i0bGizIqgt0TV0bO0`, // Використайте свіжий токен
+          Authorization: `Bearer ${token}`, // Використайте свіжий токен
         },
         body: JSON.stringify(updatedData),
       }
