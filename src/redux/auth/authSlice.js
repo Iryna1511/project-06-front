@@ -12,6 +12,15 @@ const authSlice = createSlice({
     isLoggedIn: false,
     isLoading: false,
     error: null,
+    isLogoutModalOpen: false
+  },
+  reducers: {
+    openLogoutModal: (state) => {
+      state.isLogoutModalOpen = true;
+    },
+    closeLogoutModal: (state) => {
+      state.isLogoutModalOpen = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -58,6 +67,7 @@ const authSlice = createSlice({
         state.token = null;
         state.isLoading = false;
         state.isLoggedIn = false;
+        state.isLogoutModalOpen = false;
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
@@ -66,4 +76,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { openLogoutModal, closeLogoutModal } = authSlice.actions;
 export const authReducer = authSlice.reducer;
