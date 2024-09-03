@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import css from "./DailyNormaModalWindow.module.css";
-import { BasicModalWindow } from "../../BasicModalWindow/BasicModalWindow.jsx";
+import { BasicModalWindow } from "../BasicModalWindow/BasicModalWindow";
 
-const DailyNormLVLaModal = ({ onClose, onOpen, onSave }) => {
+const DailyNormaModalWindow = ({ onClose, onOpen, onSave }) => {
   const [gender, setGender] = useState('');
   const [weight, setWeight] = useState('');
   const [activityTime, setActivityTime] = useState('');
   const [dailyNormLvl, setDailyNormLvl] = useState(0.0);
-  const [neededWater, setNeededWater] = useState('');
+  const [waterRate, setWaterRate] = useState('');
 
   useEffect(() => {
     const measuredWeight = parseFloat(weight);
@@ -45,10 +45,10 @@ const DailyNormLVLaModal = ({ onClose, onOpen, onSave }) => {
     }
   };
 
-  const handleNeededWaterChange = (e) => {
+  const handlewaterRateChange = (e) => {
     const value = e.target.value;
     if (value === '' || Number(value) >= 0) {
-      setNeededWater(value);
+      setWaterRate(value);
     }
   };
 
@@ -65,7 +65,7 @@ const DailyNormLVLaModal = ({ onClose, onOpen, onSave }) => {
       alert("Please enter a valid activity time.");
       return;
     }
-    if (isNaN(neededWater) || neededWater < 0) {
+    if (isNaN(waterRate) || waterRate < 0) {
       alert("Please enter a valid amount of water to drink.");
       return;
     }
@@ -75,7 +75,7 @@ const DailyNormLVLaModal = ({ onClose, onOpen, onSave }) => {
       weight: parseFloat(weight),
       activityTime: parseFloat(activityTime),
       dailyNormLvl: parseFloat(dailyNormLvl),
-      neededWater: parseFloat(neededWater),
+      waterRate: parseFloat(waterRate),
       date: new Date().toISOString(), 
     };
 
@@ -165,8 +165,8 @@ const DailyNormLVLaModal = ({ onClose, onOpen, onSave }) => {
                 className={css.normaInput}
                 type="number"
                 placeholder="0"
-                value={neededWater}
-                onChange={handleNeededWaterChange}
+                value={waterRate}
+                onChange={handlewaterRateChange}
               />
             </div>
             <button className={css.normaButtonSave} onClick={handleSave}>
@@ -179,10 +179,10 @@ const DailyNormLVLaModal = ({ onClose, onOpen, onSave }) => {
   );
 };
 
-DailyNormLVLaModal.propTypes = {
+DailyNormaModalWindow.propTypes = {
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,  
   onSave: PropTypes.func.isRequired, 
 };
 
-export default DailyNormLVLaModal;
+export default DailyNormaModalWindow;

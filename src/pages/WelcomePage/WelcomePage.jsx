@@ -9,6 +9,7 @@ export default function WelcomePage() {
       <div className={css.infoContainer}>
         <WaterСonsumptionTracker />
         <WhyDrinkWater />
+
       </div>
     </div>
   );
