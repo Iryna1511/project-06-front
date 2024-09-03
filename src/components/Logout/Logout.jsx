@@ -1,16 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaTimes } from 'react-icons/fa';
 import css from './LogOut.module.css';
+import { logout } from '../../redux/auth/operations';
+import { closeLogoutModal, openLogoutModal } from '../../redux/auth/authSlice';
 
 const Logout = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state) => state.auth.isLogoutModalOpen);
 
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => dispatch(closeLogoutModal());
 
-  const handleLogout = () => {
-    console.log('Logged out!');
-    setIsOpen(false);
+  const handleLogout = async () => {
+    try {
+      await dispatch(logout()).unwrap();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
+
+  useEffect(() => {
+    dispatch(openLogoutModal());
+
+    const handleBackdropClick = (event) => {
+      if (event.target.classList.contains(css.modalOverlay)) {
+        closeModal();
+      }
+    };
+
+    const handleEscapePress = (event) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    document.addEventListener('click', handleBackdropClick);
+    document.addEventListener('keydown', handleEscapePress);
+
+    return () => {
+      document.removeEventListener('click', handleBackdropClick);
+      document.removeEventListener('keydown', handleEscapePress);
+    };
+  }, [dispatch]);
 
   return (
     <div>
