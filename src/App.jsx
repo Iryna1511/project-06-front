@@ -2,8 +2,8 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
-import RestrictedRoute from "./RestrictedRoute.jsx";
-import PrivateRoute from "./PrivateRoute.jsx";
+import RestrictedRoute from "./routes/RestrictedRoute.jsx";
+import PrivateRoute from "./routes/PrivateRoute.jsx";
 import ConditionalRoute from "./ConditionalRoute.jsx";
 import Loader from "./components/Loader/Loader.jsx";
 
