@@ -13,7 +13,6 @@ const DeleteEntry = ({ entryId }) => {
   const handleDelete = async () => {
     try {
       await dispatch(deleteWaterThunk({ id: entryId })).unwrap();
-      console.log('Entry deleted!');
       setIsOpen(false);
     } catch (error) {
       console.error('Delete failed:', error);
