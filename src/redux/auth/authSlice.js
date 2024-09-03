@@ -12,7 +12,7 @@ const authSlice = createSlice({
     isLoggedIn: false,
     isLoading: false,
     error: null,
-    isLogoutModalOpen: false
+    isLogoutModalOpen: false,
   },
   reducers: {
     openLogoutModal: (state) => {
@@ -32,7 +32,7 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.token = action.payload.token;
         state.isLoading = false;
-        state.isLoggedIn = true;
+        state.isLoggedIn = false; //Тут змінила на false, бо має направляти на сторінку логування після умпішної реєстрації  @ Olena Lytovchenko
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;

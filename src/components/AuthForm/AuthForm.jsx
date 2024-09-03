@@ -59,7 +59,7 @@ const AuthForm = () => {
           .unwrap()
           .then(() => {
             alert("Registration successful!");
-            navigate("/"); // Redirect to
+            navigate("/signin"); // Тут змінила на /signin, бо має направляти на сторінку логування після умпішної реєстрації  @Olena Lytovchenko
           })
           .catch(alert("Registration error!"));
         break;
@@ -68,7 +68,7 @@ const AuthForm = () => {
           .unwrap()
           .then(() => {
             alert("Login successful!");
-            navigate("/"); // Redirect to home but doesnt redirect
+            // navigate("/"); // тут не потрібна навігація, бо коли редакс повертає isLoggedIn = true, то спрацьовую саршрутизація і користувача кидає на /home  @ OlenaLytovchenko
           });
         break;
       default:
@@ -89,7 +89,7 @@ const AuthForm = () => {
         {" "}
         <div className={css.wrap_section}>
           <div className={css.containerImageBottle}>
-            <img src='/img-sign-pages/bottle-d-1x-min.png' />
+            <img src="/img-sign-pages/bottle-d-1x-min.png" />
           </div>
 
           <div className={css.wrap_form}>
@@ -110,14 +110,14 @@ const AuthForm = () => {
                       className={`${css.field} ${
                         errors.email && touched.email ? css.errorField : ""
                       }`}
-                      type='email'
-                      name='email'
+                      type="email"
+                      name="email"
                       id={emailFieldId}
-                      placeholder='Email'
+                      placeholder="Email"
                     />
                     <ErrorMessage
-                      name='email'
-                      component='div'
+                      name="email"
+                      component="div"
                       className={css.errorText}
                     />
                     {/* {touched.email && errors.email && <div>{errors.email}</div>} */}
@@ -134,9 +134,9 @@ const AuthForm = () => {
                           : ""
                       }`}
                       type={showPassword ? "text" : "password"}
-                      name='password'
+                      name="password"
                       id={passwordFieldId}
-                      placeholder='Password'
+                      placeholder="Password"
                     />
                     <div
                       className={css.iconWrapper}
@@ -149,8 +149,8 @@ const AuthForm = () => {
                       )}
                     </div>
                     <ErrorMessage
-                      name='password'
-                      component='div'
+                      name="password"
+                      component="div"
                       className={css.errorText}
                     />
                     {/* {touched.password && errors.password && (
@@ -175,9 +175,9 @@ const AuthForm = () => {
                             : ""
                         }`}
                         type={showPassword ? "text" : "password"}
-                        name='repeatPassword'
+                        name="repeatPassword"
                         id={repeatPasswordFieldId}
-                        placeholder='Repeat password'
+                        placeholder="Repeat password"
                       />
 
                       <div
@@ -192,8 +192,8 @@ const AuthForm = () => {
                       </div>
 
                       <ErrorMessage
-                        name='repeatPassword'
-                        component='div'
+                        name="repeatPassword"
+                        component="div"
                         className={css.errorText}
                       />
                       {/* {touched.repeatPassword && errors.repeatPassword && (
@@ -202,7 +202,7 @@ const AuthForm = () => {
                     </div>
                   )}
 
-                  <button className={css.btn} type='submit'>
+                  <button className={css.btn} type="submit">
                     {action}
                   </button>
 
