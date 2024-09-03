@@ -1,19 +1,23 @@
 /*  ---------- MOBILE STYLES------- */
 
-/* .container {
-} */
+.container {
+  max-width: 312px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 0 auto;
+}
 
 /*  ---------- TABLET STYLES------- */
-/* @media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .container {
-
+    max-width: 736px;
   }
-} */
+}
 
 /*  ---------- DESKTOP STYLES------- */
 
-/* @media screen and (min-width: 1440px) {
+@media screen and (min-width: 1440px) {
   .container {
-
+    max-width: 1248px;
   }
-} */
+}
