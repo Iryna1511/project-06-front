@@ -37,16 +37,20 @@ useEffect(() => {
         if (data.status === 200) {
           const { name, email, gender } = data.data;
 
+
           setFormData((prevData) => ({
             ...prevData,
             name: name,
             email: email,
             gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
+            gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
           }));
+
 
           setInitialData({
             name: name,
             email: email,
+            gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
             gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
           });
         } else {
