@@ -1,119 +1,75 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
+import { createSlice } from "@reduxjs/toolkit";
+import { login, logout, register } from "./operations.js";
 
-import {
-  loginThunk,
-  logoutThunk,
-  refreshThunk,
-  registerThunk,
-  updateAvatarThunk,
-  updateUserThunk,
-  updateWaterRateThunk,
-} from './operations';
-
-const initialState = {
-  name: '',
-  email: '',
-  gender: '',
-  waterRate: 1.5,
-  avatarURL: '',
-  token: null,
-  isLoggedIn: false,
-  isRefresh: false,
-};
-
-const slice = createSlice({
-  name: 'auth',
-  initialState,
-  selectors: {
-    selectName: state => state.name,
-    selectGender: state => state.gender,
-    selectEmail: state => state.email,
-    selectWaterRate: state => state.waterRate,
-    selectAvatarURL: state => state.avatarURL,
-    selectIsLoggedIn: state => state.isLoggedIn,
-    selectToken: state => state.token,
-    selectIsRefresh: state => state.isRefresh,
+const authSlice = createSlice({
+  name: "auth",
+  initialState: {
+    user: {
+      email: null,
+      password: null,
+    },
+    token: null,
+    isLoggedIn: false,
+    isLoading: false,
+    error: null,
+    isLogoutModalOpen: false,
   },
   reducers: {
-    logout: state => {
-      return initialState;
+    openLogoutModal: (state) => {
+      state.isLogoutModalOpen = true;
     },
-
-    setName: (state, action) => {
-      state.name = action.payload;
+    closeLogoutModal: (state) => {
+      state.isLogoutModalOpen = false;
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(refreshThunk.fulfilled, (state, { payload }) => {
-        state.name = payload.name;
-        state.email = payload.email;
-        state.gender = payload.gender;
-        state.waterRate = payload.waterRate;
-        state.avatarURL = payload.avatarURL;
-        state.token = payload.token;
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.user = action.payload.data;
+        state.isLoading = false;
+        state.isLoggedIn = false; //Тут змінила на false, бо має направляти на сторінку логування після умпішної реєстрації  @ Olena Lytovchenko
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || "Registration error!";
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.token = action.payload.data.accessToken;
+        state.isLoading = false;
         state.isLoggedIn = true;
-        state.isRefresh = false;
       })
-      .addCase(refreshThunk.pending, (state, { payload }) => {
-        state.isRefresh = true;
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || "Login error!";
       })
-      .addCase(refreshThunk.rejected, (state, { payload }) => {
-        state.isRefresh = false;
+      .addCase(logout.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
       })
-      .addCase(logoutThunk.fulfilled, state => {
-        return initialState;
+      .addCase(logout.fulfilled, (state) => {
+        state.user = {
+          email: null,
+          password: null,
+        };
+        state.token = null;
+        state.isLoading = false;
+        state.isLoggedIn = false;
+        state.isLogoutModalOpen = false;
       })
-      .addCase(updateAvatarThunk.fulfilled, (state, { payload }) => {
-        state.avatarURL = payload.avatarURL;
-        state.isRefresh = false;
-        toast.success(`The avatar has been downloaded successfully`);
-      })
-      .addCase(updateUserThunk.fulfilled, (state, { payload }) => {
-        state.name = payload.name;
-        state.email = payload.email;
-        state.gender = payload.gender;
-        state.isRefresh = false;
-        toast.success(`Data changed successfully`);
-      })
-      .addCase(updateWaterRateThunk.fulfilled, (state, { payload }) => {
-        state.waterRate = payload.waterRate;
-        toast.success(`Daily norma updated successfully`);
-      })
-      .addCase(registerThunk.fulfilled, (state, { payload }) => {
-        state.name = payload.name;
-        state.email = payload.email;
-        state.gender = payload.gender;
-        state.waterRate = payload.waterRate;
-        state.avatarURL = payload.avatarURL;
-        state.token = payload.token;
-        state.isRefresh = false;
-        toast.success(`You have successfully registered`);
-      })
-      .addCase(loginThunk.fulfilled, (state, { payload }) => {
-        state.name = payload.name;
-        state.email = payload.email;
-        state.gender = payload.gender;
-        state.waterRate = payload.waterRate;
-        state.avatarURL = payload.avatarURL;
-        state.token = payload.token;
-        state.isLoggedIn = true;
-        state.isRefresh = false;
-        toast.success(`Welcome, ${payload.name || payload.email}`);
+      .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || "Logout error!";
       });
   },
 });
 
-export const authReducer = slice.reducer;
-export const {
-  selectName,
-  selectGender,
-  selectEmail,
-  selectWaterRate,
-  selectAvatarURL,
-  selectIsLoggedIn,
-  selectToken,
-  selectIsRefresh,
-} = slice.selectors;
-export const { logout, setName } = slice.actions;
+export const { openLogoutModal, closeLogoutModal } = authSlice.actions;
+export const authReducer = authSlice.reducer;

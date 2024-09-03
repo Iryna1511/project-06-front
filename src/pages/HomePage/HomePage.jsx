@@ -1,14 +1,11 @@
 import css from "./HomePage.module.css";
-import Calendar from '../../components/Calendar/Calendar';
-import store from "../../redux/store";
-import { Provider } from 'react-redux';
-
+// import Calendar from "../../components/Calendar/Calendar";
 
 export default function HomePage() {
-  return <div className={css.pageContainer}>
-  <Provider store={store}>
-    <Calendar/>
-  </Provider>
-  </div>;
-  
+  return (
+    <div className={css.pageContainer}>
+      {/* <Calendar /> */}
+      <p>тут буде контент для залогіненого користувача</p>
+    </div>
+  );
 }

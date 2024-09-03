@@ -1,39 +1,70 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { PiUserCircleThin } from "react-icons/pi";
 import { SlArrowDown } from "react-icons/sl";
+import { logout } from "../../redux/auth/operations";
 import styles from "./UserAuth.module.css";
+import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
+import ModalSetting from "../ModalSettings/ModalSettings.jsx";
+import Logout from "../Logout/Logout.jsx";
 
-export default function UserAuth({ isUserLoggedIn, userName, userPhoto, userEmail }) {
+export default function UserAuth() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, isLoggedIn, token } = useSelector((state) => state.auth);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  const openSettingModal = () => {
+    setIsModalOpen(false); // Close UserLogoModal
+    setIsSettingModalOpen(true); // Open Settings Modal
+  };
+
+  const closeSettingModal = () => setIsSettingModalOpen(false);
+
+  const openLogoutModal = () => {
+    setIsModalOpen(false); // Close UserLogoModal
+    setIsLogoutModalOpen(true); // Open Logout Modal
+  };
+
+  const closeLogoutModal = () => setIsLogoutModalOpen(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    closeLogoutModal();
   };
 
   const getAvatarContent = () => {
-    if (userPhoto) {
-      return <img src={userPhoto} alt="Avatar" className={styles.FotoOfUser} />;
+    if (user?.photoUrl) {
+      return (
+        <img src={user.photoUrl} alt="Avatar" className={styles.FotoOfUser} />
+      );
     }
-    if (userName || userEmail) {
-      const initial = (userName || userEmail).charAt(0).toUpperCase();
+    if (user?.name || user?.email) {
+      const initial = (user.name || user.email).charAt(0).toUpperCase();
       return <div className={styles.avatarLetter}>{initial}</div>;
     }
     return <PiUserCircleThin className={styles.defaultAvatar} />;
   };
 
-  const displayName = () => {
-    if (userName) {
-      return userName;
-    }
-    return userEmail;
+  const handleSignInClick = () => {
+    navigate("/signin");
   };
 
   return (
     <div className={styles.userSection}>
-      {isUserLoggedIn ? (
+      {isLoggedIn ? (
         <>
           <div className={styles.LoinedUser} onClick={toggleModal}>
-            <span className={styles.nameOfUser}>{displayName()}</span>
+            <span className={styles.nameOfUser}>
+              {user?.name || user?.email}
+            </span>
             {getAvatarContent()}
             <button className={styles.settings}>
               <SlArrowDown />
@@ -41,14 +72,35 @@ export default function UserAuth({ isUserLoggedIn, userName, userPhoto, userEmai
           </div>
           {isModalOpen && (
             <div className={styles.modal}>
-              <p>Modal content will go here</p>
+              <UserLogoModal
+                openSettingModal={openSettingModal}
+                openLogoutModal={openLogoutModal}
+                closeUserModal={toggleModal} // Close UserLogoModal when opening another modal
+              />
             </div>
+          )}
+          {isSettingModalOpen && (
+            <ModalSetting
+              isOpen={isSettingModalOpen}
+              closeModal={closeSettingModal}
+              userId={user?._id}
+              token={token}
+            />
+          )}
+          {isLogoutModalOpen && (
+            <Logout
+              isOpen={isLogoutModalOpen}
+              closeModal={closeLogoutModal}
+              handleLogout={handleLogout}
+            />
           )}
         </>
       ) : (
-        <div className={styles.userSection}>
-          <button className={styles.signInButton}>Sign In</button>
-          <div className={styles.userIcon}>
+        <div className={styles.userSectionUnregistredUser}>
+          <button className={styles.signInButton} onClick={handleSignInClick}>
+            Sign In
+          </button>
+          <div className={styles.userIconWrapper}>
             <PiUserCircleThin className={styles.userIcon} />
           </div>
         </div>

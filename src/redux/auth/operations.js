@@ -1,107 +1,63 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-import { authApi, setToken, removeToken } from '../../axiosConfig/authAPI.js';
-import { fetchWaterDataMonthThunk } from '../water/operations.js';
+axios.defaults.baseURL = "https://water-tracker-06.onrender.com/";
 
-export const registerThunk = createAsyncThunk(
-  'register',
-  async (credentials, thunkAPI) => {
+const setAuthHeader = (token) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+const removeAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = ``;
+};
+
+export const register = createAsyncThunk(
+  "/auth/register",
+  async (newUser, thunkAPI) => {
     try {
-      const { data } = await authApi.post('auth/register', credentials);
-      setToken(data.token);
-      return data;
+      const response = await axios.post("/auth/register", newUser);
+      return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-export const loginThunk = createAsyncThunk(
-  'login',
-  async (credentials, thunkAPI) => {
-    try {
-      const { data } = await authApi.post('auth/login', credentials);
-      setToken(data.token);
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
-    }
-  }
-);
-
-export const logoutThunk = createAsyncThunk('logout', async (_, thunkAPI) => {
+export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
   try {
-    const { data } = await authApi.post('auth/logout');
-    removeToken();
-    return data;
+    const response = await axios.post("/auth/login", user);
+    console.log(response.data);
+    setAuthHeader(response.data.token);
+    return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
 
-export const refreshThunk = createAsyncThunk('refresh', async (_, thunkApi) => {
-  const savedToken = thunkApi.getState().auth.token;
-  if (!savedToken) {
-    return thunkApi.rejectWithValue('Token is not exist!');
-  }
+export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
   try {
-    setToken(savedToken);
-    const { data } = await authApi.get('user/current');
-    return data;
+    await axios.post("/auth/logout");
+    removeAuthHeader();
   } catch (error) {
-    return thunkApi.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.message);
   }
 });
 
-export const getWaterRateThunk = createAsyncThunk(
-  'getWaterRate',
-  async (_, thunkApi) => {
+export const fetchUserProfile = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async (_, thunkAPI) => {
     try {
-      const { data } = await authApi.get('user/current');
-      return data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
-    }
-  }
-);
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
 
-export const updateUserThunk = createAsyncThunk(
-  'updateUser',
-  async (body, thunkAPI) => {
-    try {
-      const { data } = await authApi.patch('user/setting', body);
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
-    }
-  }
-);
+      if (token) {
+        setAuthHeader(token);
+      }
 
-export const updateAvatarThunk = createAsyncThunk(
-  'updateAvatar',
-  async (formData, thunkAPI) => {
-    try {
-      const response = await authApi.patch('user/avatars', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.get("/users/profile");
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
-    }
-  }
-);
-
-export const updateWaterRateThunk = createAsyncThunk(
-  'updateWaterRate',
-  async (body, thunkAPI) => {
-    try {
-      const { data } = await authApi.patch('user/waterRate', body);
-      thunkAPI.dispatch(fetchWaterDataMonthThunk());
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
