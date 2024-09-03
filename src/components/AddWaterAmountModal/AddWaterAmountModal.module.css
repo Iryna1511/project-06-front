@@ -62,6 +62,10 @@
     line-height: 1.23;
 }
 
+.closebtn {
+    cursor: pointer;
+}
+
 .subtitle {
     font-weight: 500;
     font-size: 18px;
@@ -91,6 +95,7 @@
     height: 44px;
     background-color: #FFFF;
     box-shadow: 0 2px 4px 0 #407bff33;
+    cursor: pointer;
 }
 
 .timeDropdown {
@@ -161,6 +166,7 @@
     line-height: 1.25;
     text-align: center;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {

@@ -27,21 +27,25 @@ import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
 // };
 
 
-export default function TodayListModal() {
+export default function TodayListModal({water: {amount, time, id}}) {
  
   // const waterAmount = useSelector(state => state.waterAmount);
 
     //  const isModalOpen = useSelector(selectIsModalOpen);
     // const isError = useSelector(selectError);
     // const isLoading = useSelector(selectLoading);
-//     const dispatch = useDispatch();
+    const dispatch = useDispatch();
+
+    const handleAddWaterChanges = () => dispatch(addWaterAMount(id));
+    
+    const handleClose = () => dispatch(closeModal());
 //   useEffect(() => {
 //     dispatch(fetchAmountofWater())
 //   }, [dispatch])
 
   return (
       
-    <div className={css.backdrop}>
+    <div className={css.backdrop} onClick={handleClose}>
       <div className={css.modal}>
       {/* <Modal style={customStyles}> */}
       {/* {isError && <ErrorMsg/>} */}
@@ -49,7 +53,7 @@ export default function TodayListModal() {
       {/* {isLoading && <Loader />} */}
       <div className={css.titlecontainer}>
         <h2 className={css.titletext}>Edit the entered amount of water</h2>
-          <IoCloseOutline size="24" color="407BFF" />
+        <span className={css.closebtn} onClick={closeModal}><IoCloseOutline size="24" color="407BFF" /></span>
       </div>
       {/* <p className={css.defaulttext}>No notes yet</p> */}
       <div className={css.amountofwaterContainer}>
@@ -71,18 +75,18 @@ export default function TodayListModal() {
       <h3 className={css.subtitle}>Correct entered data:</h3>
       <p className={css.signaturetext}>Amount of water:</p>
       <div className={css.waterInputcontainer}>
-        <button className={css.amountButton}><HiOutlineMinusSmall size="24" color="407BFF" /></button>
+        <button className={css.amountButton} type="button" onClick={minusWater}><HiOutlineMinusSmall size="24" color="407BFF" /></button>
         <p className={css.amountWaterIncome}>250 ml</p>
-        <button className={css.amountButton}><HiOutlinePlusSmall size="24" color="407BFF" /></button>
+        <button className={css.amountButton} type="button" onClick={plusWater}><HiOutlinePlusSmall size="24" color="407BFF" /></button>
       </div>
      
       <p className={css.signaturetext}>Recording time:</p>
       <div className={css.timeDropdown}><TimeDropdown/></div>
       <h3 className={css.subtitle}>Enter the value of the water used:</h3>
-      <input className={css.waterAmount} type="text" />
+      <input className={css.waterAmount} type="text" onChange={handleWaterAmountChange}/>
       <div className={css.footerContainer}>
         <p className={css.amountWaterIncomeFooter}>250 ml</p>
-        <button className={css.saveButton} type="button">Save</button>
+        <button className={css.saveButton} type="submit">Save</button>
       </div>
         {/* </Modal> */}
         </div>
