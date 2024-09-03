@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { useId } from "react";
 import * as yup from "yup";
@@ -10,6 +10,7 @@ import { PiEyeSlash } from "react-icons/pi";
 import css from "./AuthForm.module.css";
 import { login, register } from "../../redux/auth/operations.js";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { selectUser } from "../../redux/auth/selectors";
 //<PiEyeLight />
 // <PiEyeSlash />
 
@@ -34,7 +35,13 @@ const AuthForm = () => {
   const passwordFieldId = useId();
   const repeatPasswordFieldId = useId();
 
-  const initialValues = { email: "", password: "", repeatPassword: "" };
+  const user = useSelector(selectUser);
+
+  const initialValues = {
+    email: user.email ?? "",
+    password: "",
+    repeatPassword: "",
+  };
 
   const handleClickAction = () => {
     setAction((prevAction) =>
@@ -61,7 +68,10 @@ const AuthForm = () => {
             alert("Registration successful!");
             navigate("/signin"); // Тут змінила на /signin, бо має направляти на сторінку логування після умпішної реєстрації  @Olena Lytovchenko
           })
-          .catch(alert("Registration error!"));
+          .catch((e) => {
+            console.log("Registration error! ", e);
+            alert("Registration error!");
+          });
         break;
       case "Sign In":
         dispatch(login(loginValues))
@@ -89,7 +99,7 @@ const AuthForm = () => {
         {" "}
         <div className={css.wrap_section}>
           <div className={css.containerImageBottle}>
-            <img src="/img-sign-pages/bottle-d-1x-min.png" />
+            <img src='/img-sign-pages/bottle-d-1x-min.png' />
           </div>
 
           <div className={css.wrap_form}>
@@ -110,14 +120,14 @@ const AuthForm = () => {
                       className={`${css.field} ${
                         errors.email && touched.email ? css.errorField : ""
                       }`}
-                      type="email"
-                      name="email"
+                      type='email'
+                      name='email'
                       id={emailFieldId}
-                      placeholder="Email"
+                      placeholder='Email'
                     />
                     <ErrorMessage
-                      name="email"
-                      component="div"
+                      name='email'
+                      component='div'
                       className={css.errorText}
                     />
                     {/* {touched.email && errors.email && <div>{errors.email}</div>} */}
@@ -134,9 +144,9 @@ const AuthForm = () => {
                           : ""
                       }`}
                       type={showPassword ? "text" : "password"}
-                      name="password"
+                      name='password'
                       id={passwordFieldId}
-                      placeholder="Password"
+                      placeholder='Password'
                     />
                     <div
                       className={css.iconWrapper}
@@ -149,8 +159,8 @@ const AuthForm = () => {
                       )}
                     </div>
                     <ErrorMessage
-                      name="password"
-                      component="div"
+                      name='password'
+                      component='div'
                       className={css.errorText}
                     />
                     {/* {touched.password && errors.password && (
@@ -175,9 +185,9 @@ const AuthForm = () => {
                             : ""
                         }`}
                         type={showPassword ? "text" : "password"}
-                        name="repeatPassword"
+                        name='repeatPassword'
                         id={repeatPasswordFieldId}
-                        placeholder="Repeat password"
+                        placeholder='Repeat password'
                       />
 
                       <div
@@ -192,8 +202,8 @@ const AuthForm = () => {
                       </div>
 
                       <ErrorMessage
-                        name="repeatPassword"
-                        component="div"
+                        name='repeatPassword'
+                        component='div'
                         className={css.errorText}
                       />
                       {/* {touched.repeatPassword && errors.repeatPassword && (
@@ -202,7 +212,7 @@ const AuthForm = () => {
                     </div>
                   )}
 
-                  <button className={css.btn} type="submit">
+                  <button className={css.btn} type='submit'>
                     {action}
                   </button>
 
@@ -217,13 +227,6 @@ const AuthForm = () => {
                       {action === "Sign In" ? "Sign Up" : "Sign In"}
                     </Link>
                   </nav>
-                  {/* <div
-                    onClick={() =>
-                      setAction(action === "Sign In" ? "Sign Up" : "Sign In")
-                    }
-                  >
-                    {action === "Sign Up" ? "Sign In" : "Sign Up"}
-                  </div> */}
                 </Form>
               )}
             </Formik>
