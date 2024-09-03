@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useId } from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -9,6 +9,7 @@ import { PiEyeSlash } from "react-icons/pi";
 
 import css from "./AuthForm.module.css";
 import { login, register } from "../../redux/auth/operations.js";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 //<PiEyeLight />
 // <PiEyeSlash />
 
@@ -25,7 +26,8 @@ const signUpValidationSchema = yup.object().shape({
 
 const AuthForm = () => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [action, setAction] = useState("Sign Up");
   const emailFieldId = useId();
@@ -34,43 +36,46 @@ const AuthForm = () => {
 
   const initialValues = { email: "", password: "", repeatPassword: "" };
 
-  // const handleSubmit = (values, actions) => {
-  //   const { repeatPassword, ...loginValues } = values;
+  const handleClickAction = () => {
+    setAction((prevAction) =>
+      prevAction === "Sign In" ? "Sign Up" : "Sign In"
+    );
+  };
 
-  //   switch (action) {
-  //     case "Sign Up":
-  //       dispatch(register(loginValues))
-  //         .unwrap()
-  //         .catch(alert("Registration error!"));
-  //       break;
-  //     case "Sign In":
-  //       dispatch(login(loginValues));
-  //       break;
-  //     default:
-  //       break;
-  //   }
+  useEffect(() => {
+    if (location.pathname === "/signin") {
+      setAction("Sign In");
+    } else if (location.pathname === "/signup") {
+      setAction("Sign Up");
+    }
+  }, [location.pathname]);
 
-  //   actions.resetForm();
-  // };
-
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = (values, actions) => {
     const { repeatPassword, ...loginValues } = values;
 
-    try {
-      switch (action) {
-        case "Sign Up":
-          await dispatch(register(loginValues)).unwrap();
-          break;
-        case "Sign In":
-          await dispatch(login(loginValues)).unwrap();
-          break;
-        default:
-          break;
-      }
-      actions.resetForm();
-    } catch (error) {
-      setErrorMessage(error); // Встановлюємо повідомлення про помилку
+    switch (action) {
+      case "Sign Up":
+        dispatch(register(loginValues))
+          .unwrap()
+          .then(() => {
+            alert("Registration successful!");
+            navigate("/"); // Redirect to
+          })
+          .catch(alert("Registration error!"));
+        break;
+      case "Sign In":
+        dispatch(login(loginValues))
+          .unwrap()
+          .then(() => {
+            alert("Login successful!");
+            navigate("/"); // Redirect to home but doesnt redirect
+          });
+        break;
+      default:
+        break;
     }
+
+    actions.resetForm();
   };
 
   return (
@@ -200,13 +205,25 @@ const AuthForm = () => {
                   <button className={css.btn} type='submit'>
                     {action}
                   </button>
-                  <div
+
+                  <nav>
+                    <Link
+                      to={action === "Sign In" ? "/signup" : "/signin"}
+                      className={css.link}
+                      onClick={() =>
+                        setAction(action === "Sign In" ? "Sign Up" : "Sign In")
+                      }
+                    >
+                      {action === "Sign In" ? "Sign Up" : "Sign In"}
+                    </Link>
+                  </nav>
+                  {/* <div
                     onClick={() =>
                       setAction(action === "Sign In" ? "Sign Up" : "Sign In")
                     }
                   >
                     {action === "Sign Up" ? "Sign In" : "Sign Up"}
-                  </div>
+                  </div> */}
                 </Form>
               )}
             </Formik>
