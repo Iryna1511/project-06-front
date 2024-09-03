@@ -29,8 +29,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.token = action.payload.token;
+        state.user = action.payload.data;
         state.isLoading = false;
         state.isLoggedIn = false; //Тут змінила на false, бо має направляти на сторінку логування після умпішної реєстрації  @ Olena Lytovchenko
       })
@@ -43,11 +42,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        if (action.payload?.user) {
-          state.user = action.payload.user;
-        }
-        // state.user = action.payload.user.password;
-        state.token = action.payload.token;
+        state.token = action.payload.data.accessToken;
         state.isLoading = false;
         state.isLoggedIn = true;
       })
