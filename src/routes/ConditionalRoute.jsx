@@ -1,9 +1,10 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth"; // Тимчасове повернення статусу авторизації
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../redux/auth/selectors.js";
 
 export default function ConditionalRoute() {
-  const isAuthenticated = useAuth();
-  console.log(isAuthenticated);
+  const isAuthenticated = useSelector(selectIsLoggedIn);
+  // console.log(isAuthenticated);
 
   if (isAuthenticated) {
     return <Navigate to="/home" replace />;
