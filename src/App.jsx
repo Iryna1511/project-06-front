@@ -4,7 +4,7 @@ import { lazy, Suspense } from "react";
 
 import RestrictedRoute from "./routes/RestrictedRoute.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
-import ConditionalRoute from "./ConditionalRoute.jsx";
+import ConditionalRoute from "./routes/ConditionalRoute.jsx";
 import Loader from "./components/Loader/Loader.jsx";
 
 import SharedLayout from "./components/SharedLayout/SharedLayout.jsx";
