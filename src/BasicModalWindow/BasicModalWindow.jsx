@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
-import Icons from "../Icons/Icons";
+import Icons from "../IconsSettings/Iсons.jsx";
 import css from "./BasicModalWindow.module.css";
 
 export const BasicModalWindow = ({ onOpen, children, title, onClose }) => {
@@ -34,11 +34,11 @@ export const BasicModalWindow = ({ onOpen, children, title, onClose }) => {
   }
 
   const ModalContentWindow = (
-    <div className={css.modalBox} onClick={onClose}>
+    <div className={css.modalBox} onClick={handleClose}>
       <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={css.modalHeader}>
           <h2>{title}</h2>
-          <div className={css.offBtn} onClick={onClose}>
+          <div className={css.offBtn} onClick={handleClose}>
             <Icons id="x-mark" width={24} height={24} className="icon-blue" />
           </div>
         </div>
@@ -52,7 +52,7 @@ export const BasicModalWindow = ({ onOpen, children, title, onClose }) => {
 
 BasicModalWindow.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onOpen: PropTypes.bool.isRequired, 
   children: PropTypes.node.isRequired,
-  isShow: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
 };
