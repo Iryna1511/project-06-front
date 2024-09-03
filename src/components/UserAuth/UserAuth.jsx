@@ -22,15 +22,15 @@ export default function UserAuth() {
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const openSettingModal = () => {
-    setIsModalOpen(false);
-    setIsSettingModalOpen(true);
+    setIsModalOpen(false); // Close UserLogoModal
+    setIsSettingModalOpen(true); // Open Settings Modal
   };
 
   const closeSettingModal = () => setIsSettingModalOpen(false);
 
   const openLogoutModal = () => {
-    setIsModalOpen(false);
-    setIsLogoutModalOpen(true);
+    setIsModalOpen(false); // Close UserLogoModal
+    setIsLogoutModalOpen(true); // Open Logout Modal
   };
 
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
@@ -56,7 +56,7 @@ export default function UserAuth() {
   const handleSignInClick = () => {
     navigate("/signin");
   };
-console.log("User ID:", user?._id);
+
   return (
     <div className={styles.userSection}>
       {isLoggedIn ? (
@@ -75,6 +75,7 @@ console.log("User ID:", user?._id);
               <UserLogoModal
                 openSettingModal={openSettingModal}
                 openLogoutModal={openLogoutModal}
+                closeUserModal={toggleModal} // Close UserLogoModal when opening another modal
               />
             </div>
           )}
