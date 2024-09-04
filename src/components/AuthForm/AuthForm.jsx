@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useId } from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -9,6 +9,8 @@ import { PiEyeSlash } from "react-icons/pi";
 
 import css from "./AuthForm.module.css";
 import { login, register } from "../../redux/auth/operations.js";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { selectUser } from "../../redux/auth/selectors";
 //<PiEyeLight />
 // <PiEyeSlash />
 
@@ -25,52 +27,65 @@ const signUpValidationSchema = yup.object().shape({
 
 const AuthForm = () => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [action, setAction] = useState("Sign Up");
   const emailFieldId = useId();
   const passwordFieldId = useId();
   const repeatPasswordFieldId = useId();
 
-  const initialValues = { email: "", password: "", repeatPassword: "" };
+  const user = useSelector(selectUser);
 
-  // const handleSubmit = (values, actions) => {
-  //   const { repeatPassword, ...loginValues } = values;
+  const initialValues = {
+    email: user.email ?? "",
+    password: "",
+    repeatPassword: "",
+  };
 
-  //   switch (action) {
-  //     case "Sign Up":
-  //       dispatch(register(loginValues))
-  //         .unwrap()
-  //         .catch(alert("Registration error!"));
-  //       break;
-  //     case "Sign In":
-  //       dispatch(login(loginValues));
-  //       break;
-  //     default:
-  //       break;
-  //   }
+  const handleClickAction = () => {
+    setAction((prevAction) =>
+      prevAction === "Sign In" ? "Sign Up" : "Sign In"
+    );
+  };
 
-  //   actions.resetForm();
-  // };
+  useEffect(() => {
+    if (location.pathname === "/signin") {
+      setAction("Sign In");
+    } else if (location.pathname === "/signup") {
+      setAction("Sign Up");
+    }
+  }, [location.pathname]);
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = (values, actions) => {
     const { repeatPassword, ...loginValues } = values;
 
-    try {
-      switch (action) {
-        case "Sign Up":
-          await dispatch(register(loginValues)).unwrap();
-          break;
-        case "Sign In":
-          await dispatch(login(loginValues)).unwrap();
-          break;
-        default:
-          break;
-      }
-      actions.resetForm();
-    } catch (error) {
-      setErrorMessage(error); // Встановлюємо повідомлення про помилку
+    switch (action) {
+      case "Sign Up":
+        dispatch(register(loginValues))
+          .unwrap()
+          .then(() => {
+            alert("Registration successful!");
+            navigate("/signin"); // Тут змінила на /signin, бо має направляти на сторінку логування після умпішної реєстрації  @Olena Lytovchenko
+          })
+          .catch((e) => {
+            console.log("Registration error! ", e);
+            alert("Registration error!");
+          });
+        break;
+      case "Sign In":
+        dispatch(login(loginValues))
+          .unwrap()
+          .then(() => {
+            alert("Login successful!");
+            // navigate("/"); // тут не потрібна навігація, бо коли редакс повертає isLoggedIn = true, то спрацьовую саршрутизація і користувача кидає на /home  @ OlenaLytovchenko
+          });
+        break;
+      default:
+        break;
     }
+
+    actions.resetForm();
   };
 
   return (
@@ -200,13 +215,18 @@ const AuthForm = () => {
                   <button className={css.btn} type='submit'>
                     {action}
                   </button>
-                  <div
-                    onClick={() =>
-                      setAction(action === "Sign In" ? "Sign Up" : "Sign In")
-                    }
-                  >
-                    {action === "Sign Up" ? "Sign In" : "Sign Up"}
-                  </div>
+
+                  <nav>
+                    <Link
+                      to={action === "Sign In" ? "/signup" : "/signin"}
+                      className={css.link}
+                      onClick={() =>
+                        setAction(action === "Sign In" ? "Sign Up" : "Sign In")
+                      }
+                    >
+                      {action === "Sign In" ? "Sign Up" : "Sign In"}
+                    </Link>
+                  </nav>
                 </Form>
               )}
             </Formik>

@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import { useDispatch } from 'react-redux'; 
 import css from './DeleteEntry.module.css';
+import { deleteWaterThunk } from '../../redux/water/operations';
 
-const DeleteEntry = () => {
+const DeleteEntry = ({ entryId }) => { 
   const [isOpen, setIsOpen] = useState(true);
+  const dispatch = useDispatch(); 
 
   const closeModal = () => setIsOpen(false);
 
-  const handleEntry = () => {
-    console.log('Delete Entry!');
-    setIsOpen(false);
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteWaterThunk({ id: entryId })).unwrap();
+      setIsOpen(false);
+    } catch (error) {
+      console.error('Delete failed:', error);
+    }
   };
 
   return (
@@ -26,7 +33,7 @@ const DeleteEntry = () => {
             <h2>Are you sure you want to delete the entry?</h2>
             <div className={css.modalButtons}>
               <button className={css.cancelButton} onClick={closeModal}>Cancel</button>
-              <button className={css.deleteButton} onClick={handleEntry}>Delete</button>
+              <button className={css.deleteButton} onClick={handleDelete}>Delete</button>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 export function useAuth() {
   // const token = localStorage.getItem("token");
-  return false;
+  return true;
 }
+
