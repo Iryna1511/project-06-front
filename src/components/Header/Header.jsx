@@ -1,6 +1,6 @@
 import  { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserProfile } from '../../redux/auth/operations.js';
+
 import Logo from '../../components/Logo/Logo.jsx';
 import UserAuth from '../../components/UserAuth/UserAuth.jsx';
 import styles from './Header.module.css'; 
@@ -12,9 +12,7 @@ export default function Header() {
  useEffect(() => {
   console.log("Header token:", token);
   console.log("Header user:", user);
-  if (token && !user?.email) {
-    dispatch(fetchUserProfile());
-  }
+  
 }, [dispatch, token, user?.email]);
 
   return (
