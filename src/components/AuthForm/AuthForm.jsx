@@ -165,7 +165,7 @@ const AuthForm = () => {
                     )} */}
               </div>
 
-              {action === "Sign In" && (
+              {action === "Sign Up" && (
                 <div className={css.inputWrapper}>
                   <label className={css.label} htmlFor={repeatPasswordFieldId}>
                     Repeat password

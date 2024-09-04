@@ -216,6 +216,8 @@
   } */
 
   .wrap_form {
+    margin-top: 162px;
+    margin-left: 728px;
     /* Sign In */
     /* flex-direction: column;
     width: 384px;
