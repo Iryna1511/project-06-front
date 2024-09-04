@@ -103,6 +103,7 @@
 
   /* Primery Color/White */
   background: transparent;
+  outline: transparent;
 
   &::placeholder {
     color: rgb(158, 187, 255);

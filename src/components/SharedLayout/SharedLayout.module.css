@@ -1,5 +1,11 @@
 /*  ---------- MOBILE STYLES------- */
-
+.background {
+  height: fit-content;
+  background-image: url("../../../public/img-bg-welcome/welcome-bg-mobile@1x.png");
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+}
 .container {
   max-width: 312px;
   padding-left: 16px;
@@ -9,6 +15,9 @@
 
 /*  ---------- TABLET STYLES------- */
 @media screen and (min-width: 768px) {
+  .background {
+    background-image: url("../../../public/img-bg-welcome/welcome-bg-tablet@1x.png");
+  }
   .container {
     max-width: 736px;
   }
@@ -17,6 +26,11 @@
 /*  ---------- DESKTOP STYLES------- */
 
 @media screen and (min-width: 1440px) {
+  .background {
+    height: 100vh;
+    background: url("../../../public/img-bg-welcome/welcome-bg-desktop@1x.png")
+      bottom center / contain no-repeat;
+  }
   .container {
     max-width: 1248px;
   }
