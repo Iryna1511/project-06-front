@@ -36,16 +36,20 @@ useEffect(() => {
       .then((data) => {
         if (data.status === 200) {
           const { name, email, gender } = data.data;
+
+
           setFormData((prevData) => ({
             ...prevData,
             name: name,
             email: email,
-            gender: gender === "female" ? "Woman" : "Man",
+            gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
           }));
+
+
           setInitialData({
             name: name,
             email: email,
-            gender: gender === "female" ? "Woman" : "Man",
+            gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
           });
         } else {
           console.error("Failed to fetch user data");
@@ -102,8 +106,9 @@ useEffect(() => {
     if (formData.gender !== initialData.gender) {
       updatedData.gender = formData.gender === "Woman" ? "female" : "male";
     }
-    if (formData.outdatedPassword) { // Заміна oldPassword на outdatedPassword
-      updatedData.outdatedPassword = formData.outdatedPassword;
+    if (formData.outdatedPassword) { 
+      updatedData.password = formData.outdatedPassword;
+
     }
     if (formData.newPassword) {
       updatedData.newPassword = formData.newPassword;
@@ -113,10 +118,7 @@ useEffect(() => {
       console.log("No changes detected");
       return;
     }
-    if (!userId) {
-  console.error("User ID is undefined");
-  return;
-}
+    
 
     fetch(
       `https://water-tracker-06.onrender.com/user`, // Замініть на ID користувача
