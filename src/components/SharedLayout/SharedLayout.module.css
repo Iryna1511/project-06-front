@@ -5,6 +5,7 @@
   background-size: cover;
   background-position: bottom;
   background-repeat: no-repeat;
+  overflow-y: auto;
 }
 .container {
   max-width: 312px;
