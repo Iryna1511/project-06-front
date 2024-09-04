@@ -27,18 +27,19 @@
 } */
 
 .wrap_form {
-  order: 1;
-  width: 100%;
+  /* order: 1;
+  width: 100%; */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 16px;
+  /* align-items: center; */
 }
 
 .form {
   width: 100%;
   height: 100%;
   display: flex;
-  gap: 8px;
+  gap: 16px;
   flex-direction: column;
 }
 
@@ -56,13 +57,14 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 8;
-  padding: 0px;
+  /* justify-content: center;
+  align-items: flex-start; */
+  gap: 8px;
+  /* padding: 0px;
+  padding-bottom: 8px; */
+  margin-bottom: 8px;
 
   color: rgb(47, 47, 47);
-  font-family: Roboto;
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
@@ -87,21 +89,20 @@
 .field {
   width: 100%;
   height: 40px;
-
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 10;
+  gap: 10; */
   padding: 12px 10px 12px 10px;
 
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   /* Secondary color / 5 */
   border: 1px solid rgb(215, 227, 255);
   border-radius: 6px;
 
   /* Primery Color/White */
-  background: rgb(255, 255, 255);
+  background: transparent;
 
   &::placeholder {
     color: rgb(158, 187, 255);
@@ -110,12 +111,11 @@
 }
 .inputWrapper {
   position: relative;
-  margin-bottom: 0px;
 }
 
 .iconWrapper {
   position: absolute;
-  top: 50%;
+  top: 59%;
   right: 10px;
   cursor: pointer;
 }
@@ -181,15 +181,15 @@
   } */
 
   .wrap_form {
-    /* position: absolute;
-    width: 336px; */
+    /* position: absolute; */
+    width: 384px;
     /* height: 312px; */
     /* left: 32px;
     top: 104px; */
   }
 
   .btn {
-    width: 384px;
+    width: 100%;
     height: 44px;
   }
 }
@@ -217,23 +217,23 @@
 
   .wrap_form {
     /* Sign In */
-    position: static;
+    /* flex-direction: column;
     width: 384px;
-    height: 32px;
+    height: 32px; */
     /* Auto layout */
 
-    gap: 16;
-    padding: 0px;
+    /* gap: 16;
+    padding: 0px; */
 
     /* Inside Auto Layout */
-    flex: none;
-    order: 0;
+
+    /* order: 0;
     flex-grow: 0;
     margin: 16px 0px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
   }
 }

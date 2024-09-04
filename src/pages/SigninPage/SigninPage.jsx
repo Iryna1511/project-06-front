@@ -1,13 +1,9 @@
-import React from "react";
+// import React from "react";
 import AuthForm from "../../components/AuthForm/AuthForm";
-import css from "./SigninPage.module.css";
+// import css from "./SigninPage.module.css";
 
 const SigninPage = () => {
-  return (
-    <div className={css.signInPageContainer}>
-      <AuthForm />
-    </div>
-  );
+  return <AuthForm />;
 };
 
 export default SigninPage;
