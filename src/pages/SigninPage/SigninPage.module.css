@@ -1,25 +1,25 @@
-.signInPageContainer {
+/* .signInPageContainer {
   width: 100%;
 }
 
-@media (min-width: 375px) and (max-width: 767px) {
+@media (min-width: 768px) {
   .signInPageContainer {
     width: 343px;
   }
-}
+} */
 
-@media (min-width: 768px) and (max-width: 1439px) {
+@media (min-width: 1440px) {
   .signInPageContainer {
     display: flex;
     flex-direction: column;
     /* justify-content: space-around; */
 
-    width: 704px;
-    height: 100%;
+    /* width: 704px;
+    height: 100%; */
   }
 }
 
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
   .signInPageContainer {
     display: flex;
     flex-wrap: nowrap;
@@ -27,4 +27,4 @@
     gap: 32px;
     width: 1440px;
   }
-}
+} */
