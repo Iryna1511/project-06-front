@@ -1,6 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 
 import RestrictedRoute from "./routes/RestrictedRoute.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
@@ -13,7 +15,24 @@ const SighinPage = lazy(() => import("./pages/SigninPage/SigninPage.jsx"));
 const SighupPage = lazy(() => import("./pages/SignupPage/SignupPage.jsx"));
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 
+import axios from "axios";
+const setAuthHeader = (token) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+import { refreshUser } from "./redux/auth/operations.js";
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = Cookies.get("refreshToken");
+    if (token) {
+      setAuthHeader(token); // Встановлюємо токен в заголовки
+      dispatch(refreshUser()); // Отримуємо поточні дані користувача
+    }
+  }, [dispatch]);
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {/* тимчасова заглушка для лоудера */}
