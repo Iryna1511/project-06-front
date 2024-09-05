@@ -1,3 +1,14 @@
+:root {
+  --black: #2f2f2f;
+  --white: #ffffff;
+  --blue: #407bff;
+  --light-blue: #ecf2ff;
+  --medium-blue: #9ebbff;
+  --red: #ef5050;
+  --orange: #ff9d43;
+  --soft-blue: #d7e3ff;
+}
+
 h1,
 h2,
 h3,
@@ -36,4 +47,5 @@ body {
   color: #2f2f2f;
   font-weight: 400;
   line-height: 1.25;
+  overflow-y: auto;
 }

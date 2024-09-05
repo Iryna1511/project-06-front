@@ -1,11 +1,11 @@
-import css from "./WaterСonsumptionTracker.module.css";
+import css from "./WaterConsumptionTracker.module.css";
 import { Link } from "react-router-dom";
 
 // const handleClick = () => {
 //   alert("I'm a button!");
 // };
 
-export default function WaterСonsumptionTracker() {
+export default function WaterConsumptionTracker() {
   return (
     <div className={css.container}>
       <div className={css.titlesContainer}>
