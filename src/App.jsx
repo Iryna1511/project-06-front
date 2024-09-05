@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import RestrictedRoute from "./routes/RestrictedRoute.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
 import ConditionalRoute from "./routes/ConditionalRoute.jsx";
+import Loader from "./components/Loader/Loader.jsx";
 
 import SharedLayout from "./components/SharedLayout/SharedLayout.jsx";
 const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
@@ -15,7 +16,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       {/* тимчасова заглушка для лоудера */}
       <Routes>
         <Route path="/" element={<SharedLayout />}>
