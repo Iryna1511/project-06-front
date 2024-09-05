@@ -1,5 +1,5 @@
 /*  ---------- MOBILE STYLES------- */
-.background {
+/* .background {
   padding-bottom: 0;
   height: fit-content;
   background-image: url("../../images/mobile/bg-element-main-page-1x.png");
@@ -7,10 +7,22 @@
   background-position: bottom;
   background-repeat: no-repeat;
   overflow-y: auto;
-}
+} */
 
 .welcomeBackground {
-  background-image: url("../../images/mobile/bg-main-page-1x.png");
+  padding-bottom: 0;
+  height: fit-content;
+  background-image: url("../../images/mobile/bg-element-main-page-1x.png"),
+    url("../../images/mobile/bg-main-page-1x.png");
+  background-size: contain;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  overflow-y: auto;
+}
+.signBackground {
+  padding-bottom: 240px;
+  background: url("../../images/mobile/bg-element-main-page-1x.png"),
+    url("../../images/mobile/bottle-sign-in-1x.png") no-repeat bottom;
 }
 .container {
   max-width: 312px;
@@ -22,31 +34,35 @@
 @media screen and (min-resolution: 192dpi) and (max-width: 767px),
   screen and (min-resolution: 2dppx) and (max-width: 767px),
   screen and (min-device-pixel-ratio: 2) and (max-width: 767px) {
-  .background {
-    background-image: url("../../images/mobile/bg-element-main-page-2x.png");
-  }
   .welcomeBackground {
-    background-image: url("../../images/mobile/bg-main-page-2x.png");
+    background: url("../../images/mobile/bg-element-main-page-2x.png"),
+      url("../../images/mobile/bg-main-page-2x.png");
+  }
+  .signBackground {
+    padding: 0 20px 400px;
+    background: url("../../images/mobile/bg-element-main-page-2x.png"),
+      url("../../images/mobile/bottle-sign-in-2x.png") no-repeat bottom;
   }
 }
 
 /* ---------- TABLET STYLES------- */
 @media screen and (min-width: 768px) {
-  .background {
-    padding-bottom: 32px;
-    background-image: url("../../images/tablet/bg-element-main-page-1x.png");
-  }
   .welcomeBackground {
-    background-image: url("../../images/tablet/bg-main-page-1x.png");
+    padding-bottom: 32px;
+    background-image: url("../../images/tablet/bg-element-main-page-1x.png"),
+      url("../../images/tablet/bg-main-page-1x.png");
+  }
+  .signBackground {
+    padding: 0 55px 190px 0;
+    background: url("../../images/tablet/bottle-sign-in-1x.png") no-repeat
+      bottom right;
   }
   @media screen and (min-resolution: 192dpi),
     screen and (min-resolution: 2dppx),
     screen and (min-device-pixel-ratio: 2) {
-    .background {
-      background-image: url("../../images/tablet/bg-element-main-page-2x.png");
-    }
     .welcomeBackground {
-      background-image: url("../../images/tablet/bg-main-page-2x.png");
+      background-image: url("../../images/tablet/bg-element-main-page-2x.png"),
+        url("../../images/tablet/bg-main-page-2x.png");
     }
   }
   .container {
@@ -57,20 +73,18 @@
 /*  ---------- DESKTOP STYLES------- */
 
 @media screen and (min-width: 1440px) {
-  .background {
-    padding-bottom: 280px;
-    background-image: url("../../images/desktop/bg-element-main-page-1x.png");
-  }
   .welcomeBackground {
+    padding-bottom: 280px;
     background-image: url("../../images/desktop/bg-element-main-page-1x.png"),
       url("../../images/desktop/bg-main-page-1x.png");
+  }
+  .signBackground {
+    background: url("../../images/desktop/bg-element-main-page-1x.png"),
+      url("../../images/desktop/bottle-sign-in-1x.png") no-repeat left bottom;
   }
   @media screen and (min-resolution: 192dpi),
     screen and (min-resolution: 2dppx),
     screen and (min-device-pixel-ratio: 2) {
-    .background {
-      background-image: url("../../images/desktop/bg-element-main-page-2x.png");
-    }
     .welcomeBackground {
       background-image: url("../../images/desktop/bg-element-main-page-2x.png"),
         url("../../images/desktop/bg-main-page-2x.png");
