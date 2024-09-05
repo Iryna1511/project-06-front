@@ -12,13 +12,13 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     newPassword: "",
     repeatPassword: "",
     gender: "",
-    avatar: null, // Додано для зберігання аватара
+    avatar: undefined, // Встановлюємо значення за замовчуванням
   });
   const [initialData, setInitialData] = useState({
     name: "",
     email: "",
     gender: "",
-    avatar: null, // Додано для зберігання початкового аватара
+    avatar: undefined, // Додано для зберігання початкового аватара
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -48,7 +48,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   ? "Woman"
                   : "Man"
                 : "Woman",
-              avatar,
+              avatar: avatar || "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
             }));
 
             setInitialData({
@@ -59,7 +59,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   ? "Woman"
                   : "Man"
                 : "Woman",
-              avatar,
+              avatar: avatar || "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
             });
           } else {
             console.error("Failed to fetch user data");
@@ -98,106 +98,106 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     });
   };
 
- const handleFileChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const imageUrl = URL.createObjectURL(file); // Створюємо тимчасовий URL
-    setFormData({
-      ...formData,
-      avatar: imageUrl, // Оновлюємо аватар на URL для попереднього перегляду
-      avatarFile: file, // Зберігаємо файл для відправлення на бекенд
-    });
-  }
-};
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); // Створюємо тимчасовий URL
+      setFormData({
+        ...formData,
+        avatar: imageUrl, // Оновлюємо аватар на URL для попереднього перегляду
+        avatarFile: file, // Зберігаємо файл для відправлення на бекенд
+      });
+    }
+  };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (formData.newPassword !== formData.repeatPassword) {
-    console.error("New passwords do not match");
-    return;
-  }
+    if (formData.newPassword !== formData.repeatPassword) {
+      console.error("New passwords do not match");
+      return;
+    }
 
-  const updatedData = {};
-  if (formData.name !== initialData.name) {
-    updatedData.name = formData.name;
-  }
-  if (formData.email !== initialData.email) {
-    updatedData.email = formData.email;
-  }
-  if (formData.gender !== initialData.gender) {
-    updatedData.gender = formData.gender === "Woman" ? "female" : "male";
-  }
-  if (formData.outdatedPassword) {
-    updatedData.password = formData.outdatedPassword;
-  }
-  if (formData.newPassword) {
-    updatedData.newPassword = formData.newPassword;
-  }
+    const updatedData = {};
+    if (formData.name !== initialData.name) {
+      updatedData.name = formData.name;
+    }
+    if (formData.email !== initialData.email) {
+      updatedData.email = formData.email;
+    }
+    if (formData.gender !== initialData.gender) {
+      updatedData.gender = formData.gender === "Woman" ? "female" : "male";
+    }
+    if (formData.outdatedPassword) {
+      updatedData.password = formData.outdatedPassword;
+    }
+    if (formData.newPassword) {
+      updatedData.newPassword = formData.newPassword;
+    }
 
-  if (Object.keys(updatedData).length > 0) {
-    fetch(`https://water-tracker-06.onrender.com/user`, {
+    if (Object.keys(updatedData).length > 0) {
+      fetch(`https://water-tracker-06.onrender.com/user`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            console.log("User data successfully updated:", data);
+            if (formData.avatarFile) {            
+              handleAvatarUpdate(formData.avatarFile);
+            } else {
+              closeModal();
+            }
+          } else {
+            console.error("Failed to update user data");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating user data:", error);
+        });
+    } else if (formData.avatarFile) {
+      handleAvatarUpdate(formData.avatarFile);
+    } else {
+      closeModal();
+    }
+  };
+
+  const handleAvatarUpdate = (avatar) => {
+    const formData = new FormData();
+    formData.append("avatar", avatar);
+
+    fetch("https://water-tracker-06.onrender.com/user/avatar", {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(updatedData),
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === 200) {
-          console.log("User data successfully updated:", data);
-          if (formData.avatarFile) {
-            handleAvatarUpdate(formData.avatarFile);
-          } else {
-            closeModal();
-          }
+        if (data.status === 201) {
+          console.log("Avatar successfully updated:", data);
+          
+          // Оновлюємо стан з новим URL аватара
+          setFormData((prevData) => ({
+            ...prevData,
+            avatar: data.data.avatar,  // Додаємо новий URL аватара
+          }));
+
+          closeModal();
         } else {
-          console.error("Failed to update user data");
+          console.error("Failed to update avatar");
         }
       })
       .catch((error) => {
-        console.error("Error updating user data:", error);
+        console.error("Error updating avatar:", error);
       });
-  } else if (formData.avatarFile) {
-    handleAvatarUpdate(formData.avatarFile);
-  } else {
-    closeModal();
-  }
-};
-
-  const handleAvatarUpdate = (avatar) => {
-  const formData = new FormData();
-  formData.append("avatar", avatar);
-
-  fetch("https://water-tracker-06.onrender.com/user/avatar", {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === 201) {
-        console.log("Avatar successfully updated:", data);
-        
-        // Оновлюємо стан з новим URL аватара
-        setFormData((prevData) => ({
-          ...prevData,
-          avatar: data.data.avatar,  // Додаємо новий URL аватара
-        }));
-
-        closeModal();
-      } else {
-        console.error("Failed to update avatar");
-      }
-    })
-    .catch((error) => {
-      console.error("Error updating avatar:", error);
-    });
-};
+  };
 
   return (
     <div>
@@ -215,9 +215,11 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   <div className={styles.uploadAPhoto}>
                     <img
                       src={
-                        formData.avatar || initialData.avatar || "https://i.sstatic.net/34AD2.jpg"
+                        formData.avatar
+                          ? formData.avatar
+                          : "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af"
                       }
-                      alt="User photo"
+                      alt="Фото"
                       className={styles.fotoOfUser}
                     />
                     <label className={styles.uploadButton}>
