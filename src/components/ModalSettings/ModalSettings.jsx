@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import styles from "./ModalSettings.module.css";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
@@ -12,11 +12,13 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     newPassword: "",
     repeatPassword: "",
     gender: "",
+    photo: null, // Додано для зберігання аватара
   });
   const [initialData, setInitialData] = useState({
     name: "",
     email: "",
     gender: "",
+    photo: null, // Додано для зберігання початкового аватара
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -25,41 +27,49 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     repeatPassword: false,
   });
 
-useEffect(() => {
-  if (isOpen) {
-    fetch(`https://water-tracker-06.onrender.com/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === 200) {
-          const { name, email, gender } = data.data;
-
-
-          setFormData((prevData) => ({
-            ...prevData,
-            name: name,
-            email: email,
-            gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
-          }));
-
-
-          setInitialData({
-            name: name,
-            email: email,
-            gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
-          });
-        } else {
-          console.error("Failed to fetch user data");
-        }
+  useEffect(() => {
+    if (isOpen) {
+      fetch(`https://water-tracker-06.onrender.com/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
-  }
-}, [isOpen, userId, token]);
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            const { name, email, gender, photo } = data.data;
+
+            setFormData((prevData) => ({
+              ...prevData,
+              name: name,
+              email: email,
+              gender: gender
+                ? gender === "female"
+                  ? "Woman"
+                  : "Man"
+                : "Woman",
+              photo,
+            }));
+
+            setInitialData({
+              name: name,
+              email: email,
+              gender: gender
+                ? gender === "female"
+                  ? "Woman"
+                  : "Man"
+                : "Woman",
+              photo,
+            });
+          } else {
+            console.error("Failed to fetch user data");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, [isOpen, userId, token]);
 
   const handleOutsideClick = (event) => {
     if (event.target.classList.contains(styles.modal)) {
@@ -88,6 +98,13 @@ useEffect(() => {
     });
   };
 
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      photo: e.target.files[0],
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -106,46 +123,67 @@ useEffect(() => {
     if (formData.gender !== initialData.gender) {
       updatedData.gender = formData.gender === "Woman" ? "female" : "male";
     }
-    if (formData.outdatedPassword) { 
+    if (formData.outdatedPassword) {
       updatedData.password = formData.outdatedPassword;
-
     }
     if (formData.newPassword) {
       updatedData.newPassword = formData.newPassword;
     }
 
-    if (Object.keys(updatedData).length === 0) {
-      console.log("No changes detected");
-      return;
-    }
-    
-
-    fetch(
-      `https://water-tracker-06.onrender.com/user`, // Замініть на ID користувача
-      {
+    if (Object.keys(updatedData).length > 0) {
+      fetch(`https://water-tracker-06.onrender.com/user`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Використайте свіжий токен
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(updatedData),
-      }
-    )
-      .then((response) => {
-        console.log("Response status:", response.status);
-        return response.json();
       })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            console.log("User data successfully updated:", data);
+            if (formData.photo) {
+              handleAvatarUpdate(formData.photo);
+            } else {
+              closeModal();
+            }
+          } else {
+            console.error("Failed to update user data");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating user data:", error);
+        });
+    } else if (formData.photo) {
+      handleAvatarUpdate(formData.photo);
+    } else {
+      closeModal();
+    }
+  };
+
+  const handleAvatarUpdate = (avatar) => {
+    const formData = new FormData();
+    formData.append("avatar", avatar);
+
+    fetch("https://water-tracker-06.onrender.com/user/avatar", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
       .then((data) => {
-        console.log("Response data:", data);
-        if (data.status === 200) {
-          console.log("User data successfully updated:", data);
+        if (data.status === 201) {
+          console.log("Avatar successfully updated:", data);
           closeModal();
         } else {
-          console.error("Failed to update user data");
+          console.error("Failed to update avatar");
         }
       })
       .catch((error) => {
-        console.error("Error updating user data:", error);
+        console.error("Error updating avatar:", error);
       });
   };
 
@@ -157,23 +195,33 @@ useEffect(() => {
             <span className={styles.close} onClick={closeModal}>
               <RxCross1 className={styles.cross} />
             </span>
-            <h2 className={styles.titleOfModalSettings}>Setting</h2>
+            <h2 className={styles.titleOfModalSettings}>Settings</h2>
             <form onSubmit={handleSubmit}>
               <div className={styles.wrapperForBlokOfPhoto}>
                 <label className={styles.yourPhoto}>
                   <span className={styles.titels}>Your photo</span>
                   <div className={styles.uploadAPhoto}>
                     <img
-                      src="https://m.media-amazon.com/images/M/MV5BMTQ5MzkzNTIyN15BMl5BanBnXkFtZTYwNzUzOTA2._V1_FMjpg_UX1000_.jpg"
-                      alt="Foto of user"
+                      src={
+                        formData.photo
+                          ? URL.createObjectURL(formData.photo)
+                          : initialData.photo
+                      }
+                      alt="User photo"
                       className={styles.fotoOfUser}
                     />
-                    <div className={styles.uploadButton}>
+                    <label className={styles.uploadButton}>
                       <MdOutlineFileUpload
                         className={styles.iconOfUploadAPhoto}
                       />
                       <p className={styles.textUploadAPhoto}>Upload a photo</p>
-                    </div>
+                      <input
+                        type="file"
+                        onChange={handleFileChange}
+                        className={styles.uploadInput}
+                        accept="image/*"
+                      />
+                    </label>
                   </div>
                 </label>
               </div>
@@ -245,16 +293,20 @@ useEffect(() => {
                     <div className={styles.wrapperForInput}>
                       <input
                         type={
-                          passwordVisibility.outdatedPassword ? "text" : "password"
+                          passwordVisibility.outdatedPassword
+                            ? "text"
+                            : "password"
                         }
-                        name="outdatedPassword" 
+                        name="outdatedPassword"
                         value={formData.outdatedPassword}
                         onChange={handleInputChange}
                         className={styles.textInputAreaPassword}
                         placeholder="Password"
                       />
                       <span
-                        onClick={() => togglePasswordVisibility("outdatedPassword")} 
+                        onClick={() =>
+                          togglePasswordVisibility("outdatedPassword")
+                        }
                       >
                         {passwordVisibility.outdatedPassword ? (
                           <HiOutlineEye className={styles.eyeIcon} />
