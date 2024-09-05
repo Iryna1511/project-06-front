@@ -52,21 +52,17 @@ export const refreshToken = createAsyncThunk(
   "auth/refreshToken",
   async (_, thunkAPI) => {
     try {
-      // Отримуємо refreshToken з куки
       const refreshToken = Cookies.get("refreshToken");
       if (!refreshToken) {
         throw new Error("No refresh token available");
       }
 
-      // Встановлюємо заголовок з refreshToken
       setAuthHeader(refreshToken);
 
       const response = await axios.post("/auth/refresh");
 
-      // Отримуємо новий токен
       const newToken = response.data.data.accessToken;
 
-      // Оновлюємо заголовки і зберігаємо новий токен
       setAuthHeader(newToken);
       Cookies.set("refreshToken", newToken, { expires: 7 });
       return response.data;
@@ -80,10 +76,8 @@ export const refreshUser = createAsyncThunk(
   "auth/refreshUser",
   async (_, thunkAPI) => {
     try {
-      // Спочатку оновлюємо токен
       await thunkAPI.dispatch(refreshToken());
 
-      // Після оновлення токена отримуємо дані користувача
       const response = await axios.get("/user");
       return response.data;
     } catch (error) {

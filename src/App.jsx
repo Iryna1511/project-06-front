@@ -29,8 +29,8 @@ function App() {
   useEffect(() => {
     const token = Cookies.get("refreshToken");
     if (token) {
-      setAuthHeader(token); // Встановлюємо токен в заголовки
-      dispatch(refreshUser()); // Отримуємо поточні дані користувача
+      setAuthHeader(token);
+      dispatch(refreshUser());
     }
   }, [dispatch]);
 
