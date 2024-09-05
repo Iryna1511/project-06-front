@@ -82,6 +82,10 @@
     background: url("../../images/desktop/bg-element-main-page-1x.png"),
       url("../../images/desktop/bottle-sign-in-1x.png") no-repeat left bottom;
   }
+  /* .homeBackground {
+    background: url("../../images/desktop/bg-element-main-page-1x.png"),
+      url("../../images/desktop/bottle-sign-in-1x.png") no-repeat left bottom;
+  } */
   @media screen and (min-resolution: 192dpi),
     screen and (min-resolution: 2dppx),
     screen and (min-device-pixel-ratio: 2) {

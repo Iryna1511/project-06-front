@@ -6,13 +6,11 @@ import clsx from "clsx";
 export default function SharedLayout() {
   const location = useLocation();
 
-  // Визначаємо клас в залежності від поточного маршруту
   const backgroundClass = clsx({
     [css.welcomeBackground]: location.pathname === "/welcome",
     [css.signBackground]:
       location.pathname === "/signin" || location.pathname === "/signup",
     [css.homeBackground]: location.pathname === "/home",
-    // Додай інші маршрути за потреби
   });
 
   return (
