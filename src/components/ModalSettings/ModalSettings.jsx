@@ -12,13 +12,13 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     newPassword: "",
     repeatPassword: "",
     gender: "",
-    photo: null, // Додано для зберігання аватара
+    avatar: null, // Додано для зберігання аватара
   });
   const [initialData, setInitialData] = useState({
     name: "",
     email: "",
     gender: "",
-    photo: null, // Додано для зберігання початкового аватара
+    avatar: null, // Додано для зберігання початкового аватара
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -37,7 +37,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === 200) {
-            const { name, email, gender, photo } = data.data;
+            const { name, email, gender, avatar } = data.data;
 
             setFormData((prevData) => ({
               ...prevData,
@@ -48,7 +48,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   ? "Woman"
                   : "Man"
                 : "Woman",
-              photo,
+              avatar,
             }));
 
             setInitialData({
@@ -59,7 +59,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   ? "Woman"
                   : "Man"
                 : "Woman",
-              photo,
+              avatar,
             });
           } else {
             console.error("Failed to fetch user data");
@@ -101,7 +101,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
   const handleFileChange = (e) => {
     setFormData({
       ...formData,
-      photo: e.target.files[0],
+      avatar: e.target.files[0],
     });
   };
 
@@ -143,8 +143,8 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
         .then((data) => {
           if (data.status === 200) {
             console.log("User data successfully updated:", data);
-            if (formData.photo) {
-              handleAvatarUpdate(formData.photo);
+            if (formData.avatar) {
+              handleAvatarUpdate(formData.avatar);
             } else {
               closeModal();
             }
@@ -155,37 +155,44 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
         .catch((error) => {
           console.error("Error updating user data:", error);
         });
-    } else if (formData.photo) {
-      handleAvatarUpdate(formData.photo);
+    } else if (formData.avatar) {
+      handleAvatarUpdate(formData.avatar);
     } else {
       closeModal();
     }
   };
 
   const handleAvatarUpdate = (avatar) => {
-    const formData = new FormData();
-    formData.append("avatar", avatar);
+  const formData = new FormData();
+  formData.append("avatar", avatar);
 
-    fetch("https://water-tracker-06.onrender.com/user/avatar", {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
+  fetch("https://water-tracker-06.onrender.com/user/avatar", {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === 201) {
+        console.log("Avatar successfully updated:", data);
+        
+        // Оновлюємо стан з новим URL аватара
+        setFormData((prevData) => ({
+          ...prevData,
+          avatar: data.data.avatar,  // Додаємо новий URL аватара
+        }));
+
+        closeModal();
+      } else {
+        console.error("Failed to update avatar");
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === 201) {
-          console.log("Avatar successfully updated:", data);
-          closeModal();
-        } else {
-          console.error("Failed to update avatar");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating avatar:", error);
-      });
-  };
+    .catch((error) => {
+      console.error("Error updating avatar:", error);
+    });
+};
 
   return (
     <div>
@@ -203,7 +210,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   <div className={styles.uploadAPhoto}>
                     <img
                       src={
-                        formData.photo || initialData.photo
+                        formData.avatar || initialData.avatar
                       }
                       alt="User photo"
                       className={styles.fotoOfUser}
