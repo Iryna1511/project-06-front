@@ -158,10 +158,23 @@ input[type="password"]::placeholder {
   cursor: pointer;
 }
 
+
+.hiddenFileInput {
+  display: none;
+  /* Приховуємо інпут */
+}
+
 .uploadButton {
   display: flex;
   gap: 8px;
   cursor: pointer;
+  align-items: center;
+}
+
+.textUploadAPhoto {
+  font-size: 18px;
+  color: #407bff;
+  font-weight: 500;
 }
 
 /* Планшети (768px - 1023px) */

@@ -98,69 +98,74 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     });
   };
 
-  const handleFileChange = (e) => {
+ const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const imageUrl = URL.createObjectURL(file); // Створюємо тимчасовий URL
     setFormData({
       ...formData,
-      avatar: e.target.files[0],
+      avatar: imageUrl, // Оновлюємо аватар на URL для попереднього перегляду
+      avatarFile: file, // Зберігаємо файл для відправлення на бекенд
     });
-  };
+  }
+};
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (formData.newPassword !== formData.repeatPassword) {
-      console.error("New passwords do not match");
-      return;
-    }
+  if (formData.newPassword !== formData.repeatPassword) {
+    console.error("New passwords do not match");
+    return;
+  }
 
-    const updatedData = {};
-    if (formData.name !== initialData.name) {
-      updatedData.name = formData.name;
-    }
-    if (formData.email !== initialData.email) {
-      updatedData.email = formData.email;
-    }
-    if (formData.gender !== initialData.gender) {
-      updatedData.gender = formData.gender === "Woman" ? "female" : "male";
-    }
-    if (formData.outdatedPassword) {
-      updatedData.password = formData.outdatedPassword;
-    }
-    if (formData.newPassword) {
-      updatedData.newPassword = formData.newPassword;
-    }
+  const updatedData = {};
+  if (formData.name !== initialData.name) {
+    updatedData.name = formData.name;
+  }
+  if (formData.email !== initialData.email) {
+    updatedData.email = formData.email;
+  }
+  if (formData.gender !== initialData.gender) {
+    updatedData.gender = formData.gender === "Woman" ? "female" : "male";
+  }
+  if (formData.outdatedPassword) {
+    updatedData.password = formData.outdatedPassword;
+  }
+  if (formData.newPassword) {
+    updatedData.newPassword = formData.newPassword;
+  }
 
-    if (Object.keys(updatedData).length > 0) {
-      fetch(`https://water-tracker-06.onrender.com/user`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === 200) {
-            console.log("User data successfully updated:", data);
-            if (formData.avatar) {
-              handleAvatarUpdate(formData.avatar);
-            } else {
-              closeModal();
-            }
+  if (Object.keys(updatedData).length > 0) {
+    fetch(`https://water-tracker-06.onrender.com/user`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updatedData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          console.log("User data successfully updated:", data);
+          if (formData.avatarFile) {
+            handleAvatarUpdate(formData.avatarFile);
           } else {
-            console.error("Failed to update user data");
+            closeModal();
           }
-        })
-        .catch((error) => {
-          console.error("Error updating user data:", error);
-        });
-    } else if (formData.avatar) {
-      handleAvatarUpdate(formData.avatar);
-    } else {
-      closeModal();
-    }
-  };
+        } else {
+          console.error("Failed to update user data");
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating user data:", error);
+      });
+  } else if (formData.avatarFile) {
+    handleAvatarUpdate(formData.avatarFile);
+  } else {
+    closeModal();
+  }
+};
 
   const handleAvatarUpdate = (avatar) => {
   const formData = new FormData();
@@ -210,7 +215,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   <div className={styles.uploadAPhoto}>
                     <img
                       src={
-                        formData.avatar || initialData.avatar
+                        formData.avatar || initialData.avatar || "https://i.sstatic.net/34AD2.jpg"
                       }
                       alt="User photo"
                       className={styles.fotoOfUser}
@@ -223,7 +228,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                       <input
                         type="file"
                         onChange={handleFileChange}
-                        className={styles.uploadInput}
+                        className={styles.hiddenFileInput}
                         accept="image/*"
                       />
                     </label>
