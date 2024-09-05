@@ -16,9 +16,11 @@ const authSlice = createSlice({
   },
   reducers: {
     openLogoutModal: (state) => {
+      console.log("Opening logout modal");
       state.isLogoutModalOpen = true;
     },
     closeLogoutModal: (state) => {
+      console.log("Closing logout modal");
       state.isLogoutModalOpen = false;
     },
   },

@@ -247,13 +247,14 @@ useEffect(() => {
                         type={
                           passwordVisibility.outdatedPassword ? "text" : "password"
                         }
-                        name="outdatedPassword" // Заміна oldPassword на outdatedPassword
+                        name="outdatedPassword" 
                         value={formData.outdatedPassword}
                         onChange={handleInputChange}
                         className={styles.textInputAreaPassword}
+                        placeholder="Password"
                       />
                       <span
-                        onClick={() => togglePasswordVisibility("outdatedPassword")} // Заміна oldPassword на outdatedPassword
+                        onClick={() => togglePasswordVisibility("outdatedPassword")} 
                       >
                         {passwordVisibility.outdatedPassword ? (
                           <HiOutlineEye className={styles.eyeIcon} />
@@ -274,6 +275,7 @@ useEffect(() => {
                         value={formData.newPassword}
                         onChange={handleInputChange}
                         className={styles.textInputAreaPassword}
+                        placeholder="Password"
                       />
                       <span
                         onClick={() => togglePasswordVisibility("newPassword")}
@@ -299,6 +301,7 @@ useEffect(() => {
                         value={formData.repeatPassword}
                         onChange={handleInputChange}
                         className={styles.textInputAreaPassword}
+                        placeholder="Password"
                       />
                       <span
                         onClick={() =>
