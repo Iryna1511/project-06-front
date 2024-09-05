@@ -58,7 +58,7 @@
   font-size: 16px;
   line-height: 1.25;
   text-align: center;
-  width: 280px;
+  width: 100%;
   border: none;
 
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
@@ -125,5 +125,8 @@
 
   .list {
     flex-direction: column;
+  }
+  .button {
+    width: 384px;
   }
 }
