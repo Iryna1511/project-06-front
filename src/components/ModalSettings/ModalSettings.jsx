@@ -203,9 +203,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   <div className={styles.uploadAPhoto}>
                     <img
                       src={
-                        formData.photo
-                          ? URL.createObjectURL(formData.photo)
-                          : initialData.photo
+                        formData.photo || initialData.photo
                       }
                       alt="User photo"
                       className={styles.fotoOfUser}
