@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaTimes } from 'react-icons/fa';
+import { RxCross1 } from "react-icons/rx";
 import css from './LogOut.module.css';
 import { logout } from '../../redux/auth/operations';
 import { closeLogoutModal, openLogoutModal } from '../../redux/auth/authSlice';
@@ -51,7 +51,7 @@ const Logout = () => {
             <div className={css.modalHeader}>
               <span className={css.modalTitle}>Log out</span>
               <span className={css.modalClose} onClick={closeModal}>
-                <FaTimes />
+                <RxCross1 className={css.modalClose}/>
               </span>
             </div>
             <h2>Do you really want to leave?</h2>

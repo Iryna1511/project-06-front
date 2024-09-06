@@ -8,36 +8,30 @@ import styles from "./UserAuth.module.css";
 import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import ModalSetting from "../ModalSettings/ModalSettings.jsx";
 import Logout from "../Logout/Logout.jsx";
+import { openLogoutModal, closeLogoutModal } from '../../redux/auth/authSlice';
 
 export default function UserAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { user, isLoggedIn, token } = useSelector((state) => state.auth);
-
+  const isLogoutModalOpen = useSelector((state) => state.auth.isLogoutModalOpen);
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const openSettingModal = () => {
-    setIsModalOpen(false); // Close UserLogoModal
-    setIsSettingModalOpen(true); // Open Settings Modal
+    setIsModalOpen(false); 
+    setIsSettingModalOpen(true); 
   };
 
   const closeSettingModal = () => setIsSettingModalOpen(false);
 
-  const openLogoutModal = () => {
-    setIsModalOpen(false); // Close UserLogoModal
-    setIsLogoutModalOpen(true); // Open Logout Modal
-  };
-
-  const closeLogoutModal = () => setIsLogoutModalOpen(false);
-
   const handleLogout = () => {
     dispatch(logout());
-    closeLogoutModal();
+    dispatch(closeLogoutModal()); 
   };
 
   const getAvatarContent = () => {
@@ -74,8 +68,8 @@ export default function UserAuth() {
             <div className={styles.modal}>
               <UserLogoModal
                 openSettingModal={openSettingModal}
-                openLogoutModal={openLogoutModal}
-                closeUserModal={toggleModal} // Close UserLogoModal when opening another modal
+                openLogoutModal={() => dispatch(openLogoutModal())} 
+                closeUserModal={toggleModal} 
               />
             </div>
           )}
@@ -90,7 +84,7 @@ export default function UserAuth() {
           {isLogoutModalOpen && (
             <Logout
               isOpen={isLogoutModalOpen}
-              closeModal={closeLogoutModal}
+              closeModal={() => dispatch(closeLogoutModal())} 
               handleLogout={handleLogout}
             />
           )}
