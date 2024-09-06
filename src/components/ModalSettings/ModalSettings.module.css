@@ -177,6 +177,23 @@ input[type="password"]::placeholder {
   font-weight: 500;
 }
 
+.defoltAvatarOfUser {
+  border-radius: 50%;
+  background-color: #407bff;
+  height: 80px;
+  width: 80px;
+}
+
+.firstSimbolOfEmail {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d7e3ff;
+  font-size: 35px;
+}
+
 /* Планшети (768px - 1023px) */
 @media (min-width: 768px) {
   .modalcontent {

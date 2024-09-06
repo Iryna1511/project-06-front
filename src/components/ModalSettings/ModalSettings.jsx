@@ -48,7 +48,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   ? "Woman"
                   : "Man"
                 : "Woman",
-              avatar: avatar || "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
+              avatar: avatar || "",
             }));
 
             setInitialData({
@@ -59,7 +59,9 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   ? "Woman"
                   : "Man"
                 : "Woman",
-              avatar: avatar || "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
+              avatar:
+                avatar ||
+                "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
             });
           } else {
             console.error("Failed to fetch user data");
@@ -148,7 +150,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
         .then((data) => {
           if (data.status === 200) {
             console.log("User data successfully updated:", data);
-            if (formData.avatarFile) {            
+            if (formData.avatarFile) {
               handleAvatarUpdate(formData.avatarFile);
             } else {
               closeModal();
@@ -182,11 +184,11 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
       .then((data) => {
         if (data.status === 201) {
           console.log("Avatar successfully updated:", data);
-          
+
           // Оновлюємо стан з новим URL аватара
           setFormData((prevData) => ({
             ...prevData,
-            avatar: data.data.avatar,  // Додаємо новий URL аватара
+            avatar: data.data.avatar, // Додаємо новий URL аватара
           }));
 
           closeModal();
@@ -208,20 +210,25 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
               <RxCross1 className={styles.cross} />
             </span>
             <h2 className={styles.titleOfModalSettings}>Settings</h2>
+            {/*Початок форми */}
             <form onSubmit={handleSubmit}>
+              {/*Блок Фото */}
               <div className={styles.wrapperForBlokOfPhoto}>
                 <label className={styles.yourPhoto}>
                   <span className={styles.titels}>Your photo</span>
                   <div className={styles.uploadAPhoto}>
-                    <img
-                      src={
-                        formData.avatar
-                          ? formData.avatar
-                          : "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af"
-                      }
-                      alt="Фото"
-                      className={styles.fotoOfUser}
-                    />
+                    {formData.avatar ? (
+                      <img
+                        src={formData.avatar}
+                        alt="Фото"
+                        className={styles.fotoOfUser}
+                      />
+                    ) : (
+                      <div className={styles.defoltAvatarOfUser}>
+                          <p className={styles.firstSimbolOfEmail}>{formData.email[0]}</p>
+                      </div>
+                    )}
+
                     <label className={styles.uploadButton}>
                       <MdOutlineFileUpload
                         className={styles.iconOfUploadAPhoto}
@@ -237,9 +244,10 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   </div>
                 </label>
               </div>
-
+              {/*Блок gender, name, e-mail */}
               <div className={styles.wrapperForNameAndPassword}>
                 <div className={styles.wrapperForBlockOne}>
+                  {/*Gender*/}
                   <label>
                     <span className={styles.titels}>Your gender identity</span>
                     <div className={styles.genderradiobutton}>
@@ -269,7 +277,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                       </div>
                     </div>
                   </label>
-
+                  {/*Name */}
                   <label>
                     <span className={styles.titels}>Your name</span>
                     <div className={styles.wrapperForInput}>
@@ -282,6 +290,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                       />
                     </div>
                   </label>
+                  {/*E-mail */}
                   <label>
                     <span className={styles.titels}>E-mail</span>
                     <div className={styles.wrapperForInput}>
@@ -295,7 +304,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                     </div>
                   </label>
                 </div>
-
+                {/*Блок з парольями */}
                 <div className={styles.wrapperForPasswordField}>
                   <span className={styles.titels}>Password</span>
                   <label>
@@ -382,7 +391,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   </label>
                 </div>
               </div>
-
+              {/*Кнопка збереження данних */}
               <button type="submit" className={styles.saveButton}>
                 Save
               </button>
