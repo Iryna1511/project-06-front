@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectNotesPerMonth } from '../../redux/water/waterSlice';
-import { monthNames } from '../../constans/monthNames';
-import { fetchWaterDataMonthThunk } from '../../redux/water/operations';
-import CalendarItem from './CalendarItem/CalendarItem';
-import { GoChevronLeft } from 'react-icons/go';
-import { GoChevronRight } from 'react-icons/go';
-import s from './Calendar.module.css';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectNotesPerMonth } from "../../redux/water/waterSlice";
+import { monthNames } from "../../constans/monthNames";
+import { fetchWaterDataMonthThunk } from "../../redux/water/operations";
+
+import { GoChevronLeft } from "react-icons/go";
+import { GoChevronRight } from "react-icons/go";
+import s from "./Calendar.module.css";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -42,6 +42,15 @@ const Calendar = () => {
     );
   }, [year, month, currentYear]);
 
+  const getDaysOfMonth = () => {
+    const daysInMonth = new Date(
+      year,
+      monthNames.indexOf(month) + 1,
+      0
+    ).getDate();
+    return Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  };
+
   return (
     <section className={s.water_month_section}>
       <div className={s.title_wrapper}>
@@ -64,11 +73,23 @@ const Calendar = () => {
           </button>
         </div>
       </div>
-      <ul className={s.calendar_list}>
-        {notesPerMonth.map((note, index) => (
-          <CalendarItem key={index} note={note} index={index} />
-        ))}
-      </ul>
+      <div>
+        {" "}
+        <ul className={s.calendar_list}>
+          {/* {Array.isArray(notesPerMonth) &&
+          notesPerMonth.length > 0 ?
+          notesPerMonth.map((note, index) => (
+            <CalendarItem key={index} note={note} index={index} />
+          )):<li>No data</li>} */}
+
+          {getDaysOfMonth().map((day) => (
+            <li key={day} id={day}>
+              <button id={day}>{day}</button>
+              <p>{`0%`}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 };
