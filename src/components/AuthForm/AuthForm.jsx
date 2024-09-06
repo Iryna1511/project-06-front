@@ -90,17 +90,6 @@ const AuthForm = () => {
 
   return (
     <>
-      {/* <div
-        className={css.containerBackground}
-        style={{
-          backgroundImage: "url(/img-sign-pages/signpage-d-bg-1x-min.png)",
-        }}
-      > */}
-      {/* <div className={css.wrap_section}> */}
-      {/* <div className={css.containerImageBottle}>
-            <img src="/img-sign-pages/bottle-d-1x-min.png" />
-          </div> */}
-
       <div className={css.wrap_form}>
         <Formik
           initialValues={initialValues}
@@ -220,8 +209,6 @@ const AuthForm = () => {
           </Link>
         </nav>
       </div>
-      {/* </div> */}
-      {/* </div> */}
     </>
   );
 };
