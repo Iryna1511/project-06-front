@@ -1,0 +1,71 @@
+::-webkit-scrollbar {
+  height: 3px;
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--light-blue);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: var(--medium-blue);
+}
+
+.container {
+  width: 264px;
+  background-color: var(--soft-blue);
+}
+.title {
+  margin-bottom: 16px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.25;
+  color: var(--black);
+}
+.list {
+  height: 212px;
+  margin-bottom: 12px;
+  overflow-y: auto;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--medium-blue);
+}
+.icon {
+  margin-right: 12px;
+  color: var(--blue);
+}
+.amount {
+  margin-right: 12px;
+  font-size: 18px;
+  line-height: 1.33333;
+  color: var(--blue);
+}
+.time {
+  font-size: 12px;
+  line-height: 2;
+  color: var(--black);
+}
+.btnEdit {
+  margin-left: auto;
+  margin-right: 12px;
+  color: var(--medium-blue);
+}
+.btnDelete {
+  color: var(--red);
+}
+.btnAdd {
+  display: flex;
+  gap: 8px;
+  color: var(--blue);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.btnAdd,
+.btnDelete,
+.btnEdit {
+  border: none;
+  background-color: transparent;
+}
