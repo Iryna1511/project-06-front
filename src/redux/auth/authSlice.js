@@ -25,14 +25,6 @@ const authSlice = createSlice({
     error: null,
     isLogoutModalOpen: false,
   },
-  reducers: {
-    openLogoutModal: (state) => {
-      state.isLogoutModalOpen = true;
-    },
-    closeLogoutModal: (state) => {
-      state.isLogoutModalOpen = false;
-    },
-  },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, handlePending)
@@ -92,5 +84,4 @@ const authSlice = createSlice({
   },
 });
 
-export const { openLogoutModal, closeLogoutModal } = authSlice.actions;
 export const authReducer = authSlice.reducer;

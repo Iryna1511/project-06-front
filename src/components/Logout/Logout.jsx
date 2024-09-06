@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RxCross1 } from "react-icons/rx";
+import { FaTimes } from 'react-icons/fa';
 import css from './LogOut.module.css';
 import { logout } from '../../redux/auth/operations';
-import { closeLogoutModal, openLogoutModal } from '../../redux/auth/authSlice';
 
 const Logout = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.auth.isLogoutModalOpen);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(isOpen); // Add state management
 
-  const closeModal = () => dispatch(closeLogoutModal());
+  const closeLogoutModal = () => setIsLogoutModalOpen(false);
 
   const handleLogout = async () => {
     try {
@@ -20,17 +20,17 @@ const Logout = () => {
   };
 
   useEffect(() => {
-    dispatch(openLogoutModal());
+    setIsLogoutModalOpen(true);
 
     const handleBackdropClick = (event) => {
       if (event.target.classList.contains(css.modalOverlay)) {
-        closeModal();
+        closeLogoutModal();
       }
     };
 
     const handleEscapePress = (event) => {
       if (event.key === 'Escape') {
-        closeModal();
+        closeLogoutModal();
       }
     };
 
@@ -45,18 +45,18 @@ const Logout = () => {
 
   return (
     <div>
-      {isOpen && (
+      {isLogoutModalOpen && ( // Use the updated state
         <div className={css.modalOverlay}>
           <div className={css.modalContent}>
             <div className={css.modalHeader}>
               <span className={css.modalTitle}>Log out</span>
-              <span className={css.modalClose} onClick={closeModal}>
-                <RxCross1 className={css.modalClose}/>
+              <span className={css.modalClose} onClick={closeLogoutModal}>
+                <FaTimes />
               </span>
             </div>
             <h2>Do you really want to leave?</h2>
             <div className={css.modalButtons}>
-              <button className={css.cancelButton} onClick={closeModal}>Cancel</button>
+              <button className={css.cancelButton} onClick={closeLogoutModal}>Cancel</button>
               <button className={css.logoutButton} onClick={handleLogout}>Log out</button>
             </div>
           </div>
