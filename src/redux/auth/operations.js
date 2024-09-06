@@ -54,6 +54,7 @@ export const refreshUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const reduxState = thunkAPI.getState();
+      // console.log(reduxState);
       const token = reduxState.auth.token || Cookies.get("authToken"); // Отримуємо токен з Redux або куків
       if (token) {
         setAuthHeader(token);
