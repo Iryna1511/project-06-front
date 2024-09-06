@@ -1,46 +1,24 @@
-/*  ---------- MOBILE STYLES------- */
+.tables {
+  width: 280px;
+  padding: 24px 8px;
+  margin-left: auto;
+  border-radius: 10px;
+  background-color: var(--soft-blue);
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
+}
+.month {
+  height: 506px;
+}
 
-/* .pageContainer {
-  background-image: url("../../../public/img-bg-welcome/welcome-bg-mobile@1x.png");
-  background-size: cover;
-  background-position: bottom;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100vh;
-} */
-
-/* .infoContainer {
-  padding-bottom: 40px;
-} */
-
-/*  ---------- TABLET STYLES------- */
-
-/* @media screen and (min-width: 768px) { */
-/* .pageContainer {
-    background-image: url("../../../public/img-bg-welcome/welcome-bg-tablet@1x.png");
-    padding-left: 32px;
-    padding-right: 32px;
-  } */
-
-/* .infoContainer {
-    padding: 0 20px 40px 20px;
-  } */
-/* } */
-
-/*  ---------- DESKTOP STYLES------- */
-/* @media screen and (min-width: 1440px) { */
-/* .pageContainer {
-    background: url("../../../public/img-bg-welcome/welcome-bg-desktop2@1x.png")
-        center / cover no-repeat,
-      url("../../../public/img-bg-welcome/welcome-bg-desktop@1x.png") bottom
-        center / contain no-repeat;
-  } */
-
-/* .infoContainer {
-    display: flex;
-    justify-content: space-between;
-    width: 1014px;
-    margin: 0 auto;
-    padding-bottom: 294px;
+@media screen and (min-width: 768px) {
+  .tables {
+    width: 704px;
+    padding: 32px 24px;
   }
-} */
+}
+
+@media screen and (min-width: 1440px) {
+  .tables {
+    width: 592px;
+  }
+}

@@ -11,8 +11,7 @@
 }
 
 .container {
-  width: 264px;
-  background-color: var(--soft-blue);
+  margin: 0 auto 24px;
 }
 .title {
   margin-bottom: 16px;
@@ -68,4 +67,14 @@
 .btnEdit {
   border: none;
   background-color: transparent;
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 26px;
+    line-height: 1.23077;
+  }
+  .btnAdd {
+    font-size: 18px;
+  }
 }
