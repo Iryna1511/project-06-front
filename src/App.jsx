@@ -1,7 +1,7 @@
 import "./App.css";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
-import { lazy, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 
@@ -17,14 +17,14 @@ const SighinPage = lazy(() => import("./pages/SigninPage/SigninPage.jsx"));
 const SighupPage = lazy(() => import("./pages/SignupPage/SignupPage.jsx"));
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 
-import { selectIsLoading } from "./redux/auth/selectors.js";
+import { selectIsRefreshing } from "./redux/auth/selectors.js";
 
 import { refreshUser } from "./redux/auth/operations.js";
 
 function App() {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(selectIsLoading);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -44,39 +44,41 @@ function App() {
     checkSession();
   }, [dispatch]);
 
-  return isLoading ? (
+  return isRefreshing ? (
     <Loader />
   ) : (
-    <Routes>
-      <Route path="/" element={<SharedLayout />}>
-        <Route index element={<ConditionalRoute />} />
-        <Route
-          path="welcome"
-          element={
-            <RestrictedRoute component={<WelcomePage />} redirectTo="/home" />
-          }
-        />
-        <Route
-          path="home"
-          element={
-            <PrivateRoute component={<HomePage />} redirectTo="/signin" />
-          }
-        />
-        <Route
-          path="signin"
-          element={
-            <RestrictedRoute component={<SighinPage />} redirectTo="/home" />
-          }
-        />
-        <Route
-          path="signup"
-          element={
-            <RestrictedRoute component={<SighupPage />} redirectTo="/home" />
-          }
-        />
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<ConditionalRoute />} />
+          <Route
+            path="welcome"
+            element={
+              <RestrictedRoute component={<WelcomePage />} redirectTo="/home" />
+            }
+          />
+          <Route
+            path="home"
+            element={
+              <PrivateRoute component={<HomePage />} redirectTo="/signin" />
+            }
+          />
+          <Route
+            path="signin"
+            element={
+              <RestrictedRoute component={<SighinPage />} redirectTo="/home" />
+            }
+          />
+          <Route
+            path="signup"
+            element={
+              <RestrictedRoute component={<SighupPage />} redirectTo="/home" />
+            }
+          />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   );
 }
 
