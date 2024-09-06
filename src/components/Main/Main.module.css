@@ -1,0 +1,13 @@
+.infoContainer {
+  padding-bottom: 40px;
+}
+
+@media screen and (min-width: 1440px) {
+  .infoContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 1014px;
+    margin: 0 auto;
+    /* padding-bottom: 294px; */
+  }
+}
