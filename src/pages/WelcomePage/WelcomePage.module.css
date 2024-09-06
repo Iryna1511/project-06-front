@@ -14,6 +14,7 @@
 } */
 
 /*  ---------- TABLET STYLES------- */
+
 /* @media screen and (min-width: 768px) { */
 /* .pageContainer {
     background-image: url("../../../public/img-bg-welcome/welcome-bg-tablet@1x.png");
@@ -27,7 +28,6 @@
 /* } */
 
 /*  ---------- DESKTOP STYLES------- */
-
 /* @media screen and (min-width: 1440px) { */
 /* .pageContainer {
     background: url("../../../public/img-bg-welcome/welcome-bg-desktop2@1x.png")
