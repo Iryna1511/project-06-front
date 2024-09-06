@@ -8,7 +8,6 @@ import styles from "./UserAuth.module.css";
 import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import ModalSetting from "../ModalSettings/ModalSettings.jsx";
 import Logout from "../Logout/Logout.jsx";
-import { openLogoutModal, closeLogoutModal } from '../../redux/auth/authSlice';
 
 export default function UserAuth() {
   const dispatch = useDispatch();
