@@ -11,7 +11,6 @@ const authSlice = createSlice({
     token: null,
     isLoggedIn: false,
     isLoading: false,
-    isRefreshing: false,
     error: null,
     isLogoutModalOpen: false,
   },
@@ -75,7 +74,7 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload.data; // Оновлюємо дані користувача
+        state.user = action.payload.data;
         state.isLoggedIn = true;
         state.isLoading = false;
       })

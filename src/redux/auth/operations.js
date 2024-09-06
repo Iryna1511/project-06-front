@@ -28,9 +28,10 @@ export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
   try {
     const response = await axios.post("/auth/login", user);
     const token = response.data.data.accessToken;
+    // console.log("токен при логіні, який ми записуємо в хедер і кукі", token);
 
     setAuthHeader(token);
-    Cookies.set("refreshToken", token, { expires: 7 });
+    Cookies.set("authToken", token, { expires: 7 });
 
     return response.data;
   } catch (error) {
@@ -42,7 +43,7 @@ export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
     removeAuthHeader();
-    Cookies.remove("refreshToken");
+    Cookies.remove("authToken");
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -57,6 +58,8 @@ export const refreshUser = createAsyncThunk(
       if (token) {
         setAuthHeader(token);
         const response = await axios.get("/user");
+
+        console.log("Server response:", response.data);
         return response.data;
       }
       return thunkAPI.rejectWithValue("No token available");
