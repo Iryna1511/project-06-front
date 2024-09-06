@@ -3,7 +3,6 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
 
 import RestrictedRoute from "./routes/RestrictedRoute.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
@@ -28,7 +27,7 @@ function App() {
 
   useEffect(() => {
     const checkSession = async () => {
-      const token = Cookies.get("authToken"); // Перевіряємо, чи є токен у куках
+      const token = localStorage.getItem("authToken"); // Перевіряємо, чи є токен у cховищі
       if (token) {
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
