@@ -48,40 +48,28 @@ export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
   }
 });
 
-export const refreshToken = createAsyncThunk(
-  "auth/refreshToken",
-  async (_, thunkAPI) => {
-    try {
-      const refreshToken = Cookies.get("refreshToken");
-      if (!refreshToken) {
-        throw new Error("No refresh token available");
-      }
-
-      setAuthHeader(refreshToken);
-
-      const response = await axios.post("/auth/refresh");
-
-      const newToken = response.data.data.accessToken;
-
-      setAuthHeader(newToken);
-      Cookies.set("refreshToken", newToken, { expires: 7 });
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
 export const refreshUser = createAsyncThunk(
   "auth/refreshUser",
   async (_, thunkAPI) => {
     try {
-      await thunkAPI.dispatch(refreshToken());
-
-      const response = await axios.get("/user");
-      return response.data;
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token || Cookies.get("authToken"); // Отримуємо токен з Redux або куків
+      if (token) {
+        setAuthHeader(token);
+        const response = await axios.get("/user");
+        return response.data;
+      }
+      return thunkAPI.rejectWithValue("No token available");
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
+  },
+  {
+    condition: (_, thunkAPI) => {
+      const reduxState = thunkAPI.getState();
+      return (
+        reduxState.auth.token !== null || Cookies.get("authToken") !== null
+      );
+    },
   }
 );

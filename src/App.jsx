@@ -17,21 +17,35 @@ const SighupPage = lazy(() => import("./pages/SignupPage/SignupPage.jsx"));
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 
 import axios from "axios";
-const setAuthHeader = (token) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+// const setAuthHeader = (token) => {
+//   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+// };
 
 import { refreshUser } from "./redux/auth/operations.js";
 
 function App() {
   const dispatch = useDispatch();
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
+  // const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    const token = Cookies.get("refreshToken");
-    if (token) {
-      setAuthHeader(token);
-      dispatch(refreshUser());
-    }
+    const checkSession = async () => {
+      // Перевіряємо, чи є токен у куках або локальному сховищі
+      const token = Cookies.get("authToken");
+      if (token) {
+        // Встановлюємо заголовки для авторизації
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+        // Оновлюємо дані користувача
+        try {
+          await dispatch(refreshUser()).unwrap();
+        } catch (error) {
+          console.error("Failed to refresh user:", error);
+        }
+      }
+    };
+
+    checkSession();
   }, [dispatch]);
 
   return (
