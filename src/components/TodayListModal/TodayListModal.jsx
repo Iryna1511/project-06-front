@@ -1,14 +1,14 @@
-import css from "./TodayListModal.module.css"
+import css from "./TodayListModal.module.css";
 // import ErrorMsg from "../ErrorMsg/ErrorMsg";
 // import Loader from "../Loader/Loader.jsx"
 // import { NavLink } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
-// import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
+import { toggleTodayListModal } from "../../redux/water/waterSlice.js";
 // import Modal from "react-modal";
-
 
 // Modal.setAppElement('#root');
 
@@ -26,39 +26,40 @@ import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
 //   },
 // };
 
-
-export default function TodayListModal({water: {amount, time, id}}) {
- 
+export default function TodayListModal({ water: { amount, time, id } }) {
   // const waterAmount = useSelector(state => state.waterAmount);
 
-    //  const isModalOpen = useSelector(selectIsModalOpen);
-    // const isError = useSelector(selectError);
-    // const isLoading = useSelector(selectLoading);
-    const dispatch = useDispatch();
+  //  const isModalOpen = useSelector(selectIsModalOpen);
+  // const isError = useSelector(selectError);
+  // const isLoading = useSelector(selectLoading);
+  const dispatch = useDispatch();
 
-    const handleAddWaterChanges = () => dispatch(addWaterAMount(id));
-    
-    const handleClose = () => dispatch(closeModal());
-//   useEffect(() => {
-//     dispatch(fetchAmountofWater())
-//   }, [dispatch])
+  const handleAddWaterChanges = () => dispatch(addWaterAMount(id));
+
+  const handleClose = () => dispatch(toggleTodayListModal()); // перемикач
+  //   useEffect(() => {
+  //     dispatch(fetchAmountofWater())
+  //   }, [dispatch])
 
   return (
-      
     <div className={css.backdrop} onClick={handleClose}>
       <div className={css.modal}>
-      {/* <Modal style={customStyles}> */}
-      {/* {isError && <ErrorMsg/>} */}
-      {/* <NavLink className={css.close}><IoCloseOutline /></NavLink> */}
-      {/* {isLoading && <Loader />} */}
-      <div className={css.titlecontainer}>
-        <h2 className={css.titletext}>Edit the entered amount of water</h2>
-        <span className={css.closebtn} onClick={closeModal}><IoCloseOutline size="24" color="407BFF" /></span>
-      </div>
-      {/* <p className={css.defaulttext}>No notes yet</p> */}
-      <div className={css.amountofwaterContainer}>
-        <svg width={23} height={32}><use href="icons.svg#icon-Glass"></use></svg>
-        {/* <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* <Modal style={customStyles}> */}
+        {/* {isError && <ErrorMsg/>} */}
+        {/* <NavLink className={css.close}><IoCloseOutline /></NavLink> */}
+        {/* {isLoading && <Loader />} */}
+        <div className={css.titlecontainer}>
+          <h2 className={css.titletext}>Edit the entered amount of water</h2>
+          <span className={css.closebtn} onClick={closeModal}>
+            <IoCloseOutline size="24" color="407BFF" />
+          </span>
+        </div>
+        {/* <p className={css.defaulttext}>No notes yet</p> */}
+        <div className={css.amountofwaterContainer}>
+          <svg width={23} height={32}>
+            <use href="icons.svg#icon-Glass"></use>
+          </svg>
+          {/* <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M6.26074 3.13049L8.39948 32.7888V32.8696H26.812L28.9507 3.22281V3.13049H6.26074ZM26.0554 32.0387H9.16169L7.55764 9.82382H8.4393L9.88977 29.4018C9.89826 29.5049 9.94436 29.601 10.0191 29.6715C10.0937 29.7419 10.1917 29.7815 10.2936 29.7826H10.3278C10.3808 29.779 10.4327 29.7647 10.4803 29.7407C10.5279 29.7166 10.5704 29.6833 10.6053 29.6425C10.6402 29.6018 10.6668 29.5544 10.6836 29.5032C10.7004 29.452 10.707 29.3979 10.7032 29.3441L9.2527 9.82382H27.6595L26.0554 32.0387ZM27.7164 8.99292H9.19013L8.8716 4.66534C8.86159 4.55977 8.81268 4.46191 8.73465 4.39131C8.65662 4.32071 8.55521 4.28257 8.45067 4.28451C8.34354 4.29479 8.24452 4.34686 8.17449 4.42974C8.10446 4.51262 8.06888 4.61984 8.07526 4.72881L8.39379 8.99869H7.50076L7.13671 3.95562H28.0804L27.7164 8.99292Z" fill="#407BFF" />
   <path d="M12.7794 13.9321C13.0449 13.9321 13.3045 13.8522 13.5252 13.7026C13.746 13.553 13.918 13.3403 14.0196 13.0915C14.1212 12.8427 14.1478 12.5689 14.096 12.3047C14.0442 12.0405 13.9164 11.7979 13.7286 11.6075C13.5409 11.417 13.3017 11.2873 13.0413 11.2348C12.7809 11.1822 12.511 11.2092 12.2657 11.3123C12.0204 11.4153 11.8108 11.5899 11.6632 11.8138C11.5157 12.0378 11.437 12.301 11.437 12.5704C11.437 12.9315 11.5784 13.2779 11.8302 13.5333C12.0819 13.7886 12.4234 13.9321 12.7794 13.9321ZM12.7794 12.0337C12.884 12.0337 12.9863 12.0652 13.0733 12.1242C13.1603 12.1831 13.2281 12.267 13.2681 12.365C13.3082 12.4631 13.3187 12.571 13.2982 12.6751C13.2778 12.7791 13.2274 12.8748 13.1535 12.9498C13.0795 13.0249 12.9852 13.076 12.8826 13.0967C12.78 13.1174 12.6736 13.1068 12.577 13.0661C12.4803 13.0255 12.3977 12.9567 12.3396 12.8685C12.2814 12.7802 12.2504 12.6765 12.2504 12.5704C12.2504 12.428 12.3061 12.2916 12.4054 12.1909C12.5046 12.0903 12.6391 12.0337 12.7794 12.0337Z" fill="#407BFF" />
   <path d="M12.7735 18.3578C12.7769 18.6266 12.8586 18.8884 13.0084 19.1102C13.1582 19.332 13.3694 19.5038 13.6153 19.604C13.8612 19.7043 14.1308 19.7284 14.3902 19.6735C14.6497 19.6185 14.8872 19.4869 15.073 19.2952C15.2588 19.1036 15.3846 18.8604 15.4343 18.5963C15.4841 18.3323 15.4557 18.0592 15.3528 17.8115C15.2498 17.5638 15.0769 17.3525 14.8558 17.2043C14.6347 17.0561 14.3753 16.9777 14.1103 16.9788C13.933 16.9795 13.7577 17.0159 13.5943 17.0857C13.431 17.1556 13.2829 17.2576 13.1586 17.3858C13.0344 17.514 12.9364 17.6659 12.8703 17.8327C12.8042 17.9996 12.7713 18.178 12.7735 18.3578ZM14.6393 18.3578C14.6393 18.464 14.6082 18.5677 14.5501 18.656C14.492 18.7442 14.4094 18.813 14.3127 18.8536C14.216 18.8942 14.1097 18.9048 14.0071 18.8841C13.9044 18.8634 13.8102 18.8123 13.7362 18.7373C13.6622 18.6622 13.6118 18.5666 13.5914 18.4625C13.571 18.3584 13.5815 18.2505 13.6215 18.1525C13.6616 18.0544 13.7294 17.9706 13.8164 17.9116C13.9034 17.8527 14.0056 17.8212 14.1103 17.8212C14.2506 17.8212 14.3851 17.8777 14.4843 17.9784C14.5835 18.079 14.6393 18.2155 14.6393 18.3578Z" fill="#407BFF" />
@@ -69,32 +70,51 @@ export default function TodayListModal({water: {amount, time, id}}) {
   <path d="M22.7846 12.98C23.0096 12.98 23.2295 12.9124 23.4166 12.7856C23.6037 12.6587 23.7495 12.4785 23.8356 12.2676C23.9217 12.0568 23.9443 11.8247 23.9004 11.6009C23.8565 11.377 23.7481 11.1714 23.589 11.01C23.4299 10.8486 23.2272 10.7387 23.0065 10.6942C22.7859 10.6496 22.5571 10.6725 22.3492 10.7598C22.1414 10.8472 21.9637 10.9951 21.8387 11.1849C21.7137 11.3747 21.647 11.5978 21.647 11.826C21.647 12.1321 21.7668 12.4256 21.9802 12.642C22.1935 12.8585 22.4829 12.98 22.7846 12.98ZM22.7846 11.5548C22.8286 11.5421 22.875 11.5399 22.92 11.5483C22.965 11.5568 23.0074 11.5758 23.044 11.6038C23.0805 11.6318 23.1102 11.668 23.1306 11.7095C23.151 11.7511 23.1616 11.7969 23.1616 11.8433C23.1616 11.8898 23.151 11.9356 23.1306 11.9771C23.1102 12.0187 23.0805 12.0549 23.044 12.0829C23.0074 12.1108 22.965 12.1298 22.92 12.1383C22.875 12.1468 22.8286 12.1446 22.7846 12.1318C22.7406 12.1446 22.6942 12.1468 22.6492 12.1383C22.6042 12.1298 22.5618 12.1108 22.5252 12.0829C22.4887 12.0549 22.459 12.0187 22.4386 11.9771C22.4182 11.9356 22.4076 11.8898 22.4076 11.8433C22.4076 11.7969 22.4182 11.7511 22.4386 11.7095C22.459 11.668 22.4887 11.6318 22.5252 11.6038C22.5618 11.5758 22.6042 11.5568 22.6492 11.5483C22.6942 11.5399 22.7406 11.5421 22.7846 11.5548Z" fill="#407BFF" />
   <path d="M11.6644 30.5904C11.6134 30.6143 11.5677 30.6485 11.5303 30.691C11.4929 30.7335 11.4645 30.7834 11.4469 30.8375C11.4293 30.8917 11.4229 30.9489 11.428 31.0056C11.4331 31.0624 11.4497 31.1175 11.4767 31.1674C11.5117 31.2348 11.564 31.2913 11.6281 31.331C11.6922 31.3706 11.7657 31.3918 11.8407 31.3925C11.9037 31.3942 11.9662 31.3804 12.0228 31.3521C13.7607 30.4489 15.6842 29.9744 17.6369 29.9672C19.7034 29.9978 21.7411 30.4634 23.6209 31.3348C23.6952 31.3742 23.7797 31.3894 23.8629 31.3785C23.9461 31.3676 24.024 31.331 24.0861 31.2738C24.1481 31.2165 24.1913 31.1413 24.2098 31.0583C24.2284 30.9753 24.2213 30.8885 24.1897 30.8097C24.1496 30.7074 24.0722 30.6247 23.9735 30.5789C21.9835 29.6554 19.8251 29.1641 17.6369 29.1364C15.5611 29.1382 13.5149 29.6364 11.6644 30.5904Z" fill="#407BFF" />
 </svg> */}
-        <p className={css.wateramount}>250 ml</p>
-        <p className={css.time}>7:00</p>
-      </div>      
-      <h3 className={css.subtitle}>Correct entered data:</h3>
-      <p className={css.signaturetext}>Amount of water:</p>
-      <div className={css.waterInputcontainer}>
-        <button className={css.amountButton} type="button" onClick={minusWater}><HiOutlineMinusSmall size="24" color="407BFF" /></button>
-        <p className={css.amountWaterIncome}>250 ml</p>
-        <button className={css.amountButton} type="button" onClick={plusWater}><HiOutlinePlusSmall size="24" color="407BFF" /></button>
-      </div>
-     
-      <p className={css.signaturetext}>Recording time:</p>
-      <div className={css.timeDropdown}><TimeDropdown/></div>
-      <h3 className={css.subtitle}>Enter the value of the water used:</h3>
-      <input className={css.waterAmount} type="text" onChange={handleWaterAmountChange}/>
-      <div className={css.footerContainer}>
-        <p className={css.amountWaterIncomeFooter}>250 ml</p>
-        <button className={css.saveButton} type="submit">Save</button>
-      </div>
-        {/* </Modal> */}
+          <p className={css.wateramount}>250 ml</p>
+          <p className={css.time}>7:00</p>
         </div>
+        <h3 className={css.subtitle}>Correct entered data:</h3>
+        <p className={css.signaturetext}>Amount of water:</p>
+        <div className={css.waterInputcontainer}>
+          <button
+            className={css.amountButton}
+            type="button"
+            onClick={minusWater}
+          >
+            <HiOutlineMinusSmall size="24" color="407BFF" />
+          </button>
+          <p className={css.amountWaterIncome}>250 ml</p>
+          <button
+            className={css.amountButton}
+            type="button"
+            onClick={plusWater}
+          >
+            <HiOutlinePlusSmall size="24" color="407BFF" />
+          </button>
+        </div>
+
+        <p className={css.signaturetext}>Recording time:</p>
+        <div className={css.timeDropdown}>
+          <TimeDropdown />
+        </div>
+        <h3 className={css.subtitle}>Enter the value of the water used:</h3>
+        <input
+          className={css.waterAmount}
+          type="text"
+          onChange={handleWaterAmountChange}
+        />
+        <div className={css.footerContainer}>
+          <p className={css.amountWaterIncomeFooter}>250 ml</p>
+          <button className={css.saveButton} type="submit">
+            Save
+          </button>
+        </div>
+        {/* </Modal> */}
+      </div>
     </div>
-   
   );
 }
 
-// to={backLinkRef.current} 
+// to={backLinkRef.current}
 
 // onClick={() => dispatch(closeWindow())}
