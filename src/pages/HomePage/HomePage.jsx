@@ -10,7 +10,7 @@ import {
 // import TodayListModal from "../../components/TodayListModal/TodayListModal";
 import DeleteEntry from "../../components/DeleteEntry/DeleteEntry";
 
-// import Calendar from "../../components/Calendar/Calendar";
+import MonthStatsTable from "../../components/MonthStatsTable/MonthStatsTable";
 
 export default function HomePage() {
   // const isAddModalOpen = useSelector(selectIsAddWaterMdOpen);
@@ -21,7 +21,7 @@ export default function HomePage() {
     <>
       <div className={css.tables}>
         <TodayWaterList />
-        <div className={css.month}>Month stats table</div>
+        <MonthStatsTable/>
       </div>
       {/* {isAddModalOpen && <AddWaterAmountModal />}
       {isEditModalOpen && <TodayListModal />} */}
