@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
 import axios from "axios";
 
 axios.defaults.baseURL = "https://water-tracker-06.onrender.com/";
@@ -31,7 +30,7 @@ export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
     // console.log("токен при логіні, який ми записуємо в хедер і кукі", token);
 
     setAuthHeader(token);
-    Cookies.set("authToken", token, { expires: 7 });
+    localStorage.setItem("authToken", token);
 
     return response.data;
   } catch (error) {
@@ -43,7 +42,7 @@ export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
     removeAuthHeader();
-    Cookies.remove("authToken");
+    localStorage.removeItem("authToken");
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -54,8 +53,7 @@ export const refreshUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const reduxState = thunkAPI.getState();
-      // console.log(reduxState);
-      const token = reduxState.auth.token || Cookies.get("authToken"); // Отримуємо токен з Redux або куків
+      const token = reduxState.auth.token || localStorage.getItem("authToken");
       if (token) {
         setAuthHeader(token);
         const response = await axios.get("/user");
@@ -67,13 +65,5 @@ export const refreshUser = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  },
-  {
-    condition: (_, thunkAPI) => {
-      const reduxState = thunkAPI.getState();
-      return (
-        reduxState.auth.token !== null || Cookies.get("authToken") !== null
-      );
-    },
   }
 );

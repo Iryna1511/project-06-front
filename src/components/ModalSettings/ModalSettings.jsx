@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import styles from "./ModalSettings.module.css";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
@@ -12,11 +12,13 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     newPassword: "",
     repeatPassword: "",
     gender: "",
+    avatar: undefined, // Встановлюємо значення за замовчуванням
   });
   const [initialData, setInitialData] = useState({
     name: "",
     email: "",
     gender: "",
+    avatar: undefined, // Додано для зберігання початкового аватара
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -25,41 +27,51 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     repeatPassword: false,
   });
 
-useEffect(() => {
-  if (isOpen) {
-    fetch(`https://water-tracker-06.onrender.com/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === 200) {
-          const { name, email, gender } = data.data;
-
-
-          setFormData((prevData) => ({
-            ...prevData,
-            name: name,
-            email: email,
-            gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
-          }));
-
-
-          setInitialData({
-            name: name,
-            email: email,
-            gender: gender ? (gender === "female" ? "Woman" : "Man") : "Woman", // Якщо гендер не визначений, за замовчуванням "Woman"
-          });
-        } else {
-          console.error("Failed to fetch user data");
-        }
+  useEffect(() => {
+    if (isOpen) {
+      fetch(`https://water-tracker-06.onrender.com/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
-  }
-}, [isOpen, userId, token]);
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            const { name, email, gender, avatar } = data.data;
+
+            setFormData((prevData) => ({
+              ...prevData,
+              name: name,
+              email: email,
+              gender: gender
+                ? gender === "female"
+                  ? "Woman"
+                  : "Man"
+                : "Woman",
+              avatar: avatar || "",
+            }));
+
+            setInitialData({
+              name: name,
+              email: email,
+              gender: gender
+                ? gender === "female"
+                  ? "Woman"
+                  : "Man"
+                : "Woman",
+              avatar:
+                avatar ||
+                "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
+            });
+          } else {
+            console.error("Failed to fetch user data");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, [isOpen, userId, token]);
 
   const handleOutsideClick = (event) => {
     if (event.target.classList.contains(styles.modal)) {
@@ -88,6 +100,18 @@ useEffect(() => {
     });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); // Створюємо тимчасовий URL
+      setFormData({
+        ...formData,
+        avatar: imageUrl, // Оновлюємо аватар на URL для попереднього перегляду
+        avatarFile: file, // Зберігаємо файл для відправлення на бекенд
+      });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -106,46 +130,74 @@ useEffect(() => {
     if (formData.gender !== initialData.gender) {
       updatedData.gender = formData.gender === "Woman" ? "female" : "male";
     }
-    if (formData.outdatedPassword) { 
+    if (formData.outdatedPassword) {
       updatedData.password = formData.outdatedPassword;
-
     }
     if (formData.newPassword) {
       updatedData.newPassword = formData.newPassword;
     }
 
-    if (Object.keys(updatedData).length === 0) {
-      console.log("No changes detected");
-      return;
-    }
-    
-
-    fetch(
-      `https://water-tracker-06.onrender.com/user`, // Замініть на ID користувача
-      {
+    if (Object.keys(updatedData).length > 0) {
+      fetch(`https://water-tracker-06.onrender.com/user`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Використайте свіжий токен
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(updatedData),
-      }
-    )
-      .then((response) => {
-        console.log("Response status:", response.status);
-        return response.json();
       })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            console.log("User data successfully updated:", data);
+            if (formData.avatarFile) {
+              handleAvatarUpdate(formData.avatarFile);
+            } else {
+              closeModal();
+            }
+          } else {
+            console.error("Failed to update user data");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating user data:", error);
+        });
+    } else if (formData.avatarFile) {
+      handleAvatarUpdate(formData.avatarFile);
+    } else {
+      closeModal();
+    }
+  };
+
+  const handleAvatarUpdate = (avatar) => {
+    const formData = new FormData();
+    formData.append("avatar", avatar);
+
+    fetch("https://water-tracker-06.onrender.com/user/avatar", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
       .then((data) => {
-        console.log("Response data:", data);
-        if (data.status === 200) {
-          console.log("User data successfully updated:", data);
+        if (data.status === 201) {
+          console.log("Avatar successfully updated:", data);
+
+          // Оновлюємо стан з новим URL аватара
+          setFormData((prevData) => ({
+            ...prevData,
+            avatar: data.data.avatar, // Додаємо новий URL аватара
+          }));
+
           closeModal();
         } else {
-          console.error("Failed to update user data");
+          console.error("Failed to update avatar");
         }
       })
       .catch((error) => {
-        console.error("Error updating user data:", error);
+        console.error("Error updating avatar:", error);
       });
   };
 
@@ -157,29 +209,45 @@ useEffect(() => {
             <span className={styles.close} onClick={closeModal}>
               <RxCross1 className={styles.cross} />
             </span>
-            <h2 className={styles.titleOfModalSettings}>Setting</h2>
+            <h2 className={styles.titleOfModalSettings}>Settings</h2>
+            {/*Початок форми */}
             <form onSubmit={handleSubmit}>
+              {/*Блок Фото */}
               <div className={styles.wrapperForBlokOfPhoto}>
                 <label className={styles.yourPhoto}>
                   <span className={styles.titels}>Your photo</span>
                   <div className={styles.uploadAPhoto}>
-                    <img
-                      src="https://m.media-amazon.com/images/M/MV5BMTQ5MzkzNTIyN15BMl5BanBnXkFtZTYwNzUzOTA2._V1_FMjpg_UX1000_.jpg"
-                      alt="Foto of user"
-                      className={styles.fotoOfUser}
-                    />
-                    <div className={styles.uploadButton}>
+                    {formData.avatar ? (
+                      <img
+                        src={formData.avatar}
+                        alt="Фото"
+                        className={styles.fotoOfUser}
+                      />
+                    ) : (
+                      <div className={styles.defoltAvatarOfUser}>
+                          <p className={styles.firstSimbolOfEmail}>{formData.email[0]}</p>
+                      </div>
+                    )}
+
+                    <label className={styles.uploadButton}>
                       <MdOutlineFileUpload
                         className={styles.iconOfUploadAPhoto}
                       />
                       <p className={styles.textUploadAPhoto}>Upload a photo</p>
-                    </div>
+                      <input
+                        type="file"
+                        onChange={handleFileChange}
+                        className={styles.hiddenFileInput}
+                        accept="image/*"
+                      />
+                    </label>
                   </div>
                 </label>
               </div>
-
+              {/*Блок gender, name, e-mail */}
               <div className={styles.wrapperForNameAndPassword}>
                 <div className={styles.wrapperForBlockOne}>
+                  {/*Gender*/}
                   <label>
                     <span className={styles.titels}>Your gender identity</span>
                     <div className={styles.genderradiobutton}>
@@ -209,7 +277,7 @@ useEffect(() => {
                       </div>
                     </div>
                   </label>
-
+                  {/*Name */}
                   <label>
                     <span className={styles.titels}>Your name</span>
                     <div className={styles.wrapperForInput}>
@@ -222,6 +290,7 @@ useEffect(() => {
                       />
                     </div>
                   </label>
+                  {/*E-mail */}
                   <label>
                     <span className={styles.titels}>E-mail</span>
                     <div className={styles.wrapperForInput}>
@@ -235,7 +304,7 @@ useEffect(() => {
                     </div>
                   </label>
                 </div>
-
+                {/*Блок з парольями */}
                 <div className={styles.wrapperForPasswordField}>
                   <span className={styles.titels}>Password</span>
                   <label>
@@ -245,15 +314,20 @@ useEffect(() => {
                     <div className={styles.wrapperForInput}>
                       <input
                         type={
-                          passwordVisibility.outdatedPassword ? "text" : "password"
+                          passwordVisibility.outdatedPassword
+                            ? "text"
+                            : "password"
                         }
-                        name="outdatedPassword" // Заміна oldPassword на outdatedPassword
+                        name="outdatedPassword"
                         value={formData.outdatedPassword}
                         onChange={handleInputChange}
                         className={styles.textInputAreaPassword}
+                        placeholder="Password"
                       />
                       <span
-                        onClick={() => togglePasswordVisibility("outdatedPassword")} // Заміна oldPassword на outdatedPassword
+                        onClick={() =>
+                          togglePasswordVisibility("outdatedPassword")
+                        }
                       >
                         {passwordVisibility.outdatedPassword ? (
                           <HiOutlineEye className={styles.eyeIcon} />
@@ -274,6 +348,7 @@ useEffect(() => {
                         value={formData.newPassword}
                         onChange={handleInputChange}
                         className={styles.textInputAreaPassword}
+                        placeholder="Password"
                       />
                       <span
                         onClick={() => togglePasswordVisibility("newPassword")}
@@ -299,6 +374,7 @@ useEffect(() => {
                         value={formData.repeatPassword}
                         onChange={handleInputChange}
                         className={styles.textInputAreaPassword}
+                        placeholder="Password"
                       />
                       <span
                         onClick={() =>
@@ -315,7 +391,7 @@ useEffect(() => {
                   </label>
                 </div>
               </div>
-
+              {/*Кнопка збереження данних */}
               <button type="submit" className={styles.saveButton}>
                 Save
               </button>
