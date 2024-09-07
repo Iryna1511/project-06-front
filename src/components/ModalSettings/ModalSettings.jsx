@@ -8,8 +8,8 @@ import { RxCross1 } from "react-icons/rx";
 export default function ModalSetting({ isOpen, closeModal }) {
   // Витягуємо дані користувача з Redux-стейту
   const user = useSelector((state) => state.auth.user);
-  const token = useSelector((state) => state.auth.token);
-  console.log("Token:", token);
+  const token = localStorage.getItem('authToken');
+console.log('Token from localStorage:', token);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -97,92 +97,93 @@ export default function ModalSetting({ isOpen, closeModal }) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (formData.newPassword !== formData.repeatPassword) {
-      console.error("New passwords do not match");
-      return;
-    }
+  if (formData.newPassword !== formData.repeatPassword) {
+    console.error("New passwords do not match");
+    return;
+  }
 
-    const updatedData = {};
-    if (formData.name !== initialData.name) {
-      updatedData.name = formData.name;
-    }
-    if (formData.email !== initialData.email) {
-      updatedData.email = formData.email;
-    }
-    if (formData.gender !== initialData.gender) {
-      updatedData.gender = formData.gender === "Woman" ? "female" : "male";
-    }
-    if (formData.outdatedPassword) {
-      updatedData.password = formData.outdatedPassword;
-    }
-    if (formData.newPassword) {
-      updatedData.newPassword = formData.newPassword;
-    }
+  const updatedData = {};
+  if (formData.name !== initialData.name) {
+    updatedData.name = formData.name;
+  }
+  if (formData.email !== initialData.email) {
+    updatedData.email = formData.email;
+  }
+  if (formData.gender !== initialData.gender) {
+    updatedData.gender = formData.gender === "Woman" ? "female" : "male";
+  }
+  if (formData.outdatedPassword) {
+    updatedData.password = formData.outdatedPassword;
+  }
+  if (formData.newPassword) {
+    updatedData.newPassword = formData.newPassword;
+  }
 
-    if (Object.keys(updatedData).length > 0) {
-      fetch(`https://water-tracker-06.onrender.com/user`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === 200) {
-            console.log("User data successfully updated:", data);
-            if (formData.avatarFile) {
-              handleAvatarUpdate(formData.avatarFile);
-            } else {
-              closeModal();
-            }
-          } else {
-            console.error("Failed to update user data");
-          }
-        })
-        .catch((error) => {
-          console.error("Error updating user data:", error);
+  const updateUser = async () => {
+    try {
+      let updateResponse;
+      if (Object.keys(updatedData).length > 0) {
+        updateResponse = await fetch(`https://water-tracker-06.onrender.com/user`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedData),
         });
-    } else if (formData.avatarFile) {
-      handleAvatarUpdate(formData.avatarFile);
-    } else {
+        const updateData = await updateResponse.json();
+        if (updateData.status === 200) {
+          console.log("User data successfully updated:", updateData);
+          if (formData.avatarFile) {
+            await handleAvatarUpdate(formData.avatarFile);
+          }
+        } else {
+          console.error("Failed to update user data");
+          return;
+        }
+      } else if (formData.avatarFile) {
+        await handleAvatarUpdate(formData.avatarFile);
+      }
+
       closeModal();
+      window.location.reload(); // Перезавантаження сторінки
+    } catch (error) {
+      console.error("Error updating user data:", error);
     }
   };
 
-  const handleAvatarUpdate = (avatar) => {
+  updateUser();
+};
+
+  const handleAvatarUpdate = async (avatar) => {
+  try {
     const formData = new FormData();
     formData.append("avatar", avatar);
 
-    fetch("https://water-tracker-06.onrender.com/user/avatar", {
+    const response = await fetch("https://water-tracker-06.onrender.com/user/avatar", {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
       },
       body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === 201) {
-          console.log("Avatar successfully updated:", data);
+    });
+    const data = await response.json();
+    if (data.status === 201) {
+      console.log("Avatar successfully updated:", data);
 
-          setFormData((prevData) => ({
-            ...prevData,
-            avatar: data.data.avatar,
-          }));
-
-          closeModal();
-        } else {
-          console.error("Failed to update avatar");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating avatar:", error);
-      });
-  };
+      setFormData((prevData) => ({
+        ...prevData,
+        avatar: data.data.avatar,
+      }));
+    } else {
+      console.error("Failed to update avatar");
+    }
+  } catch (error) {
+    console.error("Error updating avatar:", error);
+  }
+};
 
   return (
     <div>

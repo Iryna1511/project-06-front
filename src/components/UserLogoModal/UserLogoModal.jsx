@@ -20,8 +20,8 @@ export default function UserLogoModal({
       <div
         className={styles.modalItem}
         onClick={() => {
-          closeUserModal(); // Закриває UserLogoModal
           openLogoutModal(); // Відкриває Logout Modal
+          closeUserModal(); // Закриває UserLogoModal
         }}
       >
         <TbLogout className={styles.TbLogout} />

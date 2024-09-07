@@ -9,7 +9,8 @@ import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import ModalSetting from "../ModalSettings/ModalSettings.jsx";
 import Logout from "../Logout/Logout.jsx";
 import closeLogoutModal from "../../components/Logout/Logout.jsx";
-import openLogoutModal from "../../components/Logout/Logout.jsx";
+import { toggleIsOpenLogoutModal } from "../../redux/auth/authSlice.js"
+
 
 export default function UserAuth() {
   // Що поєднує Пуджа та реакт?
@@ -47,7 +48,7 @@ export default function UserAuth() {
   // Підтягнення логаут та закриття модального вікна логаут
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(closeLogoutModal());
+    closeLogoutModal();
   };
   // Отримання аватару з стейту 
   const getAvatarContent = () => {
@@ -91,7 +92,7 @@ export default function UserAuth() {
             <div className={styles.modal} >
               <UserLogoModal
                 openSettingModal={openSettingModal}
-                openLogoutModal={() => dispatch(openLogoutModal())}
+                openLogoutModal={() => dispatch(toggleIsOpenLogoutModal())}
                 closeUserModal={toggleUserModal}
               />
             </div>
@@ -107,7 +108,7 @@ export default function UserAuth() {
           {isLogoutModalOpen && (
             <Logout
               isOpen={isLogoutModalOpen}
-              closeModal={() => dispatch(closeLogoutModal())}
+              closeModal={closeLogoutModal}
               handleLogout={handleLogout}
             />
           )}
