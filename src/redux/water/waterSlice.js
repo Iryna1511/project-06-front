@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 import {
   addWaterThunk,
@@ -6,33 +6,42 @@ import {
   editWaterThunk,
   fetchWaterDataMonthThunk,
   fetchWaterDataTodayThunk,
-} from './operations';
+} from "./operations";
 
 const initialState = {
   percent: 0,
   notes: [],
   notesPerMonth: [],
+  isAddWaterModalOpen: false,
+  isTodayListModalOpen: false,
+  isDeleteEntryOpen: false,
 };
 
 const slice = createSlice({
-  name: 'water',
+  name: "water",
   initialState,
-  selectors: {
-    selectNotes: state => state.notes,
-    selectPercent: state => state.percent,
-    selectNotesPerMonth: state => state.notesPerMonth,
+  reducers: {
+    toggleAddWaterModal: (state) => {
+      state.isAddWaterModalOpen = !state.isAddWaterModalOpen;
+    },
+    toggleTodayListModal: (state) => {
+      state.isTodayListModalOpen = !state.isTodayListModalOpen;
+    },
+    toggleDeleteEntryModal: (state) => {
+      state.isDeleteEntryOpen = !state.isDeleteEntryOpen;
+    },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(addWaterThunk.fulfilled, (state, { payload }) => {
         state.notes.push(payload);
       })
       .addCase(editWaterThunk.fulfilled, (state, { payload }) => {
-        const index = state.notes.findIndex(note => note._id === payload._id);
+        const index = state.notes.findIndex((note) => note._id === payload._id);
         state.notes.splice(index, 1, payload);
       })
       .addCase(deleteWaterThunk.fulfilled, (state, { payload }) => {
-        state.notes = state.notes.filter(note => note._id !== payload._id);
+        state.notes = state.notes.filter((note) => note._id !== payload._id);
       })
       .addCase(fetchWaterDataTodayThunk.fulfilled, (state, { payload }) => {
         state.notes = payload.result;
@@ -45,5 +54,8 @@ const slice = createSlice({
 });
 
 export const waterReducer = slice.reducer;
-export const { selectNotes, selectPercent, selectNotesPerMonth } =
-  slice.selectors;
+export const {
+  toggleAddWaterModal,
+  toggleTodayListModal,
+  toggleDeleteEntryModal,
+} = slice.actions;

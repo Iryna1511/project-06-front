@@ -9,6 +9,15 @@
   --soft-blue: #d7e3ff;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+  font-weight: 400;
+  line-height: 1.25;
+  overflow-y: auto;
+}
+
 h1,
 h2,
 h3,
@@ -39,13 +48,4 @@ img {
   max-width: 100%;
   height: auto;
   object-fit: cover;
-}
-
-body {
-  font-family: "Roboto", sans-serif;
-  background-color: #fff;
-  color: #2f2f2f;
-  font-weight: 400;
-  line-height: 1.25;
-  overflow-y: auto;
 }

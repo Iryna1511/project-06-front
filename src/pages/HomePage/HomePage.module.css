@@ -1,3 +1,28 @@
+.tables {
+  width: 280px;
+  padding: 24px 8px;
+  margin-left: auto;
+  border-radius: 10px;
+  background-color: var(--soft-blue);
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
+}
+.month {
+  height: 506px;
+}
+
+@media screen and (min-width: 768px) {
+  .tables {
+    width: 704px;
+    padding: 32px 24px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .tables {
+    width: 592px;
+  }
+}
+
 .infoContainer {
     display: flex;
     flex-direction: column;

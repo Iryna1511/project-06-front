@@ -1,24 +1,37 @@
 
 import css from "./HomePage.module.css";
-// import Calendar from "../../components/Calendar/Calendar";
+import TodayWaterList from "../../components/TodayWaterList/TodayWaterList";
+import { useSelector } from "react-redux";
+import {
+  // selectIsAddWaterMdOpen,
+  // selectIsTodayListMdOpen,
+  selectIsDeleteEntryOpen,
+} from "../../redux/water/waterSelectors"; // селектор стану
+// import AddWaterAmountModal from "../../components/AddWaterAmountModal/AddWaterAmountModal";
+// import TodayListModal from "../../components/TodayListModal/TodayListModal";
+import DeleteEntry from "../../components/DeleteEntry/DeleteEntry";
 import DailyNorma from "../../components/DailyNorma/DailyNorma";
 import WaterRatioPanel from "../../components/WaterRatioPanel/WaterRatioPanel";
-import AddWaterButton from "../../components/AddWaterButton/AddWaterButton";
+
+import MonthStatsTable from "../../components/MonthStatsTable/MonthStatsTable";
 
 export default function HomePage() {
+  // const isAddModalOpen = useSelector(selectIsAddWaterMdOpen);
+  // const isEditModalOpen = useSelector(selectIsTodayListMdOpen);
+  const isDeleteModalOpen = useSelector(selectIsDeleteEntryOpen);
+
   return (
-    <div className={css.pageContainer}>
-      <div className= {css.infoContainer}>
-        <DailyNorma />
-        <div className={css.panelContainer}> 
-        <WaterRatioPanel />
-        <AddWaterButton />
-        </div>
+    <>
 
+      <div className={css.tables}>
+        <DailyNorma />  
+        <WaterRatioPanel/>
+        <TodayWaterList />
+        <MonthStatsTable/>
       </div>
-
-      {/* <Calendar /> */}
-
-    </div>
+      {/* {isAddModalOpen && <AddWaterAmountModal />}
+      {isEditModalOpen && <TodayListModal />} */}
+      {isDeleteModalOpen && <DeleteEntry />}
+    </>
   );
 }
