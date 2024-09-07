@@ -153,7 +153,7 @@ export default function ModalSetting({ isOpen, closeModal }) {
           );
           const updateData = await updateResponse.json();
           if (updateResponse.ok) {
-            console.log("User data successfully updated:", updateData);
+          //  console.log("User data successfully updated:", updateData);  Інформація про оновлення данних в консоль
 
             // Оновлення даних у Redux-стейті
             dispatch(updateUserData(updateData.data));
@@ -197,7 +197,7 @@ export default function ModalSetting({ isOpen, closeModal }) {
       );
       const data = await response.json();
       if (response.ok) {
-        console.log("Avatar successfully updated:", data);
+       // console.log("Avatar successfully updated:", data); Інформація про оновлення аватара в консоль
 
         // Оновлення аватара у Redux-стейті
         dispatch(updateUserData({ avatar: data.data.avatar }));
