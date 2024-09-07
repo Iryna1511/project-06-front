@@ -1,8 +1,13 @@
 import css from "./TodayWaterList.module.css";
 import { HiOutlineTrash, HiOutlinePencilSquare } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsAddWaterMdOpen } from "../../redux/water/waterSlice";
 
 export default function TodayWaterList() {
+  const dispatch = useDispatch();
+  const openModalAdd = useSelector(selectIsAddWaterMdOpen);
+  const handleOpen = dispatch(openModalAdd(true));
   return (
     <div className={css.container}>
       <h2 className={css.title}>Today</h2>
@@ -92,7 +97,7 @@ export default function TodayWaterList() {
           </button>
         </li>
       </ul>
-      <button className={css.btnAdd} type="button">
+      <button className={css.btnAdd} onClick={handleOpen} type="button">
         <span>
           <FaPlus />
         </span>
