@@ -9,7 +9,6 @@ export default function ModalSetting({ isOpen, closeModal }) {
   // Витягуємо дані користувача з Redux-стейту
   const user = useSelector((state) => state.auth.user);
   const token = localStorage.getItem('authToken');
-console.log('Token from localStorage:', token);
   
   const [formData, setFormData] = useState({
     name: "",

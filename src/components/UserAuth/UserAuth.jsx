@@ -18,7 +18,7 @@ export default function UserAuth() {
   const navigate = useNavigate();
   // Витягуємо данні із стейту
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const token = useSelector((state) => state.auth.token);
+    const token = localStorage.getItem('authToken');
   
   const user = useSelector((state) => state.auth.user);
   // Записуємо необхідні данні в змінні
