@@ -21,16 +21,9 @@ const authSlice = createSlice({
     token: null,
     isLoggedIn: false,
     isLoading: false,
+    isRefreshing: false,
     error: null,
     isLogoutModalOpen: false,
-  },
-  reducers: {
-    openLogoutModal: (state) => {
-      state.isLogoutModalOpen = true;
-    },
-    closeLogoutModal: (state) => {
-      state.isLogoutModalOpen = false;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -38,7 +31,7 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.data;
         state.isLoading = false;
-        state.isLoggedIn = false; //Тут змінила на false, бо має направляти на сторінку логування після умпішної реєстрації  @ Olena Lytovchenko
+        state.isLoggedIn = false;
       })
       .addCase(register.rejected, handleRejected)
       // .addCase(register.rejected, (state, action) => {
@@ -75,19 +68,20 @@ const authSlice = createSlice({
       //   state.error = action.payload || "Logout error!";
       // })
 
-      .addCase(refreshUser.pending, handlePending)
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload.data;
-        state.isLoggedIn = true;
-        state.isLoading = false;
+      .addCase(refreshUser.pending, (state) => {
+        state.isRefreshing = true;
       })
-      .addCase(refreshUser.rejected, handleRejected);
-    // .addCase(refreshUser.rejected, (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = action.payload || "Error refreshing user data";
-    // });
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.isLoading = false;
+        state.error = action.payload || "Error refreshing user data";
+      });
   },
 });
 
-export const { openLogoutModal, closeLogoutModal } = authSlice.actions;
 export const authReducer = authSlice.reducer;
