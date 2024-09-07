@@ -8,67 +8,91 @@ import styles from "./UserAuth.module.css";
 import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import ModalSetting from "../ModalSettings/ModalSettings.jsx";
 import Logout from "../Logout/Logout.jsx";
+import closeLogoutModal from "../../components/Logout/Logout.jsx";
+import openLogoutModal from "../../components/Logout/Logout.jsx";
 
 export default function UserAuth() {
+  // Що поєднує Пуджа та реакт?
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { user, isLoggedIn, token } = useSelector((state) => state.auth);
-  const isLogoutModalOpen = useSelector((state) => state.auth.isLogoutModalOpen);
+  // Витягуємо данні із стейту
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const token = useSelector((state) => state.auth.token);
   
+  const user = useSelector((state) => state.auth.user);
+  // Записуємо необхідні данні в змінні
+  const avatar = user?.data?.avatar || "";
+  const name = user?.data?.name || "";
+  const email = user?.data?.email || "";
+  // Витягуємо значення про відкритість чи закритість модального вікна з стейту
+  const isLogoutModalOpen = useSelector(
+    (state) => state.auth.isLogoutModalOpen
+  );
+  // Додаємо локальні стани для модального вікна UserLogoModal та SettingModal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
-
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
-
-  const openSettingModal = () => {
-    setIsModalOpen(false); 
-    setIsSettingModalOpen(true); 
+  // Перемикач стану true/false для UserLogoModal
+  const toggleUserModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
-
-  const closeSettingModal = () => setIsSettingModalOpen(false);
-
+  // Відкриття SettingModal та закриття UserLogoModal
+  const openSettingModal = () => {
+    setIsModalOpen(false);
+    setIsSettingModalOpen(true);
+  };
+  // Закриття SettingModal
+  const closeSettingModal = () => {
+    setIsSettingModalOpen(false);
+  };
+  // Підтягнення логаут та закриття модального вікна логаут
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(closeLogoutModal()); 
+    dispatch(closeLogoutModal());
   };
-
+  // Отримання аватару з стейту 
   const getAvatarContent = () => {
-    if (user?.photoUrl) {
-      return (
-        <img src={user.photoUrl} alt="Avatar" className={styles.FotoOfUser} />
-      );
-    }
-    if (user?.name || user?.email) {
-      const initial = (user.name || user.email).charAt(0).toUpperCase();
-      return <div className={styles.avatarLetter}>{initial}</div>;
-    }
-    return <PiUserCircleThin className={styles.defaultAvatar} />;
-  };
-
+  //  Якщо відсутні данні про юзера повертає дефолтний аватар
+  if (!user) {
+    return <PiUserCircleThin className={styles.defaultAvatar} />; // Потрібно змінити на синій фон та першу велику літеру імейлу
+  }
+  // Повертає аватар користувача
+  if (avatar && avatar.trim() !== "") {
+    return (
+      <img src={avatar} alt="Avatar" className={styles.FotoOfUser} />
+    );
+  }
+  // Якщо присутні данні про імя або імейл, використання  першої літери імені або імейлу
+  if (name || email) {
+    const letter = (name || email).charAt(0).toUpperCase();
+    return <div className={styles.avatarLetter}>{letter}</div>;
+  }
+  // Якщо ні одна з умов не підходить повертає дефолтний аватар
+  return <PiUserCircleThin className={styles.defaultAvatar} />;
+};
+  // Перенаправляє на сторінку входу
   const handleSignInClick = () => {
     navigate("/signin");
   };
 
   return (
     <div className={styles.userSection}>
-      {isLoggedIn ? (
+      {isLoggedIn ? ( // Залогінений чи не залогінений користувач?
         <>
-          <div className={styles.LoinedUser} onClick={toggleModal}>
+          <div className={styles.LoinedUser} onClick={toggleUserModal} >
             <span className={styles.nameOfUser}>
-              {user?.name || user?.email}
+              {name || email} {/* Вибір між іменем та імейлом, обирається лівий, якщо відсутній правий*/}
             </span>
-            {getAvatarContent()}
+            {getAvatarContent()} {/*Викликається функція-обробник аватару */}
             <button className={styles.settings}>
-              <SlArrowDown />
+              <SlArrowDown /> 
             </button>
           </div>
           {isModalOpen && (
-            <div className={styles.modal}>
+            <div className={styles.modal} >
               <UserLogoModal
                 openSettingModal={openSettingModal}
-                openLogoutModal={() => dispatch(openLogoutModal())} 
-                closeUserModal={toggleModal} 
+                openLogoutModal={() => dispatch(openLogoutModal())}
+                closeUserModal={toggleUserModal}
               />
             </div>
           )}
@@ -83,7 +107,7 @@ export default function UserAuth() {
           {isLogoutModalOpen && (
             <Logout
               isOpen={isLogoutModalOpen}
-              closeModal={() => dispatch(closeLogoutModal())} 
+              closeModal={() => dispatch(closeLogoutModal())}
               handleLogout={handleLogout}
             />
           )}

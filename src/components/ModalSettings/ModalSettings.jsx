@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styles from "./ModalSettings.module.css";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
 
-export default function ModalSetting({ isOpen, closeModal, userId, token }) {
+export default function ModalSetting({ isOpen, closeModal }) {
+  // Витягуємо дані користувача з Redux-стейту
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+  console.log("Token:", token);
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,13 +18,14 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
     newPassword: "",
     repeatPassword: "",
     gender: "",
-    avatar: undefined, // Встановлюємо значення за замовчуванням
+    avatar: undefined,
   });
+
   const [initialData, setInitialData] = useState({
     name: "",
     email: "",
     gender: "",
-    avatar: undefined, // Додано для зберігання початкового аватара
+    avatar: undefined,
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -28,50 +35,27 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
   });
 
   useEffect(() => {
-    if (isOpen) {
-      fetch(`https://water-tracker-06.onrender.com/user`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === 200) {
-            const { name, email, gender, avatar } = data.data;
+    if (isOpen && user) {
+      const { name, email, gender, avatar } = user.data;
 
-            setFormData((prevData) => ({
-              ...prevData,
-              name: name,
-              email: email,
-              gender: gender
-                ? gender === "female"
-                  ? "Woman"
-                  : "Man"
-                : "Woman",
-              avatar: avatar || "",
-            }));
+      setFormData((prevData) => ({
+        ...prevData,
+        name: name,
+        email: email,
+        gender: gender === "female" ? "Woman" : "Man",
+        avatar: avatar || "",
+      }));
 
-            setInitialData({
-              name: name,
-              email: email,
-              gender: gender
-                ? gender === "female"
-                  ? "Woman"
-                  : "Man"
-                : "Woman",
-              avatar:
-                avatar ||
-                "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
-            });
-          } else {
-            console.error("Failed to fetch user data");
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
+      setInitialData({
+        name: name,
+        email: email,
+        gender: gender === "female" ? "Woman" : "Man",
+        avatar:
+          avatar ||
+          "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
+      });
     }
-  }, [isOpen, userId, token]);
+  }, [isOpen, user]);
 
   const handleOutsideClick = (event) => {
     if (event.target.classList.contains(styles.modal)) {
@@ -103,11 +87,11 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file); // Створюємо тимчасовий URL
+      const imageUrl = URL.createObjectURL(file);
       setFormData({
         ...formData,
-        avatar: imageUrl, // Оновлюємо аватар на URL для попереднього перегляду
-        avatarFile: file, // Зберігаємо файл для відправлення на бекенд
+        avatar: imageUrl,
+        avatarFile: file,
       });
     }
   };
@@ -185,10 +169,9 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
         if (data.status === 201) {
           console.log("Avatar successfully updated:", data);
 
-          // Оновлюємо стан з новим URL аватара
           setFormData((prevData) => ({
             ...prevData,
-            avatar: data.data.avatar, // Додаємо новий URL аватара
+            avatar: data.data.avatar,
           }));
 
           closeModal();
@@ -210,9 +193,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
               <RxCross1 className={styles.cross} />
             </span>
             <h2 className={styles.titleOfModalSettings}>Settings</h2>
-            {/*Початок форми */}
             <form onSubmit={handleSubmit}>
-              {/*Блок Фото */}
               <div className={styles.wrapperForBlokOfPhoto}>
                 <label className={styles.yourPhoto}>
                   <span className={styles.titels}>Your photo</span>
@@ -225,7 +206,7 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                       />
                     ) : (
                       <div className={styles.defoltAvatarOfUser}>
-                          <p className={styles.firstSimbolOfEmail}>{formData.email[0]}</p>
+                        <p className={styles.firstSimbolOfEmail}>{formData.email[0]}</p>
                       </div>
                     )}
 
@@ -244,10 +225,8 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   </div>
                 </label>
               </div>
-              {/*Блок gender, name, e-mail */}
               <div className={styles.wrapperForNameAndPassword}>
                 <div className={styles.wrapperForBlockOne}>
-                  {/*Gender*/}
                   <label>
                     <span className={styles.titels}>Your gender identity</span>
                     <div className={styles.genderradiobutton}>
@@ -277,7 +256,6 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                       </div>
                     </div>
                   </label>
-                  {/*Name */}
                   <label>
                     <span className={styles.titels}>Your name</span>
                     <div className={styles.wrapperForInput}>
@@ -290,7 +268,6 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                       />
                     </div>
                   </label>
-                  {/*E-mail */}
                   <label>
                     <span className={styles.titels}>E-mail</span>
                     <div className={styles.wrapperForInput}>
@@ -304,7 +281,6 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                     </div>
                   </label>
                 </div>
-                {/*Блок з парольями */}
                 <div className={styles.wrapperForPasswordField}>
                   <span className={styles.titels}>Password</span>
                   <label>
@@ -391,7 +367,6 @@ export default function ModalSetting({ isOpen, closeModal, userId, token }) {
                   </label>
                 </div>
               </div>
-              {/*Кнопка збереження данних */}
               <button type="submit" className={styles.saveButton}>
                 Save
               </button>
