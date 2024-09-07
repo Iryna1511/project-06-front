@@ -28,7 +28,13 @@ const authSlice = createSlice({
   reducers: {
     toggleIsOpenLogoutModal: (state) => {
       state.isLogoutModalOpen = !state.isLogoutModalOpen
-    }
+    },
+    updateUserData: (state, action) => {
+      state.user = {
+        ...state.user,
+        ...action.payload,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -90,4 +96,5 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const {toggleIsOpenLogoutModal} = authSlice.actions;
+export const { toggleIsOpenLogoutModal } = authSlice.actions;
+  export const { updateUserData } = authSlice.actions;

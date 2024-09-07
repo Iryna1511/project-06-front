@@ -1,15 +1,31 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./ModalSettings.module.css";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
+import { updateUserData } from "../../redux/auth/authSlice.js";
+import { refreshUser } from "../../redux/auth/operations.js";
 
 export default function ModalSetting({ isOpen, closeModal }) {
+  // Хуки
+  const dispatch = useDispatch();
   // Витягуємо дані користувача з Redux-стейту
   const user = useSelector((state) => state.auth.user);
-  const token = localStorage.getItem('authToken');
-  
+  const token = localStorage.getItem("authToken");
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        ...formData,
+        name: user.data?.name,
+        email: user.data?.email,
+        gender: user.data?.gender === "female" ? "Woman" : "Man",
+        avatar: user.data?.avatar || "",
+      });
+    }
+  }, [user]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -96,93 +112,108 @@ export default function ModalSetting({ isOpen, closeModal }) {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (formData.newPassword !== formData.repeatPassword) {
-    console.error("New passwords do not match");
-    return;
-  }
-
-  const updatedData = {};
-  if (formData.name !== initialData.name) {
-    updatedData.name = formData.name;
-  }
-  if (formData.email !== initialData.email) {
-    updatedData.email = formData.email;
-  }
-  if (formData.gender !== initialData.gender) {
-    updatedData.gender = formData.gender === "Woman" ? "female" : "male";
-  }
-  if (formData.outdatedPassword) {
-    updatedData.password = formData.outdatedPassword;
-  }
-  if (formData.newPassword) {
-    updatedData.newPassword = formData.newPassword;
-  }
-
-  const updateUser = async () => {
-    try {
-      let updateResponse;
-      if (Object.keys(updatedData).length > 0) {
-        updateResponse = await fetch(`https://water-tracker-06.onrender.com/user`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(updatedData),
-        });
-        const updateData = await updateResponse.json();
-        if (updateData.status === 200) {
-          console.log("User data successfully updated:", updateData);
-          if (formData.avatarFile) {
-            await handleAvatarUpdate(formData.avatarFile);
-          }
-        } else {
-          console.error("Failed to update user data");
-          return;
-        }
-      } else if (formData.avatarFile) {
-        await handleAvatarUpdate(formData.avatarFile);
-      }
-
-      closeModal();
-      window.location.reload(); // Перезавантаження сторінки
-    } catch (error) {
-      console.error("Error updating user data:", error);
+    if (formData.newPassword !== formData.repeatPassword) {
+      console.error("New passwords do not match");
+      return;
     }
+
+    const updatedData = {};
+    if (formData.name !== initialData.name) {
+      updatedData.name = formData.name;
+    }
+    if (formData.email !== initialData.email) {
+      updatedData.email = formData.email;
+    }
+    if (formData.gender !== initialData.gender) {
+      updatedData.gender = formData.gender === "Woman" ? "female" : "male";
+    }
+    if (formData.outdatedPassword) {
+      updatedData.password = formData.outdatedPassword;
+    }
+    if (formData.newPassword) {
+      updatedData.newPassword = formData.newPassword;
+    }
+
+    const updateUser = async () => {
+      try {
+        let updateResponse;
+        if (Object.keys(updatedData).length > 0) {
+          updateResponse = await fetch(
+            `https://water-tracker-06.onrender.com/user`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(updatedData),
+            }
+          );
+          const updateData = await updateResponse.json();
+          if (updateResponse.ok) {
+            console.log("User data successfully updated:", updateData);
+
+            // Оновлення даних у Redux-стейті
+            dispatch(updateUserData(updateData.data));
+
+            if (formData.avatarFile) {
+              await handleAvatarUpdate(formData.avatarFile);
+            }
+
+            // Тільки після успішного оновлення викликати рефреш
+            dispatch(refreshUser());
+          } else {
+            console.error("Failed to update user data");
+            return;
+          }
+        } else if (formData.avatarFile) {
+          await handleAvatarUpdate(formData.avatarFile);
+        }
+        closeModal();
+      } catch (error) {
+        console.error("Error updating user data:", error);
+      }
+    };
+
+    updateUser();
   };
 
-  updateUser();
-};
-
   const handleAvatarUpdate = async (avatar) => {
-  try {
-    const formData = new FormData();
-    formData.append("avatar", avatar);
+    try {
+      const formData = new FormData();
+      formData.append("avatar", avatar);
 
-    const response = await fetch("https://water-tracker-06.onrender.com/user/avatar", {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
-    const data = await response.json();
-    if (data.status === 201) {
-      console.log("Avatar successfully updated:", data);
+      const response = await fetch(
+        "https://water-tracker-06.onrender.com/user/avatar",
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Avatar successfully updated:", data);
 
-      setFormData((prevData) => ({
-        ...prevData,
-        avatar: data.data.avatar,
-      }));
-    } else {
-      console.error("Failed to update avatar");
+        // Оновлення аватара у Redux-стейті
+        dispatch(updateUserData({ avatar: data.data.avatar }));
+
+        // Оновлення локального стейту
+        setFormData((prevData) => ({
+          ...prevData,
+          avatar: data.data.avatar,
+        }));
+      } else {
+        console.error("Failed to update avatar");
+      }
+    } catch (error) {
+      console.error("Error updating avatar:", error);
     }
-  } catch (error) {
-    console.error("Error updating avatar:", error);
-  }
-};
+  };
 
   return (
     <div>
@@ -206,7 +237,9 @@ export default function ModalSetting({ isOpen, closeModal }) {
                       />
                     ) : (
                       <div className={styles.defoltAvatarOfUser}>
-                        <p className={styles.firstSimbolOfEmail}>{formData.email[0]}</p>
+                        <p className={styles.firstSimbolOfEmail}>
+                          {formData.email[0]}
+                        </p>
                       </div>
                     )}
 
@@ -231,28 +264,32 @@ export default function ModalSetting({ isOpen, closeModal }) {
                     <span className={styles.titels}>Your gender identity</span>
                     <div className={styles.genderradiobutton}>
                       <div>
-                        <input
-                          className={styles.genderInput}
-                          type="radio"
-                          id="genderWoman"
-                          name="gender"
-                          value="Woman"
-                          checked={formData.gender === "Woman"}
-                          onChange={handleGenderChange}
-                        />
-                        <label htmlFor="genderWoman">Woman</label>
+                        <label htmlFor="genderWoman">
+                          <input
+                            className={styles.genderInput}
+                            type="radio"
+                            id="genderWoman"
+                            name="gender"
+                            value="Woman"
+                            checked={formData.gender === "Woman"}
+                            onChange={handleGenderChange}
+                          />
+                          Woman
+                        </label>
                       </div>
                       <div>
-                        <input
-                          className={styles.genderInput}
-                          type="radio"
-                          id="genderMan"
-                          name="gender"
-                          value="Man"
-                          checked={formData.gender === "Man"}
-                          onChange={handleGenderChange}
-                        />
-                        <label htmlFor="genderMan">Man</label>
+                        <label htmlFor="genderMan">
+                          <input
+                            className={styles.genderInput}
+                            type="radio"
+                            id="genderMan"
+                            name="gender"
+                            value="Man"
+                            checked={formData.gender === "Man"}
+                            onChange={handleGenderChange}
+                          />
+                          Man
+                        </label>
                       </div>
                     </div>
                   </label>
