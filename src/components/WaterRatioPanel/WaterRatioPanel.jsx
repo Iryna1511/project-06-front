@@ -1,5 +1,4 @@
 import css from "./WaterRatioPanel.module.css";
-import  AddWaterButton  from "../AddWaterButton/AddWaterButton";
 
 
 export default function WaterRatioPanel() {
@@ -34,7 +33,6 @@ export default function WaterRatioPanel() {
             </div>
           </div>
         </div>
-        <AddWaterButton />
       </div>
     </>
   );

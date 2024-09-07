@@ -1,0 +1,23 @@
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: auto;
+}
+
+    .panelContainer {
+            flex-direction: row;
+        }
+
+@media (min-width: 769px) {
+    .infoContainer {
+        width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .infoContainer {
+        width: 100%;
+        margin: 0;
+    }
+}
