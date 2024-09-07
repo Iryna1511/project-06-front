@@ -6,6 +6,7 @@ import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
 import { updateUserData } from "../../redux/auth/authSlice.js";
 import { refreshUser } from "../../redux/auth/operations.js";
+import { toast } from "react-hot-toast";
 
 export default function ModalSetting({ isOpen, closeModal }) {
   // Хуки
@@ -111,109 +112,108 @@ export default function ModalSetting({ isOpen, closeModal }) {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (formData.newPassword !== formData.repeatPassword) {
-      console.error("New passwords do not match");
-      return;
-    }
+  if (formData.newPassword !== formData.repeatPassword) {
+    toast.error("New passwords do not match");
+    return;
+  }
 
-    const updatedData = {};
-    if (formData.name !== initialData.name) {
-      updatedData.name = formData.name;
-    }
-    if (formData.email !== initialData.email) {
-      updatedData.email = formData.email;
-    }
-    if (formData.gender !== initialData.gender) {
-      updatedData.gender = formData.gender === "Woman" ? "female" : "male";
-    }
-    if (formData.outdatedPassword) {
-      updatedData.password = formData.outdatedPassword;
-    }
-    if (formData.newPassword) {
-      updatedData.newPassword = formData.newPassword;
-    }
+  const updatedData = {};
+  if (formData.name !== initialData.name) {
+    updatedData.name = formData.name;
+  }
+  if (formData.email !== initialData.email) {
+    updatedData.email = formData.email;
+  }
+  if (formData.gender !== initialData.gender) {
+    updatedData.gender = formData.gender === "Woman" ? "female" : "male";
+  }
+  if (formData.outdatedPassword) {
+    updatedData.password = formData.outdatedPassword;
+  }
+  if (formData.newPassword) {
+    updatedData.newPassword = formData.newPassword;
+  }
 
-    const updateUser = async () => {
-      try {
-        let updateResponse;
-        if (Object.keys(updatedData).length > 0) {
-          updateResponse = await fetch(
-            `https://water-tracker-06.onrender.com/user`,
-            {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify(updatedData),
-            }
-          );
-          const updateData = await updateResponse.json();
-          if (updateResponse.ok) {
-          //  console.log("User data successfully updated:", updateData);  Інформація про оновлення данних в консоль
-
-            // Оновлення даних у Redux-стейті
-            dispatch(updateUserData(updateData.data));
-
-            if (formData.avatarFile) {
-              await handleAvatarUpdate(formData.avatarFile);
-            }
-
-            // Тільки після успішного оновлення викликати рефреш
-            dispatch(refreshUser());
-          } else {
-            console.error("Failed to update user data");
-            return;
-          }
-        } else if (formData.avatarFile) {
-          await handleAvatarUpdate(formData.avatarFile);
-        }
-        closeModal();
-      } catch (error) {
-        console.error("Error updating user data:", error);
-      }
-    };
-
-    updateUser();
-  };
-
-  const handleAvatarUpdate = async (avatar) => {
-    try {
-      const formData = new FormData();
-      formData.append("avatar", avatar);
-
-      const response = await fetch(
-        "https://water-tracker-06.onrender.com/user/avatar",
+  try {
+    let updateResponse;
+    if (Object.keys(updatedData).length > 0) {
+      updateResponse = await fetch(
+        `https://water-tracker-06.onrender.com/user`,
         {
           method: "PATCH",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: formData,
+          body: JSON.stringify(updatedData),
         }
       );
-      const data = await response.json();
-      if (response.ok) {
-       // console.log("Avatar successfully updated:", data); Інформація про оновлення аватара в консоль
+      const updateData = await updateResponse.json();
+      if (updateResponse.ok) {
+        // Оновлення даних у Redux-стейті
+        dispatch(updateUserData(updateData.data));
 
-        // Оновлення аватара у Redux-стейті
-        dispatch(updateUserData({ avatar: data.data.avatar }));
+        if (formData.avatarFile) {
+          await handleAvatarUpdate(formData.avatarFile);
+        }
 
-        // Оновлення локального стейту
-        setFormData((prevData) => ({
-          ...prevData,
-          avatar: data.data.avatar,
-        }));
+        // Тільки після успішного оновлення викликати рефреш
+        dispatch(refreshUser());
+
+        toast.success("User data successfully updated");
+        // Закрити модалку
+        closeModal();
+        
       } else {
-        console.error("Failed to update avatar");
+        toast.error("Failed to update user data");
       }
-    } catch (error) {
-      console.error("Error updating avatar:", error);
+    } else if (formData.avatarFile) {
+      await handleAvatarUpdate(formData.avatarFile);
+      toast.success("User data successfully updated");
+      closeModal();
     }
-  };
+  } catch (error) {
+    toast.error("Error updating user data: " + error.message);
+  }
+};
+
+  const handleAvatarUpdate = async (avatar) => {
+  try {
+    const formData = new FormData();
+    formData.append("avatar", avatar);
+
+    const response = await fetch(
+      "https://water-tracker-06.onrender.com/user/avatar",
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      // Оновлення аватара у Redux-стейті
+      dispatch(updateUserData({ avatar: data.data.avatar }));
+
+      // Оновлення локального стейту
+      setFormData((prevData) => ({
+        ...prevData,
+        avatar: data.data.avatar,
+      }));
+
+      toast.success("Avatar successfully updated");
+    } else {
+      toast.error("Failed to update avatar");
+    }
+  } catch (error) {
+    toast.error("Error updating avatar: " + error.message);
+  }
+};
 
   return (
     <div>
