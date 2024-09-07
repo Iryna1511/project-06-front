@@ -13,16 +13,23 @@ const initialState = {
   notes: [],
   notesPerMonth: [],
   isAddWaterModalOpen: false,
+  isTodayListModalOpen: false,
+  isDeleteEntryOpen: false,
 };
 
 const slice = createSlice({
   name: "water",
   initialState,
-  selectors: {
-    selectNotes: (state) => state.notes,
-    selectPercent: (state) => state.percent,
-    selectNotesPerMonth: (state) => state.notesPerMonth,
-    selectIsAddWaterMdOpen: (state) => state.isAddWaterModalOpen,
+  reducers: {
+    toggleAddWaterModal: (state) => {
+      state.isAddWaterModalOpen = !state.isAddWaterModalOpen;
+    },
+    toggleTodayListModal: (state) => {
+      state.isTodayListModalOpen = !state.isTodayListModalOpen;
+    },
+    toggleDeleteEntryModal: (state) => {
+      state.isDeleteEntryOpen = !state.isDeleteEntryOpen;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,5 +54,8 @@ const slice = createSlice({
 });
 
 export const waterReducer = slice.reducer;
-export const { selectNotes, selectPercent, selectNotesPerMonth } =
-  slice.selectors;
+export const {
+  toggleAddWaterModal,
+  toggleTodayListModal,
+  toggleDeleteEntryModal,
+} = slice.actions;
