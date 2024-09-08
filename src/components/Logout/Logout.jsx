@@ -7,13 +7,14 @@ import { logout } from '../../redux/auth/operations';
 const Logout = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.auth.isLogoutModalOpen);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(isOpen); // Add state management
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(isOpen);
 
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
 
   const handleLogout = async () => {
     try {
       await dispatch(logout()).unwrap();
+      closeLogoutModal();        
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -45,7 +46,7 @@ const Logout = () => {
 
   return (
     <div>
-      {isLogoutModalOpen && ( // Use the updated state
+      {isLogoutModalOpen && (
         <div className={css.modalOverlay}>
           <div className={css.modalContent}>
             <div className={css.modalHeader}>
