@@ -16,16 +16,27 @@ export default function ModalSetting({ isOpen, closeModal }) {
   const token = localStorage.getItem("authToken");
 
   useEffect(() => {
-    if (user) {
-      setFormData({
-        ...formData,
-        name: user.data?.name,
-        email: user.data?.email,
-        gender: user.data?.gender === "female" ? "Woman" : "Man",
-        avatar: user.data?.avatar || "",
+    if (isOpen && user?.data) {
+      const { name, email, gender, avatar } = user.data;
+
+      setFormData((prevData) => ({
+        ...prevData,
+        name: name,
+        email: email,
+        gender: gender === "female" ? "Woman" : "Man",
+        avatar: avatar || "",
+      }));
+
+      setInitialData({
+        name: name,
+        email: email,
+        gender: gender === "female" ? "Woman" : "Man",
+        avatar:
+          avatar ||
+          "https://preview.redd.it/high-resolution-remakes-of-the-old-default-youtube-avatar-v0-bgwxf7bec4ob1.png?width=2160&format=png&auto=webp&s=2bdfee069c06fd8939b9c2bff2c9917ed04771af",
       });
     }
-  }, [user]);
+  }, [isOpen, user]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -34,14 +45,14 @@ export default function ModalSetting({ isOpen, closeModal }) {
     newPassword: "",
     repeatPassword: "",
     gender: "",
-    avatar: undefined,
+    avatar: "",
   });
 
   const [initialData, setInitialData] = useState({
     name: "",
     email: "",
     gender: "",
-    avatar: undefined,
+    avatar: "",
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -113,111 +124,110 @@ export default function ModalSetting({ isOpen, closeModal }) {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (formData.newPassword !== formData.repeatPassword) {
-    toast.error("New passwords do not match");
-    return;
-  }
+    if (formData.newPassword !== formData.repeatPassword) {
+      toast.error("New passwords do not match");
+      return;
+    }
 
-  const updatedData = {};
-  if (formData.name !== initialData.name) {
-    updatedData.name = formData.name;
-  }
-  if (formData.email !== initialData.email) {
-    updatedData.email = formData.email;
-  }
-  if (formData.gender !== initialData.gender) {
-    updatedData.gender = formData.gender === "Woman" ? "female" : "male";
-  }
-  if (formData.outdatedPassword) {
-    updatedData.password = formData.outdatedPassword;
-  }
-  if (formData.newPassword) {
-    updatedData.newPassword = formData.newPassword;
-  }
+    const updatedData = {};
+    if (formData.name !== initialData.name) {
+      updatedData.name = formData.name;
+    }
+    if (formData.email !== initialData.email) {
+      updatedData.email = formData.email;
+    }
+    if (formData.gender !== initialData.gender) {
+      updatedData.gender = formData.gender === "Woman" ? "female" : "male";
+    }
+    if (formData.outdatedPassword) {
+      updatedData.password = formData.outdatedPassword;
+    }
+    if (formData.newPassword) {
+      updatedData.newPassword = formData.newPassword;
+    }
 
-  try {
-    let updateResponse;
-    if (Object.keys(updatedData).length > 0) {
-      updateResponse = await fetch(
-        `https://water-tracker-06.onrender.com/user`,
+    try {
+      let updateResponse;
+      if (Object.keys(updatedData).length > 0) {
+        updateResponse = await fetch(
+          `https://water-tracker-06.onrender.com/user`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedData),
+          }
+        );
+        const updateData = await updateResponse.json();
+        if (updateResponse.ok) {
+          // Оновлення даних у Redux-стейті
+          dispatch(updateUserData(updateData.data));
+
+          if (formData.avatarFile) {
+            await handleAvatarUpdate(formData.avatarFile);
+          }
+
+          // Тільки після успішного оновлення викликати рефреш
+          dispatch(refreshUser());
+
+          toast.success("User data successfully updated");
+          // Закрити модалку
+          closeModal();
+        } else {
+          toast.error("Failed to update user data");
+        }
+      } else if (formData.avatarFile) {
+        await handleAvatarUpdate(formData.avatarFile);
+        toast.success("User data successfully updated");
+        closeModal();
+      }
+    } catch (error) {
+      toast.error("Error updating user data: " + error.message);
+    }
+  };
+
+  const handleAvatarUpdate = async (avatar) => {
+    try {
+      const formData = new FormData();
+      formData.append("avatar", avatar);
+
+      const response = await fetch(
+        "https://water-tracker-06.onrender.com/user/avatar",
         {
           method: "PATCH",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(updatedData),
+          body: formData,
         }
       );
-      const updateData = await updateResponse.json();
-      if (updateResponse.ok) {
-        // Оновлення даних у Redux-стейті
-        dispatch(updateUserData(updateData.data));
+      const data = await response.json();
+      if (response.ok) {
+        // Оновлення аватара у Redux-стейті
+        dispatch(updateUserData({ avatar: data.data.avatar }));
 
-        if (formData.avatarFile) {
-          await handleAvatarUpdate(formData.avatarFile);
-        }
+        // Оновлення локального стейту
+        setFormData((prevData) => ({
+          ...prevData,
+          avatar: data.data.avatar,
+        }));
 
-        // Тільки після успішного оновлення викликати рефреш
-        dispatch(refreshUser());
-
-        toast.success("User data successfully updated");
-        // Закрити модалку
-        closeModal();
-        
+        toast.success("Avatar successfully updated");
       } else {
-        toast.error("Failed to update user data");
+        toast.error("Failed to update avatar");
       }
-    } else if (formData.avatarFile) {
-      await handleAvatarUpdate(formData.avatarFile);
-      toast.success("User data successfully updated");
-      closeModal();
+    } catch (error) {
+      toast.error("Error updating avatar: " + error.message);
     }
-  } catch (error) {
-    toast.error("Error updating user data: " + error.message);
-  }
-};
-
-  const handleAvatarUpdate = async (avatar) => {
-  try {
-    const formData = new FormData();
-    formData.append("avatar", avatar);
-
-    const response = await fetch(
-      "https://water-tracker-06.onrender.com/user/avatar",
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      }
-    );
-    const data = await response.json();
-    if (response.ok) {
-      // Оновлення аватара у Redux-стейті
-      dispatch(updateUserData({ avatar: data.data.avatar }));
-
-      // Оновлення локального стейту
-      setFormData((prevData) => ({
-        ...prevData,
-        avatar: data.data.avatar,
-      }));
-
-      toast.success("Avatar successfully updated");
-    } else {
-      toast.error("Failed to update avatar");
-    }
-  } catch (error) {
-    toast.error("Error updating avatar: " + error.message);
-  }
-};
+  };
 
   return (
     <div>
-      {isOpen && (
+      {isOpen && user?.data ? (
         <div className={styles.modal} onClick={handleOutsideClick}>
           <div className={styles.modalcontent}>
             <span className={styles.close} onClick={closeModal}>
@@ -410,7 +420,7 @@ export default function ModalSetting({ isOpen, closeModal }) {
             </form>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
