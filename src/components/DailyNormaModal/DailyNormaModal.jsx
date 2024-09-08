@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import css from "./DailyNormaModal.module.css";
 import Icons from "../Icons/Iсons.jsx";
 // import { BasicModalWindow } from "../BasicModalWindow/BasicModalWindow";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateDailyNorma } from "../../redux/auth/operations";
+import { selectWaterRate } from "../../redux/auth/selectors";
 const DailyNormaModal = ({ onClose, onOpen }) => {
   const [gender, setGender] = useState("female");
   const [weight, setWeight] = useState("");
@@ -24,8 +25,10 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
         volume = mass * 0.04 + time * 0.6;
       }
       setDailyNorm(volume.toFixed(1));
+      setWaterToDrink(volume.toFixed(1));
     } else {
       setDailyNorm(0.0);
+      setWaterToDrink(0.0);
     }
   }, [gender, weight, activityTime]);
 
@@ -73,17 +76,17 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
       return;
     }
 
-    const data = {
-      gender,
-      weight: parseFloat(weight),
-      activityTime: parseFloat(activityTime),
-      dailyNorm: parseFloat(dailyNorm),
-      waterToDrink: parseFloat(waterToDrink),
-      date: new Date().toISOString(),
-    };
+    // const data = {
+    //   gender,
+    //   weight: parseFloat(weight),
+    //   activityTime: parseFloat(activityTime),
+    //   dailyNorm: parseFloat(dailyNorm),
+    //   waterToDrink: parseFloat(waterToDrink),
+    //   date: new Date().toISOString(),
+    // };
 
     try {
-      dispatch(updateDailyNorma(data));
+      dispatch(updateDailyNorma(waterToDrink));
       onClose();
     } catch (error) {
       console.error("Error saving daily norma:", error);

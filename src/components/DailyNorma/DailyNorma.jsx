@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/auth/selectors";
+import { selectUser, selectWaterRate } from "../../redux/auth/selectors";
 import DailyNormaModal from "../DailyNormaModal/DailyNormaModal";
 import css from "./DailyNorma.module.css";
 
 const DailyNorma = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { waterLvl } = useSelector(selectUser);
-  const waterNorma = waterLvl ? (waterLvl / 1000).toFixed(1) : 2.0;
-
+  // const waterNorma = waterLvl ? (waterLvl / 1000).toFixed(1) : 2.0;
+  const dailyNorma = useSelector(selectWaterRate);
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -21,7 +21,7 @@ const DailyNorma = () => {
     <div className={css.normaContainer}>
       <h2 className={css.normaHeader}>My daily norma:</h2>
       <div className={css.normaEditContainer}>
-        <p className={css.normaWaterVolumeInfo}>{waterNorma} L</p>
+        <p className={css.normaWaterVolumeInfo}>{dailyNorma} L</p>
         <button
           className={css.normaEditButton}
           type='button'

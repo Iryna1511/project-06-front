@@ -69,16 +69,16 @@ export const refreshUser = createAsyncThunk(
 );
 export const updateDailyNorma = createAsyncThunk(
   "user/dailyNorma",
-  async (dailyNorma, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.accessToken;
-
+  async (waterToDrink, thunkAPI) => {
     try {
-      setAuthHeader(persistedToken);
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token || localStorage.getItem("authToken");
+      if (token) {
+        setAuthHeader(token);
+      }
       const res = await axios.patch("/user/waterRate", {
-        waterRate: dailyNorma,
+        waterRate: waterToDrink,
       });
-      console.log(res.data);
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
