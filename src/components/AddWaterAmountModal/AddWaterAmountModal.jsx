@@ -1,4 +1,4 @@
-import css from "./AddWaterAmountModal.module.css"
+import css from "./AddWaterAmountModal.module.css";
 import { useDispatch, useSelector } from "react-redux";
 // import ErrorMsg from "../ErrorMsg/ErrorMsg";
 // import Loader from "../Loader/Loader.jsx"
@@ -7,8 +7,9 @@ import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
 
-// import Modal from "react-modal";
+import { selectIsAddWaterMdOpen } from "../../redux/water/waterSlice";
 
+// import Modal from "react-modal";
 
 // Modal.setAppElement('#root');
 
@@ -169,11 +170,10 @@ export default function AddWaterAmountModal({ water: { amount, id } }) {
       </div>
         {/* </Modal> */}
         </div>
-    </div>
-   
+      )}
   );
 }
 
-// to={backLinkRef.current} 
+// to={backLinkRef.current}
 
 // onClick={() => dispatch(closeWindow())}

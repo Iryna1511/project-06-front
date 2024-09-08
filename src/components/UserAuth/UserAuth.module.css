@@ -43,13 +43,13 @@
     align-items: center;
     font-size: 14px;
     font-weight: bold;
-    background-color: #ccc;
+    background-color: #D7E3FF;
 }
 
 .modal {
     position: absolute;
     top: 100%;
-    left: 0;
+    left: -50px;
     background: white;
     padding: 16px;
     box-shadow: 0 4px 8px rgba(64, 123, 255, 0.2);

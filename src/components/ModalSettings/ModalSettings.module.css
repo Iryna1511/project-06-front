@@ -8,7 +8,7 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .modalcontent {
@@ -70,15 +70,27 @@ form {
   font-weight: 500;
 }
 
+.genderBlock {
+  width: 181px;
+}
+
 .genderradiobutton {
   display: flex;
   gap: 8px;
   margin: 12px 0 24px;
+  
+}
+
+.genderOption {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .genderInput {
   cursor: pointer;
   accent-color: #407bff;
+  margin-right: 4px;
 }
 
 label {
@@ -95,15 +107,26 @@ label {
   color: #407bff;
   outline: none;
   border: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .textInputAreaPassword {
   color: #9ebbff;
   outline: none;
   border: 0;
+  width: 100%;
+  height: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+input[type="password"]::placeholder {
+  color: #9ebbff;
 }
 
 .wrapperForInput {
+  color: #9ebbff;
   border: 1px solid #d7e3ff;
   width: 256px;
   padding: 8px;
@@ -147,10 +170,40 @@ label {
   cursor: pointer;
 }
 
+
+.hiddenFileInput {
+  display: none;
+  /* Приховуємо інпут */
+}
+
 .uploadButton {
   display: flex;
   gap: 8px;
   cursor: pointer;
+  align-items: center;
+}
+
+.textUploadAPhoto {
+  font-size: 18px;
+  color: #407bff;
+  font-weight: 500;
+}
+
+.defoltAvatarOfUser {
+  border-radius: 50%;
+  background-color: #407bff;
+  height: 80px;
+  width: 80px;
+}
+
+.firstSimbolOfEmail {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d7e3ff;
+  font-size: 35px;
 }
 
 /* Планшети (768px - 1023px) */
@@ -158,6 +211,10 @@ label {
   .modalcontent {
     width: 704px;
     margin-top: 42px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 
   .genderradiobutton {
@@ -166,7 +223,13 @@ label {
 
   .wrapperForInput {
     width: 392px;
+    
   }
+
+    .saveButton {
+      width: 160px;
+      margin-left: auto;
+    }
 }
 
 /* Десктопи (1024px і більше) */

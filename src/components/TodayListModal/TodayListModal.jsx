@@ -1,4 +1,4 @@
-import css from "./TodayListModal.module.css"
+import css from "./TodayListModal.module.css";
 // import ErrorMsg from "../ErrorMsg/ErrorMsg";
 // import Loader from "../Loader/Loader.jsx"
 // import { NavLink } from "react-router-dom";
@@ -7,9 +7,10 @@ import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
 import { createSlice } from "@reduxjs/toolkit";
 // import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
+import { toggleTodayListModal } from "../../redux/water/waterSlice.js";
 // import Modal from "react-modal";
-
 
 // Modal.setAppElement('#root');
 
@@ -94,11 +95,48 @@ export default function TodayListModal({water: {amount, time, id}}) {
       </div>
         {/* </Modal> */}
         </div>
+        <h3 className={css.subtitle}>Correct entered data:</h3>
+        <p className={css.signaturetext}>Amount of water:</p>
+        <div className={css.waterInputcontainer}>
+          <button
+            className={css.amountButton}
+            type="button"
+            onClick={minusWater}
+          >
+            <HiOutlineMinusSmall size="24" color="407BFF" />
+          </button>
+          <p className={css.amountWaterIncome}>250 ml</p>
+          <button
+            className={css.amountButton}
+            type="button"
+            onClick={plusWater}
+          >
+            <HiOutlinePlusSmall size="24" color="407BFF" />
+          </button>
+        </div>
+
+        <p className={css.signaturetext}>Recording time:</p>
+        <div className={css.timeDropdown}>
+          <TimeDropdown />
+        </div>
+        <h3 className={css.subtitle}>Enter the value of the water used:</h3>
+        <input
+          className={css.waterAmount}
+          type="text"
+          onChange={handleWaterAmountChange}
+        />
+        <div className={css.footerContainer}>
+          <p className={css.amountWaterIncomeFooter}>250 ml</p>
+          <button className={css.saveButton} type="submit">
+            Save
+          </button>
+        </div>
+        {/* </Modal> */}
+      </div>
     </div>
-   
   );
 }
 
-// to={backLinkRef.current} 
+// to={backLinkRef.current}
 
 // onClick={() => dispatch(closeWindow())}
