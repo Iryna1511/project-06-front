@@ -47,8 +47,19 @@ export const setEnteredTime = (time) => ({
     payload: time,
 });
 
+export const toggleModal = () => ({
+    tupe: 'TOGGLE_MODAL'
+})
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'TOGGLE_MODAL':
+            return {
+                ...state,
+                modal: {
+                    ...state.modal, isModalOpen: !state.modal.isModalOpen,
+                },
+            };
         case 'INCREMENT_WATER_AMOUNT':
             return {
                 ...state,
@@ -75,7 +86,6 @@ const reducer = (state = initialState, action) => {
     }
 };
 
-// const initialState = { waterLog: [] };
 
 // const waterSlice = createSlice({
 //     name: 'waterAmount',
@@ -128,9 +138,6 @@ export default function AddWaterAmountModal({ water: { amount, id } }) {
     }
     
     const handleCloseModal = () => dispatch(toggleWaterModal());
-//   useEffect(() => {
-//     dispatch(fetchContacts())
-//   }, [dispatch])
 
   return (
       

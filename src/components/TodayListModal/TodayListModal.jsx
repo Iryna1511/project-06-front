@@ -27,6 +27,21 @@ import { createSlice } from "@reduxjs/toolkit";
 //   },
 // };
 
+const initialState = { 
+    modal: {
+        isModalOpen: false,
+        waterAmount: 0,
+        enteredTime: '',
+        },
+}
+
+export const getWater = state => state.water;
+export const getTime = state => state.time; 
+// селектор для отримання введених даних з елементу списку введеної води і часу
+
+export const selectIsModalOpen = state => state.modal.isModalOpen;
+// селектор для відкриття модального вікна
+
 
 
 
@@ -34,17 +49,14 @@ export default function TodayListModal({water: {amount, time, id}}) {
  
   // const waterAmount = useSelector(state => state.waterAmount);
 
-    //  const isModalOpen = useSelector(selectIsModalOpen);
+  
     // const isError = useSelector(selectError);
     // const isLoading = useSelector(selectLoading);
     const dispatch = useDispatch();
-
+   const isModalOpen = useSelector(selectIsModalOpen);
     const handleAddWaterChanges = () => dispatch(addWaterAMount(id));
     
-    const handleCloseModal = () => dispatch(toggleTodayListModal());
-//   useEffect(() => {
-//     dispatch(fetchAmountofWater())
-//   }, [dispatch])
+    const handleCloseModal = () => dispatch(toggleModal());
 
   return (
       
