@@ -42,11 +42,17 @@ export const deleteWaterThunk = createAsyncThunk(
   }
 );
 
+// допрацьовую цей запит Іра Г
 export const fetchWaterDataTodayThunk = createAsyncThunk(
   "fetchWaterDataToday",
   async (_, thunkAPI) => {
     try {
-      const { data } = await authApi.get("water/today");
+      const date = new Date();
+      const isoDate = date.toISOString();
+      const day = isoDate.split("T")[0];
+
+      const { data } = await authApi.get(`water/day?day=${day}`);
+      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.message);

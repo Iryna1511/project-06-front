@@ -1,17 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { newDate } from '../redux/waterDetails/helpers';
-
+import { newDate } from "../redux/waterDetails/helpers";
 
 const instance = axios.create({
-  baseURL: 'https://water-tracker-06.onrender.com',
+  baseURL: "https://water-tracker-06.onrender.com",
 });
 
 export const authApi = axios.create({
-  baseURL: 'https://water-tracker-06.onrender.com/api-docs/',
+  baseURL: "https://water-tracker-06.onrender.com/api-docs/",
 });
 
-export const setToken = token => {
+export const setToken = (token) => {
   authApi.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 export const removeToken = () => {
@@ -20,7 +19,7 @@ export const removeToken = () => {
 
 // -------------------waterMonth----------------------
 
-export const fetchMonthWater = async selectDate => {
+export const fetchMonthWater = async (selectDate) => {
   const { data } = await instance.get(
     `/api/user/water/month?date=${selectDate}`
   );
@@ -40,14 +39,15 @@ export const newDailyNorm = async ({ updatedData }) => {
 
 // -------------------water----------------------
 
+// ось це теж чіпаю
 export const fetchTodayWater = async () => {
   const time = newDate(new Date());
-  const { data } = await instance.get(`/api/user/water/today?date=${time}`);
+  const { data } = await instance.get(`/water/day?day=${time}`);
   return data;
 };
 
-export const addWaters = async newWater => {
-  const { data } = await instance.post('/api/user/water', newWater);
+export const addWaters = async (newWater) => {
+  const { data } = await instance.post("/api/user/water", newWater);
   return data;
 };
 

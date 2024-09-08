@@ -5,12 +5,12 @@ import {
   // selectIsAddWaterMdOpen,
   // selectIsTodayListMdOpen,
   selectIsDeleteEntryOpen,
-} from "../../redux/water/waterSelectors"; // селектор стану
+} from "../../redux/waterDetails/waterSelectors"; // селектор стану
 // import AddWaterAmountModal from "../../components/AddWaterAmountModal/AddWaterAmountModal";
 // import TodayListModal from "../../components/TodayListModal/TodayListModal";
 import DeleteEntry from "../../components/DeleteEntry/DeleteEntry";
 
-import MonthStatsTable from "../../components/MonthStatsTable/MonthStatsTable";
+// import MonthStatsTable from "../../components/MonthStatsTable/MonthStatsTable";
 
 export default function HomePage() {
   // const isAddModalOpen = useSelector(selectIsAddWaterMdOpen);
@@ -21,7 +21,7 @@ export default function HomePage() {
     <>
       <div className={css.tables}>
         <TodayWaterList />
-        <MonthStatsTable/>
+        {/* <MonthStatsTable /> */}
       </div>
       {/* {isAddModalOpen && <AddWaterAmountModal />}
       {isEditModalOpen && <TodayListModal />} */}

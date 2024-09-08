@@ -3,7 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import css from "./DeleteEntry.module.css";
 import { deleteWaterThunk } from "../../redux/water/operations";
-import { toggleDeleteEntryModal } from "../../redux/water/waterSlice";
+import { toggleDeleteEntryModal } from "../../redux/waterDetails/waterSlice";
 
 const DeleteEntry = ({ entryId }) => {
   const dispatch = useDispatch();

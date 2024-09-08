@@ -1,18 +1,26 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { fetchTodayWater, addWaters, editWater, deleteWater } from '../../axiosConfig/authAPI';
+import {
+  fetchTodayWater,
+  addWaters,
+  editWater,
+  deleteWater,
+} from "../../axiosConfig/authAPI";
 
-
-export const getTodayWater = createAsyncThunk('water/getTodayWater', async (_, thunkAPI) => {
-  try {
-    const water = await fetchTodayWater();
-    return water;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+// поправлю цю, щоб був коректний запит на бекк
+export const getTodayWater = createAsyncThunk(
+  "water/getTodayWater",
+  async (_, thunkAPI) => {
+    try {
+      const water = await fetchTodayWater();
+      return water;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 export const addWatersThunk = createAsyncThunk(
-  'water/addWater',
+  "water/addWater",
   async (newWater, { rejectWithValue }) => {
     try {
       const data = await addWaters(newWater);
@@ -24,7 +32,7 @@ export const addWatersThunk = createAsyncThunk(
 );
 
 export const editWaterThunk = createAsyncThunk(
-  'water/editWater',
+  "water/editWater",
   async ({ _id, waterVolume, time, id }, { rejectWithValue }) => {
     try {
       const newWater = { waterVolume, time };
@@ -37,7 +45,7 @@ export const editWaterThunk = createAsyncThunk(
 );
 
 export const deleteWaterThunk = createAsyncThunk(
-  'water/deleteWater',
+  "water/deleteWater",
   async (dataDelete, { rejectWithValue }) => {
     try {
       deleteWater(dataDelete);
