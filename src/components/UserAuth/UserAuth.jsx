@@ -9,8 +9,7 @@ import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import ModalSetting from "../ModalSettings/ModalSettings.jsx";
 import Logout from "../Logout/Logout.jsx";
 import closeLogoutModal from "../../components/Logout/Logout.jsx";
-import { toggleIsOpenLogoutModal } from "../../redux/auth/authSlice.js"
-
+import { toggleIsOpenLogoutModal } from "../../redux/auth/authSlice.js";
 
 export default function UserAuth() {
   // Що поєднує Пуджа та реакт?
@@ -18,13 +17,13 @@ export default function UserAuth() {
   const navigate = useNavigate();
   // Витягуємо данні із стейту
   const { isLoggedIn } = useSelector((state) => state.auth);
-    const token = localStorage.getItem('authToken');
-  
+  const token = localStorage.getItem("authToken");
+
   const user = useSelector((state) => state.auth.user);
   // Записуємо необхідні данні в змінні
-  const avatar = user?.data?.avatar || "";
-  const name = user?.data?.name || "";
-  const email = user?.data?.email || "";
+  const avatar = user.avatar || "";
+  const name = user.name || "";
+  const email = user.email || "";
   // Витягуємо значення про відкритість чи закритість модального вікна з стейту
   const isLogoutModalOpen = useSelector(
     (state) => state.auth.isLogoutModalOpen
@@ -50,26 +49,24 @@ export default function UserAuth() {
     dispatch(logout());
     closeLogoutModal();
   };
-  // Отримання аватару з стейту 
+  // Отримання аватару з стейту
   const getAvatarContent = () => {
-  //  Якщо відсутні данні про юзера повертає дефолтний аватар
-  if (!user) {
-    return <PiUserCircleThin className={styles.defaultAvatar} />; // Потрібно змінити на синій фон та першу велику літеру імейлу
-  }
-  // Повертає аватар користувача
-  if (avatar && avatar.trim() !== "") {
-    return (
-      <img src={avatar} alt="Avatar" className={styles.FotoOfUser} />
-    );
-  }
-  // Якщо присутні данні про імя або імейл, використання  першої літери імені або імейлу
-  if (name || email) {
-    const letter = (name || email).charAt(0).toUpperCase();
-    return <div className={styles.avatarLetter}>{letter}</div>;
-  }
-  // Якщо ні одна з умов не підходить повертає дефолтний аватар
-  return <PiUserCircleThin className={styles.defaultAvatar} />;
-};
+    //  Якщо відсутні данні про юзера повертає дефолтний аватар
+    if (!user) {
+      return <PiUserCircleThin className={styles.defaultAvatar} />; // Потрібно змінити на синій фон та першу велику літеру імейлу
+    }
+    // Повертає аватар користувача
+    if (avatar && avatar.trim() !== "") {
+      return <img src={avatar} alt="Avatar" className={styles.FotoOfUser} />;
+    }
+    // Якщо присутні данні про імя або імейл, використання  першої літери імені або імейлу
+    if (name || email) {
+      const letter = (name || email).charAt(0).toUpperCase();
+      return <div className={styles.avatarLetter}>{letter}</div>;
+    }
+    // Якщо ні одна з умов не підходить повертає дефолтний аватар
+    return <PiUserCircleThin className={styles.defaultAvatar} />;
+  };
   // Перенаправляє на сторінку входу
   const handleSignInClick = () => {
     navigate("/signin");
@@ -79,17 +76,18 @@ export default function UserAuth() {
     <div className={styles.userSection}>
       {isLoggedIn ? ( // Залогінений чи не залогінений користувач?
         <>
-          <div className={styles.LoinedUser} onClick={toggleUserModal} >
+          <div className={styles.LoinedUser} onClick={toggleUserModal}>
             <span className={styles.nameOfUser}>
-              {name || email} {/* Вибір між іменем та імейлом, обирається лівий, якщо відсутній правий*/}
+              {name}{" "}
+              {/* Вибір між іменем та імейлом, обирається лівий, якщо відсутній правий*/}
             </span>
             {getAvatarContent()} {/*Викликається функція-обробник аватару */}
             <button className={styles.settings}>
-              <SlArrowDown /> 
+              <SlArrowDown />
             </button>
           </div>
           {isModalOpen && (
-            <div className={styles.modal} >
+            <div className={styles.modal}>
               <UserLogoModal
                 openSettingModal={openSettingModal}
                 openLogoutModal={() => dispatch(toggleIsOpenLogoutModal())}

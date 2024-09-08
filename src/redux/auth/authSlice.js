@@ -3,7 +3,6 @@ import { login, logout, register, refreshUser } from "./operations.js";
 
 const handlePending = (state) => {
   state.isLoading = true;
-  state.error = null;
 };
 
 const handleRejected = (state, action) => {
@@ -30,7 +29,7 @@ const authSlice = createSlice({
   },
   reducers: {
     toggleIsOpenLogoutModal: (state) => {
-      state.isLogoutModalOpen = !state.isLogoutModalOpen
+      state.isLogoutModalOpen = !state.isLogoutModalOpen;
     },
     updateUserData: (state, action) => {
       state.user = {
@@ -55,7 +54,9 @@ const authSlice = createSlice({
 
       .addCase(login.pending, handlePending)
       .addCase(login.fulfilled, (state, action) => {
-        state.user = action.payload.data;
+        state.user = action.payload.data.user;
+        console.log(state.user);
+        
         state.token = action.payload.data.accessToken;
         state.isLoading = false;
         state.isLoggedIn = true;
@@ -101,4 +102,4 @@ const authSlice = createSlice({
 
 export const authReducer = authSlice.reducer;
 export const { toggleIsOpenLogoutModal } = authSlice.actions;
-  export const { updateUserData } = authSlice.actions;
+export const { updateUserData } = authSlice.actions;

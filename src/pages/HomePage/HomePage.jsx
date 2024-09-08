@@ -9,8 +9,10 @@ import {
 // import AddWaterAmountModal from "../../components/AddWaterAmountModal/AddWaterAmountModal";
 // import TodayListModal from "../../components/TodayListModal/TodayListModal";
 import DeleteEntry from "../../components/DeleteEntry/DeleteEntry";
+import DailyNorma from "../../components/DailyNorma/DailyNorma";
+import WaterRatioPanel from "../../components/WaterRatioPanel/WaterRatioPanel";
 
-// import MonthStatsTable from "../../components/MonthStatsTable/MonthStatsTable";
+import MonthStatsTable from "../../components/MonthStatsTable/MonthStatsTable";
 
 export default function HomePage() {
   // const isAddModalOpen = useSelector(selectIsAddWaterMdOpen);
@@ -19,9 +21,17 @@ export default function HomePage() {
 
   return (
     <>
-      <div className={css.tables}>
-        <TodayWaterList />
-        {/* <MonthStatsTable /> */}
+      <div className={css.generalContainer}>
+        <div className={css.infoContainer}>
+          <div className={css.containerWater}>
+            <DailyNorma />
+            <WaterRatioPanel />
+          </div>
+        </div>
+        <div className={css.tables}>
+          <TodayWaterList />
+          <MonthStatsTable />
+        </div>
       </div>
       {/* {isAddModalOpen && <AddWaterAmountModal />}
       {isEditModalOpen && <TodayListModal />} */}

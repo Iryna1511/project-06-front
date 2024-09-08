@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import {authApi} from "../../axiosConfig/authAPI";
+
 
 axios.defaults.baseURL = "https://water-tracker-06.onrender.com/";
 
@@ -33,9 +35,6 @@ export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
     localStorage.setItem("authToken", token);
 
     
-    thunkAPI.dispatch(refreshUser()); // Додати виклик для оновлення даних про користувача !!!
-
-
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -62,10 +61,23 @@ export const refreshUser = createAsyncThunk(
         setAuthHeader(token);
         const response = await axios.get("/user");
 
-        console.log("Server response:", response.data);
         return response.data;
       }
       return thunkAPI.rejectWithValue("No token available");
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const updateDailyNorma = createAsyncThunk(
+  "user/dailyNorma",
+  async (credentials, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.accessToken;
+    try {
+      setAuthHeader(persistedToken);
+      const res = await authApi.post("/users/daily-norma", credentials);
+      return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
