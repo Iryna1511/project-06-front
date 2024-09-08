@@ -75,7 +75,7 @@ export const updateDailyNorma = createAsyncThunk(
 
     try {
       setAuthHeader(persistedToken);
-      const res = await axios.patch("/water/waterRate", {
+      const res = await axios.patch("/user/waterRate", {
         waterRate: dailyNorma,
       });
       console.log(res.data);
