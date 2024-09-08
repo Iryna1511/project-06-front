@@ -8,6 +8,7 @@ export default function WaterRatioPanel() {
 
   return (
     <>
+      <div className={css.marginSection}>
       <h2 className={css.title}>Today</h2>
 
       <div className={css.wrapper}>
@@ -34,8 +35,11 @@ export default function WaterRatioPanel() {
             </div>
           </div>
         </div>
+       <AddWaterButton />
+        </div>
+
       </div>
-      <AddWaterButton />
+
     </>
   );
 }

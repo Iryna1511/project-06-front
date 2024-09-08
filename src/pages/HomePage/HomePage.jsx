@@ -22,12 +22,19 @@ export default function HomePage() {
 
   return (
     <>
+      <div className={css.generalContainer}>
+        <div className={css.infoContainer}>
+          <div className={css.containerWater}>
+            <DailyNorma  />  
+            <WaterRatioPanel/>
+          </div>
 
-      <div className={css.tables}>
-        <DailyNorma />  
-        <WaterRatioPanel/>
-        <TodayWaterList />
-        <MonthStatsTable/>
+        </div>
+
+        <div className={css.tables}>
+          <TodayWaterList />
+          <MonthStatsTable/>
+          </div>
       </div>
       {/* {isAddModalOpen && <AddWaterAmountModal />}
       {isEditModalOpen && <TodayListModal />} */}
