@@ -9,6 +9,7 @@ const instance = axios.create({
 
 export const authApi = axios.create({
   baseURL: 'https://water-tracker-06.onrender.com/api-docs/',
+  withCredentials: true,
 });
 
 export const setToken = token => {

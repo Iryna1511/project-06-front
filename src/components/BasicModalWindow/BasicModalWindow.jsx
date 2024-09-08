@@ -1,7 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
-import PropTypes from "prop-types";
-import Icons from "../IconsSettings/Iсons.jsx";
+import Icons from "../Icons/Iсons.jsx";
 import css from "./BasicModalWindow.module.css";
 
 export const BasicModalWindow = ({ onOpen, children, title, onClose }) => {
@@ -48,11 +47,4 @@ export const BasicModalWindow = ({ onOpen, children, title, onClose }) => {
   );
 
   return createPortal(ModalContentWindow, modalWindowRoot);
-};
-
-BasicModalWindow.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  onOpen: PropTypes.bool.isRequired, 
-  children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
 };

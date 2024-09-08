@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import css from "./SharedLayout.module.css";
+import css from "./SharedLayout.module.css"
 import Header from "../Header/Header";
 import clsx from "clsx";
 
