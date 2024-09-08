@@ -28,6 +28,7 @@ const authSlice = createSlice({
     isLogoutModalOpen: false,
   },
   reducers: {
+    //Liza 
     toggleIsOpenLogoutModal: (state) => {
       state.isLogoutModalOpen = !state.isLogoutModalOpen;
     },

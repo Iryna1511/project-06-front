@@ -40,7 +40,7 @@ export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
-
+//Liza 
 export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
