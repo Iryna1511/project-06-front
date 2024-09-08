@@ -1,4 +1,4 @@
-export const selectUser = (state) => state.auth.user;
+export const selectUser = (state) => state.auth.user; // Використовується в хедері для отримання данних про користувача.
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 

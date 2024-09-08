@@ -27,11 +27,11 @@ const authSlice = createSlice({
     error: null,
     isLogoutModalOpen: false,
   },
-  reducers: {
-    toggleIsOpenLogoutModal: (state) => {
+  reducers: {                                             
+    toggleIsOpenLogoutModal: (state) => {                       // Використовуються в хедері. Перемикач модалки логауту.
       state.isLogoutModalOpen = !state.isLogoutModalOpen;
     },
-    updateUserData: (state, action) => {
+    updateUserData: (state, action) => {                        // Використовуються в хедері. Оновлення даних користувача.
       state.user = {
         ...state.user,
         ...action.payload,
@@ -101,5 +101,5 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { toggleIsOpenLogoutModal } = authSlice.actions;
-export const { updateUserData } = authSlice.actions;
+export const { toggleIsOpenLogoutModal } = authSlice.actions; // Викоистовується в хедері. 
+export const { updateUserData } = authSlice.actions; // Викоистовується в хедері. 
