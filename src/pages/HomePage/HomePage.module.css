@@ -11,43 +11,40 @@
   height: 506px;
 }
 
-@media screen and (min-width: 768px) {
-  .tables {
-    width: 704px;
-    padding: 32px 24px;
-  }
+.infoContainer {
+  background-image: url("../../images/mobile/bottle-home-screen-1x.png");
+  background-size: inherit;
+  background-position: center 90px;
+  background-repeat: no-repeat;
 }
 
-@media screen and (min-width: 1440px) {
-  .tables {
-    width: 592px;
-  }
-}
-
-.containerWater {
+/* .containerWater {
   display: flex;
   flex-direction: column;
   gap: 24px;
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.2);
   border-radius: 10px;
   padding: 24px 8px;
-}
+} */
 
-.infoContainer {
-  background-image: url("../../images/mobile/bottle-home-screen-1x.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.generalContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
+  gap: 40px;
 }
-
 @media screen and (min-width: 768px) {
+  .tables {
+    width: 704px;
+    padding: 32px 24px;
+  }
+
   .infoContainer {
     background-image: url("../../images/tablet/bottle-home-screen-1x.png");
-    background-position: center 0;
+    background-position: center 40px;
+  }
+
+  .containerWater {
+    padding: 32px 24px;
   }
 }
 
@@ -56,24 +53,13 @@
     background-image: url("../../images/desktop/bottle-home-screen-1x.png");
     background-position: center -30px;
   }
-}
 
-@media screen and (min-width: 768px) {
-  .containerWater {
-    padding: 32px 24px;
+  .tables {
+    width: 592px;
   }
-}
 
-.generalContainer {
-  display: flex;
-  flex-direction: column;
-  
-}
-
-@media screen and (min-width: 1440px) {
   .generalContainer {
     flex-direction: row;
-
   }
 
   .tables {
@@ -84,7 +70,7 @@
     width: 704px;
   }
 
-  .infoContainer{
-      width: 50%;
+  .infoContainer {
+    width: 50%;
   }
 }

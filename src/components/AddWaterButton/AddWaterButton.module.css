@@ -1,49 +1,49 @@
 .btn {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    background-color: #407BFF;
-    border: none;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: #407bff;
+  border: none;
 
-    width: 260px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    border-radius: 10px;
-    margin: 0 auto;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.25;
-    color: #FFFFFF;
+  width: 100%;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-radius: 10px;
+  margin: 0 auto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #ffffff;
 }
 
 .btn:hover {
-    box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
 }
 
 .btn:active {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 .icon-white {
-    width: 24px;
-    height: 24px;
-    background: transparent;
-    fill: none;
-    stroke: #ffffff;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  fill: none;
+  stroke: #ffffff;
 }
 
 @media screen and (min-width: 768px) {
-    .btn {
-        width: 336px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        font-size: 18px;
-    }
+  .btn {
+    width: 336px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+  }
 }
 
 @media screen and (min-width: 1440px) {
-    .btn {
-        width: 330px;
-    }
+  .btn {
+    width: 330px;
+  }
 }

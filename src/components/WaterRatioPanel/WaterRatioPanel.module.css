@@ -1,143 +1,140 @@
+/* .marginSection {
+  margin-top: 16px;
+} */
+
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
 }
-
-.marginSection{
-    margin-top: 16px;
-}
-
-
 
 .title {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.3;
-    color: #407BFF;
-    margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #407bff;
+  margin-bottom: 16px;
 }
 
 .progressContainer {
-    margin: 0 auto;
-    width: 256px;
-    position: relative;
+  margin: 0 auto;
+  width: 256px;
+  position: relative;
+  /* margin-bottom: 16px; */
 }
 
 .progressBar {
-    width: 100%;
-    height: 8px;
-    border-radius: 10px;
-    background: rgba(215, 227, 255, 1);
-    position: relative;
-    margin-bottom: 4px;
+  width: 100%;
+  height: 8px;
+  border-radius: 10px;
+  background: rgba(215, 227, 255, 1);
+  position: relative;
+  margin-bottom: 4px;
 }
 
 .progressCompleted {
-    height: 8px;
-    border-radius: 10px;
-    background: rgba(158, 187, 255, 1);
-    position: absolute;
+  height: 8px;
+  border-radius: 10px;
+  background: rgba(158, 187, 255, 1);
+  position: absolute;
 }
 
 .percentageMarker {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    border: 1px solid #407BFF;
-    position: absolute;
-    top: -3px;
-    right: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid #407bff;
+  position: absolute;
+  top: -3px;
+  right: 0;
 }
 
 .percentageText {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.3;
-    color: #2F3875;
-    position: absolute;
-    bottom: 15px;
-    right: -50%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #2f3875;
+  position: absolute;
+  bottom: 15px;
+  right: -50%;
 }
 
 .scaleContainer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .scaleTick {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .scaleTick:first-child {
-    align-items: flex-start;
+  align-items: flex-start;
 }
 
 .scaleTick:last-child {
-    align-items: flex-end;
+  align-items: flex-end;
 }
 
 .scaleTick::before {
-    content: "";
-    width: 1px;
-    height: 8px;
-
+  content: "";
+  width: 1px;
+  height: 8px;
 }
 
 .scaleText {
-    font-size: 12px;
-    color: #407BFF;
+  font-size: 12px;
+  color: #407bff;
 }
 
 .scaleTick:first-child .scaleText {
-    transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .scaleTick:last-child .scaleText {
-    transform: translateX(50%);
+  transform: translateX(50%);
 }
 
 .scaleTextBold {
-    font-size: 16px;
-    font-weight: 500;
-    color:#407BFF;
+  font-size: 16px;
+  font-weight: 500;
+  color: #407bff;
 }
 
 @media screen and (min-width: 768px) {
-    .wrapper {
-        flex-direction: row;
-        gap: 32px;
+  .wrapper {
+    flex-direction: row;
+    gap: 32px;
+  }
 
-    }
+  .title {
+    margin-bottom: 16px;
+  }
 
-    .title {
-        margin-bottom: 16px;
-    }
-
-    .progressContainer {
-        width: 325px;
-        transform: translateY(50%);
-    }
+  .progressContainer {
+    width: 325px;
+    transform: translateY(50%);
+  }
 }
 
 @media screen and (min-width: 1440px) {
-    .title{
-        margin-bottom: 16px;
-    }
-    .wrapper {
-        gap: 32px;
-        width: 560px;
-    }
+  .title {
+    margin-bottom: 16px;
+  }
+  .wrapper {
+    gap: 32px;
+    width: 560px;
+  }
 
-    .progressContainer {
-        width: 356px;
-    }
-    .marginSection{
-        margin-top: 24px;
-    }
+  .progressContainer {
+    width: 356px;
+  }
+  .marginSection {
+    margin-top: 24px;
+  }
 }
