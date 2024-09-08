@@ -19,6 +19,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import { selectIsRefreshing } from "./redux/auth/selectors.js";
 
 import { refreshUser } from "./redux/auth/operations.js";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,35 +48,36 @@ function App() {
     <Loader />
   ) : (
     <Suspense fallback={<Loader />}>
+      <Toaster />
       <Routes>
-        <Route path="/" element={<SharedLayout />}>
+        <Route path='/' element={<SharedLayout />}>
           <Route index element={<ConditionalRoute />} />
           <Route
-            path="welcome"
+            path='welcome'
             element={
-              <RestrictedRoute component={<WelcomePage />} redirectTo="/home" />
+              <RestrictedRoute component={<WelcomePage />} redirectTo='/home' />
             }
           />
           <Route
-            path="home"
+            path='home'
             element={
-              <PrivateRoute component={<HomePage />} redirectTo="/signin" />
+              <PrivateRoute component={<HomePage />} redirectTo='/signin' />
             }
           />
           <Route
-            path="signin"
+            path='signin'
             element={
-              <RestrictedRoute component={<SighinPage />} redirectTo="/home" />
+              <RestrictedRoute component={<SighinPage />} redirectTo='/home' />
             }
           />
           <Route
-            path="signup"
+            path='signup'
             element={
-              <RestrictedRoute component={<SighupPage />} redirectTo="/home" />
+              <RestrictedRoute component={<SighupPage />} redirectTo='/home' />
             }
           />
         </Route>
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Suspense>
   );

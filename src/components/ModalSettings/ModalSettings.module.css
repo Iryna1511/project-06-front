@@ -70,15 +70,27 @@ form {
   font-weight: 500;
 }
 
+.genderBlock {
+  width: 181px;
+}
+
 .genderradiobutton {
   display: flex;
   gap: 8px;
   margin: 12px 0 24px;
+  
+}
+
+.genderOption {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .genderInput {
   cursor: pointer;
   accent-color: #407bff;
+  margin-right: 4px;
 }
 
 label {
@@ -199,6 +211,10 @@ input[type="password"]::placeholder {
   .modalcontent {
     width: 704px;
     margin-top: 42px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 
   .genderradiobutton {
@@ -207,7 +223,13 @@ input[type="password"]::placeholder {
 
   .wrapperForInput {
     width: 392px;
+    
   }
+
+    .saveButton {
+      width: 160px;
+      margin-left: auto;
+    }
 }
 
 /* Десктопи (1024px і більше) */
