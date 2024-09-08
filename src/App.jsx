@@ -17,36 +17,45 @@ const SighupPage = lazy(() => import("./pages/SignupPage/SignupPage.jsx"));
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 
 import { selectIsRefreshing } from "./redux/auth/selectors.js";
+import { useNavigate } from "react-router-dom";
 
-import { refreshUser } from "./redux/auth/operations.js";
+import { refreshUser, logout } from "./redux/auth/operations.js";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     const checkSession = async () => {
-      const token = localStorage.getItem("authToken"); // Перевіряємо, чи є токен у cховищі
+      const token = localStorage.getItem("authToken");
+
       if (token) {
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-        // Оновлюємо дані користувача
         try {
           await dispatch(refreshUser()).unwrap();
         } catch (error) {
-          console.error("Failed to refresh user:", error);
+          // console.error("Failed to refresh user:", error);
+
+          if (error.response?.status === 401) {
+            dispatch(logout());
+            navigate("/signin");
+          }
         }
       }
     };
 
     checkSession();
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   return isRefreshing ? (
     <Loader />
   ) : (
     <Suspense fallback={<Loader />}>
+      <Toaster />
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<ConditionalRoute />} />
