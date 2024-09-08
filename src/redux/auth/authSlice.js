@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, logout, register, refreshUser } from "./operations.js";
+import {
+  login,
+  logout,
+  register,
+  refreshUser,
+  updateDailyNorma,
+} from "./operations.js";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -19,6 +25,7 @@ const authSlice = createSlice({
       avatar: null,
       gender: null,
       _id: null,
+      waterRate: null,
     },
     token: null,
     isLoggedIn: false,
@@ -56,7 +63,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.data.user;
         console.log(state.user);
-        
+
         state.token = action.payload.data.accessToken;
         state.isLoading = false;
         state.isLoggedIn = true;
@@ -96,7 +103,12 @@ const authSlice = createSlice({
         state.isRefreshing = false;
         state.isLoading = false;
         state.error = action.payload || "Error refreshing user data";
-      });
+      })
+      .addCase(updateDailyNorma.pending, handlePending)
+      .addCase(updateDailyNorma.fulfilled, (state, action) => {
+        state.user = action.payload.data.user;
+      })
+      .addCase(updateDailyNorma.rejected, handleRejected);
   },
 });
 
