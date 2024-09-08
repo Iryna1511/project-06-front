@@ -1,222 +1,243 @@
-.BoxModal {
-padding: 0 12px 24px;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000cc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-
+.BoxModal {
+  /* padding: 0 12px 24px; */
+  background-color: white;
+  /* width: 280px; */
+  /* height: 260px; */
+  padding: 32px 24px;
+  gap: 24px;
+  border-radius: 10px;
+  position: fixed;
+  left: 50%;
+  top: 80px;
+  transform: translateX(-50%);
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+}
 
 .normaFormula {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .normaFormula span {
-    color: #407bff;
+  color: #407bff;
 }
 
 @media screen and (min-width: 768px) {
-    .normaFormula {
-        flex-direction: row;
-        gap: 24px;
-    }
+  .normaFormula {
+    flex-direction: row;
+    gap: 24px;
+  }
 }
 
 .normaForm {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .normaTitleModal {
-    margin-bottom: 16px;
-    color:#2f2f2f;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.1;
+  margin-bottom: 16px;
+  color: #2f2f2f;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
 }
 
 .normaParagraph {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.25;
-    color:#2f2f2f;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: #2f2f2f;
 }
 
 .normaExplanation {
-    display: flex;
-    padding: 10px;
-    margin-bottom: 24px;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.33;
-    border-radius: 10px;
-    border: 1px solid #ff9d43;
-    color:#2f2f2f;
+  display: flex;
+  padding: 10px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.33;
+  border-radius: 10px;
+  border: 1px solid #ff9d43;
+  color: #2f2f2f;
 }
 
 .normaComment span {
-    color: #407bff;
+  color: #407bff;
 }
 
 .normaFormRadio {
-    gap: 16px;
+  gap: 16px;
 }
 
 .normaFormRadio span {
-    margin-right: 24px;
-    font-size: 16px;
+  margin-right: 24px;
+  font-size: 16px;
 }
 
 .normaInputRadio {
-    opacity: 0;
-    position: absolute;
+  opacity: 0;
+  position: absolute;
 }
 
-.normaInputRadio+span {
-    display: inline-block;
-    padding-left: 25px;
-    position: relative;
-    cursor: pointer;
+.normaInputRadio + span {
+  display: inline-block;
+  padding-left: 25px;
+  position: relative;
+  cursor: pointer;
 }
 
-.normaInputRadio+span:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1px solid #407bff;
-    background-color: #ffffff;
+.normaInputRadio + span:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #407bff;
+  background-color: #ffffff;
 }
 
-.normaInputRadio+span:after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #407bff;
-    top: 50%;
-    left: 3px;
-    transform: translate(0, -50%);
-    opacity: 0;
+.normaInputRadio + span:after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #407bff;
+  top: 50%;
+  left: 3px;
+  transform: translate(0, -50%);
+  opacity: 0;
 }
 
-.normaInputRadio:checked+span:after {
-    opacity: 1;
+.normaInputRadio:checked + span:after {
+  opacity: 1;
 }
 
 .normaInput {
-    border: 1px solid #ff9d43;
-    border-radius: 6px;
-    display: flex;
-    padding: 12px 10px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 16px;
-    width: 100%;
-    margin-top: 8px;
-    color: #407bff;
-    background-color: #ffffff;
+  border: 1px solid #ff9d43;
+  border-radius: 6px;
+  display: flex;
+  padding: 12px 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 8px;
+  color: #407bff;
+  background-color: #ffffff;
 }
 
 .normaInput::placeholder {
-    color: #407bff;
+  color: #407bff;
 }
 
 .normaInput:hover {
-    color:#2f2f2f;
-    border: 1px solid #ff9d43;
+  color: #2f2f2f;
+  border: 1px solid #ff9d43;
 }
 
 .normaInput:focus {
-    outline: none;
-    border: 1px solid #ff9d43;
+  outline: none;
+  border: 1px solid #ff9d43;
 }
 
 .normaInput:not(:placeholder-shown) {
-    color: #407bff;
+  color: #407bff;
 }
 
 .normaInput[type="number"]::-webkit-outer-spin-button,
 .normaInput[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .normaFormResult {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font-size: 16px;
 
-    font-weight: 400;
-    line-height: 20px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 .normaFormResult strong {
-    font-size: 18px;
+  font-size: 18px;
 
-    font-weight: 700;
-    line-height: 24px;
+  font-weight: 700;
+  line-height: 24px;
 
-    white-space: nowrap;
-    color: #407bff;
+  white-space: nowrap;
+  color: #407bff;
 }
 
-
 .normaButton {
-    background-color: #407bff;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    padding: 10px 30px;
-    border-radius: 10px;
-    font-size: 18px;
-    width: 100%;
-    height: 44px;
-    margin-left: auto;
-    box-shadow: 0px 4px 8px 0px rgba(64, 123, 255, 0.34);
-    border: none;
+  background-color: #407bff;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  width: 100%;
+  height: 44px;
+  margin-left: auto;
+  box-shadow: 0px 4px 8px 0px rgba(64, 123, 255, 0.34);
+  border: none;
 }
 
 .normaButton:hover {
-    outline: none;
-    box-shadow: 0px 4px 14px 0px rgba(64, 123, 255, 0.54);
+  outline: none;
+  box-shadow: 0px 4px 14px 0px rgba(64, 123, 255, 0.54);
 }
 
-
 @media screen and (min-width: 768px) {
-    .BoxModal {
-        width: 704px;
-        padding: 0 24px 32px;
-    }
+  .BoxModal {
+    width: 704px;
+    padding: 0 24px 32px;
+  }
 
-    .normaButton {
-        width: 160px;
-    }
+  .normaButton {
+    width: 160px;
+  }
 
-    .normaFormula {
-        flex-direction: row;
-        gap: 24px;
-    }
+  .normaFormula {
+    flex-direction: row;
+    gap: 24px;
+  }
 
-    .normaFormResult {
-        display: block;
-    }
-        
+  .normaFormResult {
+    display: block;
+  }
 }
 
 @media screen and (min-width: 1440px) {
-    .BoxModal {
-        width: 592px;
-    }
+  .BoxModal {
+    width: 592px;
+  }
 }

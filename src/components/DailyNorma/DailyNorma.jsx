@@ -9,7 +9,6 @@ const DailyNorma = () => {
   const { waterLvl } = useSelector(selectUser);
   const waterNorma = waterLvl ? (waterLvl / 1000).toFixed(1) : 2.0;
 
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -23,14 +22,15 @@ const DailyNorma = () => {
       <h2 className={css.normaHeader}>My daily norma:</h2>
       <div className={css.normaEditContainer}>
         <p className={css.normaWaterVolumeInfo}>{waterNorma} L</p>
-        <button className={css.normaEditButton} type="button" onClick={openModal}>
+        <button
+          className={css.normaEditButton}
+          type='button'
+          onClick={openModal}
+        >
           Edit
         </button>
         {isModalOpen && (
-          <DailyNormaModal
-            onOpen={isModalOpen} 
-            onClose={closeModal} 
-          />
+          <DailyNormaModal onOpen={isModalOpen} onClose={closeModal} />
         )}
       </div>
     </div>

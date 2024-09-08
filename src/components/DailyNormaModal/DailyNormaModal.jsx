@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import css from "./DailyNormaModal.module.css";
-import { BasicModalWindow } from "../BasicModalWindow/BasicModalWindow";
+import Icons from "../Icons/Iсons.jsx";
+// import { BasicModalWindow } from "../BasicModalWindow/BasicModalWindow";
 import { useDispatch } from "react-redux";
 import { updateDailyNorma } from "../../redux/auth/operations";
 const DailyNormaModal = ({ onClose, onOpen }) => {
@@ -82,7 +83,7 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
     };
 
     try {
-      await dispatch(updateDailyNorma(data));
+      dispatch(updateDailyNorma(data));
       onClose();
     } catch (error) {
       console.error("Error saving daily norma:", error);
@@ -90,9 +91,23 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
     }
   };
 
+  const handleOutsideClick = (event) => {
+    if (event.target.classList.contains(css.modal)) {
+      onClose();
+    }
+  };
+
   return (
-    <BasicModalWindow onClose={onClose} onOpen={onOpen} title="My daily norma">
-      <div className={css.BoxModal}>
+    // <BasicModalWindow onClose={onClose} onOpen={onOpen} title='My daily norma'>
+
+    <div className={css.modal} onClick={handleOutsideClick}>
+      <div className={css.BoxModal} onClick={(e) => e.stopPropagation()}>
+        <div className={css.modalHeader}>
+          <h2>My daily norma</h2>
+          <div className={css.offBtn} onClick={onClose}>
+            <Icons id='x-mark' width={24} height={24} className='icon-blue' />
+          </div>
+        </div>
         <div>
           <div className={css.normaFormula}>
             <p className={css.normaParagraph}>
@@ -118,9 +133,9 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               <label>
                 <input
                   className={css.normaInputRadio}
-                  type="radio"
-                  name="gender"
-                  value="female"
+                  type='radio'
+                  name='gender'
+                  value='female'
                   checked={gender === "female"}
                   onChange={handleGenderChange}
                 />
@@ -129,9 +144,9 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               <label>
                 <input
                   className={css.normaInputRadio}
-                  type="radio"
-                  name="gender"
-                  value="male"
+                  type='radio'
+                  name='gender'
+                  value='male'
                   checked={gender === "male"}
                   onChange={handleGenderChange}
                 />
@@ -142,10 +157,10 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               <p className={css.normaParagraph}>Your weight in kilograms:</p>
               <input
                 className={css.normaInput}
-                type="number"
-                min="0"
-                max="250"
-                placeholder="0"
+                type='number'
+                min='0'
+                max='250'
+                placeholder='0'
                 value={weight}
                 onChange={handleWeightChange}
               />
@@ -157,9 +172,9 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               </p>
               <input
                 className={css.normaInput}
-                type="number"
-                min="0"
-                placeholder="0"
+                type='number'
+                min='0'
+                placeholder='0'
                 value={activityTime}
                 onChange={handleActivityTimeChange}
               />
@@ -174,19 +189,23 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               </p>
               <input
                 className={css.normaInput}
-                type="number"
-                placeholder="0"
+                type='number'
+                placeholder='0'
                 value={waterToDrink}
                 onChange={handleWaterToDrinkChange}
               />
             </div>
-            <button type="submit" className={css.normaButton} onClick={handleSave}>
+            <button
+              type='submit'
+              className={css.normaButton}
+              onClick={handleSave}
+            >
               Save
             </button>
           </form>
         </div>
       </div>
-    </BasicModalWindow>
+    </div>
   );
 };
 
