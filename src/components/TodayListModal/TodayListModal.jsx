@@ -12,8 +12,11 @@ const initialState = {
   waterIntake:  [{
     amount: null,
     time: '00:00', //можливо null потрібно
-  }],
+    }],
+    isAddWaterModalOpen: false,
+    isTodayListModalOpen: false,
 };
+// мабуть тут треба зробити addCase (Reject, Fulfield, Pending ) 
 
 export const waterSlice = createSlice({
   name: 'water',
@@ -22,12 +25,21 @@ export const waterSlice = createSlice({
     setWaterIntake: (state, action) => {
       state.waterIntake = action.payload;
     },
+    addWaterIntake: (state, action) => {
+        state.waterIntake.push(action.payload);
+    },
     updateWaterAmount: (state, action) => {
       state.waterIntake.amount = action.payload;
       },
     updateTime: (state, action) => {
         state.waterIntake.time = action.payload;
-    }
+      }
+    toggleAddWaterModal: (state) => {
+      state.isAddWaterModalOpen = !state.isAddWaterModalOpen;
+    },
+    toggleTodayListModal: (state) => {
+      state.isTodayListModalOpen = !state.isTodayListModalOpen;
+    },
   },
 });
 
