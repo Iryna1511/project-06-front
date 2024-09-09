@@ -26,6 +26,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { editWaterReducer } from './editWater/editWaterSlice';
 
 const authConfig = {
   key: 'auth',
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   water: waterReducer, // from first store file
   waterDetails: waterReducer, 
   monthWater: monthWaterReducer, 
+  editWater: editWaterReducer,
 });
 
 // Creating the store with persisted auth and middlewares
