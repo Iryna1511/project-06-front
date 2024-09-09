@@ -28,7 +28,7 @@ export const editWaterThunk = createAsyncThunk(
     }
   }
 );
-//Liza 
+//Liza
 export const deleteWaterThunk = createAsyncThunk(
   "deleteWater",
   async (waterData, thunkAPI) => {
