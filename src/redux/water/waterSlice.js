@@ -29,17 +29,18 @@ const initialState = {
 const slice = createSlice({
   name: "water",
   initialState,
-  // reducers: {
-  //   toggleAddWaterModal: (state) => {
-  //     state.isAddWaterModalOpen = !state.isAddWaterModalOpen;
-  //   },
-  //   toggleTodayListModal: (state) => {
-  //     state.isTodayListModalOpen = !state.isTodayListModalOpen;
-  //   },
-  //   toggleDeleteEntryModal: (state) => {
-  //     state.isDeleteEntryOpen = !state.isDeleteEntryOpen;
-  //   },
-  // }, // це також
+  reducers: {
+    toggleAddWaterModal: (state) => {
+      state.isAddWaterModalOpen = !state.isAddWaterModalOpen;
+    },
+    toggleTodayListModal: (state) => {
+      state.isTodayListModalOpen = !state.isTodayListModalOpen;
+    },
+    //Liza
+    toggleDeleteEntryModal: (state) => {
+      state.isDeleteEntryOpen = !state.isDeleteEntryOpen;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addWaterThunk.fulfilled, (state, { payload }) => {

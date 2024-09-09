@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { authApi } from "../../axiosConfig/authAPI";
 
 axios.defaults.baseURL = "https://water-tracker-06.onrender.com/";
 
@@ -38,7 +37,7 @@ export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
-
+//Liza
 export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
@@ -69,12 +68,16 @@ export const refreshUser = createAsyncThunk(
 );
 export const updateDailyNorma = createAsyncThunk(
   "user/dailyNorma",
-  async (credentials, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.accessToken;
+  async (waterToDrink, thunkAPI) => {
     try {
-      setAuthHeader(persistedToken);
-      const res = await authApi.post("/users/daily-norma", credentials);
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token || localStorage.getItem("authToken");
+      if (token) {
+        setAuthHeader(token);
+      }
+      const res = await axios.patch("/user/waterRate", {
+        waterRate: waterToDrink,
+      });
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

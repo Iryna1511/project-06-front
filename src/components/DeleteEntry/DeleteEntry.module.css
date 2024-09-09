@@ -1,3 +1,16 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000CC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 .modalContent {
     background-color: white;
     width: 280px;
@@ -35,6 +48,7 @@
     width: 24px;
     height: 24px;
     gap: 6px;
+    cursor: pointer;
   }
   
   h2 {
