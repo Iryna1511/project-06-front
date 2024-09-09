@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { authApi } from "../../axiosConfig/authAPI";
 
 axios.defaults.baseURL = "https://water-tracker-06.onrender.com/";
 

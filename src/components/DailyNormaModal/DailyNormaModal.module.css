@@ -28,6 +28,12 @@
   flex-direction: column;
 }
 
+.modalHeader {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .normaFormula {
   display: flex;
   flex-direction: column;

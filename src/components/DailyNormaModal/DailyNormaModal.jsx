@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import css from "./DailyNormaModal.module.css";
 import Icons from "../Icons/Iсons.jsx";
-// import { BasicModalWindow } from "../BasicModalWindow/BasicModalWindow";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateDailyNorma } from "../../redux/auth/operations";
-import { selectWaterRate } from "../../redux/auth/selectors";
-const DailyNormaModal = ({ onClose, onOpen }) => {
+const DailyNormaModal = ({ onClose }) => {
   const [gender, setGender] = useState("female");
   const [weight, setWeight] = useState("");
   const [activityTime, setActivityTime] = useState("");
@@ -20,12 +18,12 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
     if (gender && !isNaN(mass) && !isNaN(time)) {
       let volume = 0;
       if (gender === "female") {
-        volume = mass * 0.03 + time * 0.4;
+        volume = (mass * 0.03 + time * 0.4) * 1000;
       } else if (gender === "male") {
-        volume = mass * 0.04 + time * 0.6;
+        volume = (mass * 0.04 + time * 0.6) * 1000;
       }
-      setDailyNorm(volume.toFixed(1));
-      setWaterToDrink(volume.toFixed(1));
+      setDailyNorm(volume.toFixed(1) / 1000);
+      setWaterToDrink(volume.toFixed(1) / 1000);
     } else {
       setDailyNorm(0.0);
       setWaterToDrink(0.0);
@@ -76,17 +74,8 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
       return;
     }
 
-    // const data = {
-    //   gender,
-    //   weight: parseFloat(weight),
-    //   activityTime: parseFloat(activityTime),
-    //   dailyNorm: parseFloat(dailyNorm),
-    //   waterToDrink: parseFloat(waterToDrink),
-    //   date: new Date().toISOString(),
-    // };
-
     try {
-      dispatch(updateDailyNorma(waterToDrink));
+      dispatch(updateDailyNorma(waterToDrink * 1000));
       onClose();
     } catch (error) {
       console.error("Error saving daily norma:", error);
@@ -101,14 +90,12 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
   };
 
   return (
-    // <BasicModalWindow onClose={onClose} onOpen={onOpen} title='My daily norma'>
-
     <div className={css.modal} onClick={handleOutsideClick}>
       <div className={css.BoxModal} onClick={(e) => e.stopPropagation()}>
         <div className={css.modalHeader}>
           <h2>My daily norma</h2>
           <div className={css.offBtn} onClick={onClose}>
-            <Icons id='x-mark' width={24} height={24} className='icon-blue' />
+            <Icons id="x-mark" width={24} height={24} className="icon-blue" />
           </div>
         </div>
         <div>
@@ -136,9 +123,9 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               <label>
                 <input
                   className={css.normaInputRadio}
-                  type='radio'
-                  name='gender'
-                  value='female'
+                  type="radio"
+                  name="gender"
+                  value="female"
                   checked={gender === "female"}
                   onChange={handleGenderChange}
                 />
@@ -147,9 +134,9 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               <label>
                 <input
                   className={css.normaInputRadio}
-                  type='radio'
-                  name='gender'
-                  value='male'
+                  type="radio"
+                  name="gender"
+                  value="male"
                   checked={gender === "male"}
                   onChange={handleGenderChange}
                 />
@@ -160,10 +147,10 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               <p className={css.normaParagraph}>Your weight in kilograms:</p>
               <input
                 className={css.normaInput}
-                type='number'
-                min='0'
-                max='250'
-                placeholder='0'
+                type="number"
+                min="0"
+                max="250"
+                placeholder="0"
                 value={weight}
                 onChange={handleWeightChange}
               />
@@ -175,9 +162,9 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               </p>
               <input
                 className={css.normaInput}
-                type='number'
-                min='0'
-                placeholder='0'
+                type="number"
+                min="0"
+                placeholder="0"
                 value={activityTime}
                 onChange={handleActivityTimeChange}
               />
@@ -192,14 +179,14 @@ const DailyNormaModal = ({ onClose, onOpen }) => {
               </p>
               <input
                 className={css.normaInput}
-                type='number'
-                placeholder='0'
+                type="number"
+                placeholder="0"
                 value={waterToDrink}
                 onChange={handleWaterToDrinkChange}
               />
             </div>
             <button
-              type='submit'
+              type="submit"
               className={css.normaButton}
               onClick={handleSave}
             >
