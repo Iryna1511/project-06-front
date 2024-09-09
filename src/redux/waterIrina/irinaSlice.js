@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTodayWater } from "./irinaOperations";
+import { fetchTodayWater, deleteWaterEntry } from "./irinaOperations";
 
 const irinaWaterSlice = createSlice({
   name: "irinaWater",
@@ -31,6 +31,17 @@ const irinaWaterSlice = createSlice({
         state.todayWater.waterEntries = action.payload.data.waterEntries;
       })
       .addCase(fetchTodayWater.rejected, (state, action) => {
+        state.error = {
+          message: action.payload.message || "An unknown error occurred",
+          status: action.payload.status,
+        };
+      })
+      .addCase(deleteWaterEntry.fulfilled, (state, action) => {
+        state.todayWater.waterEntries = state.todayWater.waterEntries.filter(
+          (item) => item.id !== action.payload.id
+        );
+      })
+      .addCase(deleteWaterEntry.rejected, (state, action) => {
         state.error = {
           message: action.payload.message || "An unknown error occurred",
           status: action.payload.status,

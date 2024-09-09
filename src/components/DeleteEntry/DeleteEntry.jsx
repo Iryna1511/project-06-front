@@ -1,58 +1,42 @@
-import React, { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import css from "./DeleteEntry.module.css";
-import { deleteWaterThunk } from "../../redux/water/operations";
 import { toggleDeleteEntryModal } from "../../redux/waterDetails/waterSlice";
+import {
+  deleteWaterEntry,
+  fetchTodayWater,
+} from "../../redux/waterIrina/irinaOperations";
+import { selectIsDeleteEntryOpen } from "../../redux/waterIrina/irinaSelectors";
 
-const DeleteEntry = ({ entryId }) => {
+const DeleteEntry = ({ id, onClose }) => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.water.isDeleteEntryModalOpen);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(isOpen);
+  const isDeleteEntryOpen = useSelector(selectIsDeleteEntryOpen);
 
   const closeModal = () => {
-    setIsDeleteModalOpen(false);
     dispatch(toggleDeleteEntryModal());
+    onClose();
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
   };
 
   const handleDelete = async () => {
     try {
-      await dispatch(deleteWaterThunk({ id: entryId })).unwrap();
+      await dispatch(deleteWaterEntry(id)).unwrap();
+      dispatch(fetchTodayWater());
       closeModal();
     } catch (error) {
-      console.error("Delete failed:", error);
-      closeModal(); // Close modal even if there is an error
+      console.error("Помилка видалення:", error);
     }
   };
 
-  useEffect(() => {
-    setIsDeleteModalOpen(true);
-
-    const handleBackdropClick = (event) => {
-      if (event.target.classList.contains(css.modalOverlay)) {
-        closeModal();
-      }
-    };
-
-    const handleEscapePress = (event) => {
-      if (event.key === "Escape") {
-        closeModal();
-      }
-    };
-
-    document.addEventListener("click", handleBackdropClick);
-    document.addEventListener("keydown", handleEscapePress);
-
-    return () => {
-      document.removeEventListener("click", handleBackdropClick);
-      document.removeEventListener("keydown", handleEscapePress);
-    };
-  }, [dispatch]);
-
   return (
-    <div>
-      {isDeleteModalOpen && (
-        <div className={css.modalOverlay}>
+    <>
+      {isDeleteEntryOpen && (
+        <div className={css.modalOverlay} onClick={handleBackdropClick}>
           <div className={css.modalContent}>
             <div className={css.modalHeader}>
               <span className={css.modalTitle}>Delete entry</span>
@@ -72,9 +56,8 @@ const DeleteEntry = ({ entryId }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
 export default DeleteEntry;
-  

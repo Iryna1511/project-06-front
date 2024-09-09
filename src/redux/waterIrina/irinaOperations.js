@@ -27,3 +27,17 @@ export const fetchTodayWater = createAsyncThunk(
     }
   }
 );
+
+export const deleteWaterEntry = createAsyncThunk(
+  "irinaWater/deleteWaterEntry",
+  async (id, thunkAPI) => {
+    const token = localStorage.getItem("authToken");
+    setAuthHeader(token);
+    try {
+      const res = await axios.delete(`/water/${id}`);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
