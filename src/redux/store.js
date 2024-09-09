@@ -14,7 +14,6 @@ export const store = configureStore({
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer } from './auth/authSlice';
 import { waterReducer } from './water/waterSlice';
-import { dailyNormaReducer } from './dailyNorma/dailyNormaSlice';
 import { monthWaterReducer } from './monthWater/monthWaterSlice';
 import {
   persistStore,
@@ -27,6 +26,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { editWaterReducer } from './editWater/editWaterSlice';
 
 const authConfig = {
   key: 'auth',
@@ -38,9 +38,9 @@ const authConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(authConfig, authReducer), // persist auth with token whitelist
   water: waterReducer, // from first store file
-  waterDetails: waterReducer, // from second store file
-  dailyNorma: dailyNormaReducer, 
+  waterDetails: waterReducer, 
   monthWater: monthWaterReducer, 
+  editWater: editWaterReducer,
 });
 
 // Creating the store with persisted auth and middlewares

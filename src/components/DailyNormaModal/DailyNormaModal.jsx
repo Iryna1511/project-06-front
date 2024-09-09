@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import css from "./DailyNormaModal.module.css";
 import Icons from "../Icons/Iсons.jsx";
 import { useDispatch } from "react-redux";
-import { updateDailyNorma } from "../../redux/auth/operations";
+import { updateUserWaterDailyNorma } from "../../redux/auth/operations";
 const DailyNormaModal = ({ onClose }) => {
   const [gender, setGender] = useState("female");
   const [weight, setWeight] = useState("");
@@ -75,7 +75,7 @@ const DailyNormaModal = ({ onClose }) => {
     }
 
     try {
-      dispatch(updateDailyNorma(waterToDrink * 1000));
+      dispatch(updateUserWaterDailyNorma(waterToDrink * 1000));
       onClose();
     } catch (error) {
       console.error("Error saving daily norma:", error);

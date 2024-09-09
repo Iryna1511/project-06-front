@@ -11,7 +11,7 @@ import {
 import { formatDate } from "../../redux/waterDetails/helpers";
 import Loader from "../../components/Loader/Loader";
 import {
-  selectNorma,
+  // selectNorma,
 //  selectTodayWater,
 } from "../../redux/waterDetails/waterSelectors";
 import { isToday } from "date-fns";

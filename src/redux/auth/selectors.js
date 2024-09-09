@@ -5,5 +5,3 @@ export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 // export const selectIsLoading = (state) => state.auth.isLoading;
 
 export const selectIsRefreshing = (state) => state.auth.isRefresh;
-
-export const selectWaterRate = (state) => state.auth.user.waterRate;
