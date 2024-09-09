@@ -1,12 +1,12 @@
 import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import css from "./DeleteEntry.module.css";
-import { toggleDeleteEntryModal } from "../../redux/waterDetails/waterSlice";
+// import { toggleDeleteEntryModal } from "../../redux/waterDetails/waterSlice";
 import {
   deleteWaterEntry,
   fetchTodayWater,
-} from "../../redux/waterIrina/irinaOperations";
-import { selectIsDeleteEntryOpen } from "../../redux/waterIrina/irinaSelectors";
+} from "../../redux/mainWater/operations";
+import { selectIsDeleteEntryOpen } from "../../redux/mainWater/selectors";
 
 const DeleteEntry = ({ id, onClose }) => {
   const dispatch = useDispatch();

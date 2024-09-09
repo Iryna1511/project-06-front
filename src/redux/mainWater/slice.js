@@ -73,9 +73,11 @@ const waterSlice = createSlice({
       //Видалення води
       .addCase(deleteWaterEntry.pending, handlePending)
       .addCase(deleteWaterEntry.fulfilled, (state, action) => {
-        state.todayWater.waterEntries = state.todayWater.waterEntries.filter(
-          (item) => item.id !== action.payload.id
-        );
+        if (state.todayWater && state.todayWater.waterEntries) {
+          state.todayWater.waterEntries = state.todayWater.waterEntries.filter(
+            (item) => item.id !== action.payload.id
+          );
+        }
       })
       .addCase(deleteWaterEntry.rejected, (state, action) => {
         state.error = {

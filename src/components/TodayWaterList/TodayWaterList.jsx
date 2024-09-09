@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectWaterToday,
   selectIsDeleteEntryOpen,
-} from "../../redux/waterIrina/irinaSelectors";
+} from "../../redux/mainWater/selectors";
 import {
   toggleAddWaterModal,
   toggleTodayListModal,
   toggleDeleteEntryModal,
-} from "../../redux/waterIrina/irinaSlice";
-import { fetchTodayWater } from "../../redux/waterIrina/irinaOperations";
+} from "../../redux/mainWater/slice";
+import { fetchTodayWater } from "../../redux/mainWater/operations";
 import { useEffect, useState } from "react";
 
 import DeleteEntry from "../../components/DeleteEntry/DeleteEntry";
