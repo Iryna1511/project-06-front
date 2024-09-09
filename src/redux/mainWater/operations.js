@@ -35,9 +35,24 @@ export const editWaterConsumption = createAsyncThunk(
   }
 );
 
+// Видалення запису по воді
+export const deleteWaterEntry = createAsyncThunk(
+  "water/deleteWaterEntry",
+  async (id, thunkAPI) => {
+    // const token = localStorage.getItem("authToken");
+    // setAuthHeader(token);
+    try {
+      const res = await axiosLoader.delete(`/water/${id}`);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 //
 export const fetchTodayWater = createAsyncThunk(
-  "irinaWater/todayWaterList",
+  "water/todayWaterList",
   async (_, thunkAPI) => {
     const day = createDay();
     // const token = localStorage.getItem("authToken");

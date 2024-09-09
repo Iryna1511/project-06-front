@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addWater, editWaterConsumption, fetchTodayWater } from "./operations";
+import {
+  addWater,
+  editWaterConsumption,
+  fetchTodayWater,
+  deleteWaterEntry,
+} from "./operations";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -65,7 +70,22 @@ const waterSlice = createSlice({
       })
       .addCase(editWaterConsumption.rejected, handleRejected)
 
+      //Видалення води
+      .addCase(deleteWaterEntry.pending, handlePending)
+      .addCase(deleteWaterEntry.fulfilled, (state, action) => {
+        state.todayWater.waterEntries = state.todayWater.waterEntries.filter(
+          (item) => item.id !== action.payload.id
+        );
+      })
+      .addCase(deleteWaterEntry.rejected, (state, action) => {
+        state.error = {
+          message: action.payload.message || "An unknown error occurred",
+          status: action.payload.status,
+        };
+      })
+
       //fetchTodayWater
+      .addCase(fetchTodayWater.pending, handlePending)
       .addCase(fetchTodayWater.fulfilled, (state, action) => {
         state.todayWater.percent =
           action.payload.data.waterConsumptionPercentage;
