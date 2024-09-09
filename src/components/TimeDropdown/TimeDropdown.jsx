@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 // import css from './TimeDropdown.module.css'
 
-export const TimeDropDown = () => {
+ const TimeDropDown = () => {
     const options = [];
     for (let hours = 0; hours < 24; hours++) {
       for (let minutes = 0; minutes < 60; minutes += 5) {
@@ -12,6 +12,8 @@ export const TimeDropDown = () => {
     return options;
   };
 
+
+  export default TimeDropDown;
 //старий функціонал
 
 // const TimeDropdown = () => {
@@ -56,4 +58,3 @@ export const TimeDropDown = () => {
 //     );
 // };
 
-// export default TimeDropdown;
