@@ -1,139 +1,115 @@
 import css from "./TodayListModal.module.css";
-// import ErrorMsg from "../ErrorMsg/ErrorMsg";
-// import Loader from "../Loader/Loader.jsx"
-// import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
-import { createSlice } from "@reduxjs/toolkit";
-// import { useSelector } from "react-redux";
 import { useSelector, useDispatch } from "react-redux";
-
 import { toggleTodayListModal } from "../../redux/water/waterSlice.js";
-// import Modal from "react-modal";
-
-// Modal.setAppElement('#root');
-
-// const customStyles = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//   },
-//   overlay: {
-//     background: 'rgba(0, 0, 0, 0.8)',
-//   },
-// };
-
-const initialState = { 
-    modal: {
-        isModalOpen: false,
-        waterAmount: 0,
-        enteredTime: '',
-        },
-}
-
-export const getWater = state => state.water;
-export const getTime = state => state.time; 
-// селектор для отримання введених даних з елементу списку введеної води і часу
-
-export const selectIsModalOpen = state => state.modal.isModalOpen;
-// селектор для відкриття модального вікна
 
 
+//Slice
+const initialState = {
+  waterIntake:  [{
+    amount: null,
+    time: '00:00', //можливо null потрібно
+  }],
+};
+
+export const waterSlice = createSlice({
+  name: 'water',
+  initialState,
+  reducers: {
+    setWaterIntake: (state, action) => {
+      state.waterIntake = action.payload;
+    },
+    updateWaterAmount: (state, action) => {
+      state.waterIntake.amount = action.payload;
+      },
+    updateTime: (state, action) => {
+        state.waterIntake.time = action.payload;
+    }
+  },
+});
+
+export const { setWaterIntake, updateWaterAmount, updateTime } = waterSlice.actions;
+export default waterSlice.reducer;
+
+// Selector
+
+export const selectWaterIntake = (state) => state.water.waterIntake.amount;
+
+export const selectUpdateTime = (state) => state.water.waterIntake.time;
 
 
-export default function TodayListModal({water: {amount, time, id}}) {
- 
-  // const waterAmount = useSelector(state => state.waterAmount);
 
-  
-    // const isError = useSelector(selectError);
-    // const isLoading = useSelector(selectLoading);
+export default function TodayListModal() {
+
+    const waterActual = useSelector(selectWaterIntake);
+    const currentTime = useSelector(selectUpdateTime)
+    const [amount, setAmount] = useState(waterActual);
+    const [selectedTime, setSelectedTime] = useState(currentTime);
     const dispatch = useDispatch();
-   const isModalOpen = useSelector(selectIsModalOpen);
-    const handleAddWaterChanges = () => dispatch(addWaterAMount(id));
-    
-    const handleCloseModal = () => dispatch(toggleModal());
 
-  return (
-      
+    const handleIncrement = () => {
+        setAmount(Math.max(amount, 50) + 50);
+        dispatch(setWaterIntake(amount));
+    }
+    
+    const handleDecrement = () => {
+        setAmount(Math.max(amount, 50) - 50);
+        dispatch(setWaterIntake(amount));
+    };
+
+    const changeWaterAmount = (e) => {
+        setAmount(Number(e.target.value));
+        dispatch(updateWaterAmount(Number(e.target.value)));
+    }
+
+    const handleTimeChange = (event) => {
+    setSelectedTime(event.target.value);
+  };
+    
+    
+    const handleCloseModal = () => dispatch(toggleTodayListModal());
+
+    const handleSubmit = () => {
+        dispatch(updateTime(selectedTime),
+        dispatch(updateWaterAmount(amount)));
+    }
+
+  return (      
     <div className={css.backdrop} onClick={handleCloseModal}>
       <div className={css.modal}>
-      {/* <Modal style={customStyles}> */}
-      {/* {isError && <ErrorMsg/>} */}
-      {/* <NavLink className={css.close}><IoCloseOutline /></NavLink> */}
-      {/* {isLoading && <Loader />} */}
       <div className={css.titlecontainer}>
         <h2 className={css.titletext}>Edit the entered amount of water</h2>
         <span className={css.closebtn} onClick={handleCloseModal}><IoCloseOutline size="24" color="407BFF" /></span>
       </div>
-      {/* <p className={css.defaulttext}>No notes yet</p> */}
       <div className={css.amountofwaterContainer}>
         <svg width={23} height={32}><use href="icons.svg#icon-Glass"></use></svg>
-        <p className={css.wateramount}>250 ml</p>
-        <p className={css.time}>{currentTime}</p>
+        <p className={css.wateramount}>{waterActual}ml</p>
+        <p className={css.time}>{selectedTime}</p>
       </div>      
       <h3 className={css.subtitle}>Correct entered data:</h3>
       <p className={css.signaturetext}>Amount of water:</p>
       <div className={css.waterInputcontainer}>
-        <button className={css.amountButton} type="button" onClick={minusWater}><HiOutlineMinusSmall size="24" color="407BFF" /></button>
-        <p className={css.amountWaterIncome}>{waterAmount}</p>
-        <button className={css.amountButton} type="button" onClick={plusWater}><HiOutlinePlusSmall size="24" color="407BFF" /></button>
+        <button className={css.amountButton} type="button" onClick={handleDecrement}><HiOutlineMinusSmall size="24" color="407BFF" /></button>
+        <p className={css.amountWaterIncome}>{amount}ml</p>
+        <button className={css.amountButton} type="button" onClick={handleIncrement}><HiOutlinePlusSmall size="24" color="407BFF" /></button>
       </div>
      
       <p className={css.signaturetext}>Recording time:</p>
-      <div className={css.timeDropdown}><TimeDropdown/></div>
+      <select className={css.timeDropdown} value={selectedTime} onChange={handleTimeChange}>
+        {generateTimeOptions()}
+      </select>
+      {/* <div className={css.timeDropdown}><TimeDropdown/></div> */}
       <h3 className={css.subtitle}>Enter the value of the water used:</h3>
-      <input className={css.waterAmount} type="text" onChange={handleWaterAmountChange}/>
+              <input className={css.waterAmount} type="number" value={amount} onChange={changeWaterAmount} min={0} step={50}/>
       <div className={css.footerContainer}>
-        <p className={css.amountWaterIncomeFooter}>{waterAmount}</p>
-        <button className={css.saveButton} type="submit">Save</button>
+        <p className={css.amountWaterIncomeFooter}>{waterActual}ml</p>
+        <button className={css.saveButton} type="submit" onClick={handleSubmit}>Save</button>
       </div>
-        {/* </Modal> */}
         </div>
-        <h3 className={css.subtitle}>Correct entered data:</h3>
-        <p className={css.signaturetext}>Amount of water:</p>
-        <div className={css.waterInputcontainer}>
-          <button
-            className={css.amountButton}
-            type="button"
-            onClick={minusWater}
-          >
-            <HiOutlineMinusSmall size="24" color="407BFF" />
-          </button>
-          <p className={css.amountWaterIncome}>250 ml</p>
-          <button
-            className={css.amountButton}
-            type="button"
-            onClick={plusWater}
-          >
-            <HiOutlinePlusSmall size="24" color="407BFF" />
-          </button>
-        </div>
-
-        <p className={css.signaturetext}>Recording time:</p>
-        <div className={css.timeDropdown}>
-          <TimeDropdown />
-        </div>
-        <h3 className={css.subtitle}>Enter the value of the water used:</h3>
-        <input
-          className={css.waterAmount}
-          type="text"
-          onChange={handleWaterAmountChange}
-        />
-        <div className={css.footerContainer}>
-          <p className={css.amountWaterIncomeFooter}>250 ml</p>
-          <button className={css.saveButton} type="submit">
-            Save
-          </button>
-        </div>
-        {/* </Modal> */}
       </div>
-    </div>
   );
 }
 

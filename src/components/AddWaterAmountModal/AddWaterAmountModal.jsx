@@ -6,33 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
+import { toggleAddWaterModal } from "../../redux/water/waterSlice.js";
 
-import { selectIsAddWaterMdOpen } from "../../redux/water/waterSlice";
-
-// import Modal from "react-modal";
-
-// Modal.setAppElement('#root');
-
-// const customStyles = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//   },
-//   overlay: {
-//     background: 'rgba(0, 0, 0, 0.8)',
-//   },
-// };
-
-const initialState = { 
-    modal: {
-        isModalOpen: false,
-        waterAmount: 0,
-        enteredTime: '',
-        },
+const initialState = {
+    waterData: [{ id: '', amountWater: '', time: '' }], //notes y slice
+    isAddWaterModalOpen: false,
+    isTodayListModalOpen: false,
 }
      
 export const incrementWaterAmount = () => ({
@@ -111,34 +90,22 @@ const reducer = (state = initialState, action) => {
 //     dispatch(addWaterLog({ amount, time: newDate().getTime() }));
 // };
 
-
-// const rootReducer = (state = initialState, action) => {
-//   return state;
-// };
-// в store записуємо стан і редюсер
-
-
-
-
-export default function AddWaterAmountModal({ water: { amount, id } }) {
+export default function AddWaterAmountModal({notes, onSubmit}) {
     // const waterValue = useSelector(state => state.water.value);
 
-    //  const isModalOpen = useSelector(selectIsModalOpen);
-    // const isError = useSelector(selectError);
-    // const isLoading = useSelector(selectLoading);
     const dispatch = useDispatch();
 
     // const handleAddWater = () => dispatch(addWaterAmount(id));
 
-    const waterAmount = useSelector(state => state.modal.waterAmount);
+    const waterAmount = useSelector(state => state.water.notes.waterAmount);
 
-    const enterdTime = useSelector(state => state.modal.enteredTime);
+    const enteredTime = useSelector(state => state.water.notes.enteredTime);
 
     const handleTimeChange = (event) => {
         dispatch(setEnteredTime(event.target.value))
     }
     
-    const handleCloseModal = () => dispatch(toggleWaterModal());
+    const handleCloseModal = () => dispatch(toggleAddWaterModal());
 
   return (
       
@@ -169,8 +136,8 @@ export default function AddWaterAmountModal({ water: { amount, id } }) {
         <button className={css.saveButton} type="button" onClick={handleAddWaterChanges}>Save</button>
       </div>
         {/* </Modal> */}
-        </div>
-      )}
+          </div>
+          </div>
   );
 }
 
