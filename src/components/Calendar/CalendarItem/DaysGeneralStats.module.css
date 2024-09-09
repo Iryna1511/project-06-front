@@ -1,17 +1,17 @@
 .stats_list {
     position: absolute;
-    top: -200px;
-    right: -9px;
-    background-color: var(--white-color);
-    overflow: hidden;
+    top: -190px;
+    /* Відступ вгору над елементом */
+    right: 0;
+    /* Можна скоригувати відповідно до сітки */
     width: 280px;
     height: 188px;
     border-radius: 10px;
     padding: 24px 13px;
-    background-color: var(--white-color);
-    border-radius: 10px;
+    background-color: #FFFFFF;
     box-shadow: 0 4px 4px 0 rgba(64, 123, 255, 0.3);
     z-index: 999;
+    /* Переконайтеся, що це значення більше за інші елементи на сторінці */
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -19,7 +19,7 @@
 
 .date {
     line-height: 1.25;
-    color: var(--blue-color);
+    color: #407BFF;
 }
 
 .stat {
@@ -30,5 +30,5 @@
 .accent {
     font-size: 18px;
     line-height: 1.33333;
-    color: var(--blue-color);
+    color: #407BFF;
 }

@@ -1,6 +1,9 @@
+
+
 import styled from 'styled-components';
 
 export const CalendarStyle = styled.div`
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -73,7 +76,8 @@ export const CalendarStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+  position: relative; /* Додати позиціонування */
+}
 
   .progressWaterText {
     color: var(--secondary-color-blue);
@@ -191,3 +195,4 @@ export const LoaderMonthWrapper = styled.div`
     height: 262px;
   }
 `;
+
