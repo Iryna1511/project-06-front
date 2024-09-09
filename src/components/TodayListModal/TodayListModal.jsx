@@ -43,7 +43,7 @@ export const waterSlice = createSlice({
   },
 });
 
-export const { setWaterIntake, updateWaterAmount, updateTime } = waterSlice.actions;
+export const { setWaterIntake, updateWaterAmount, updateTime, addWaterIntake } = waterSlice.actions;
 export default waterSlice.reducer;
 
 // Selector
@@ -57,7 +57,7 @@ export const selectUpdateTime = (state) => state.water.waterIntake.time;
 export default function TodayListModal() {
 
     const waterActual = useSelector(selectWaterIntake);
-    const currentTime = useSelector(selectUpdateTime)
+    const currentTime = useSelector(selectUpdateTime);
     const [amount, setAmount] = useState(waterActual);
     const [selectedTime, setSelectedTime] = useState(currentTime);
     const dispatch = useDispatch();
@@ -111,7 +111,7 @@ export default function TodayListModal() {
      
       <p className={css.signaturetext}>Recording time:</p>
       <select className={css.timeDropdown} value={selectedTime} onChange={handleTimeChange}>
-        {generateTimeOptions()}
+        {TimeDropdown()}
       </select>
       {/* <div className={css.timeDropdown}><TimeDropdown/></div> */}
       <h3 className={css.subtitle}>Enter the value of the water used:</h3>
@@ -125,6 +125,3 @@ export default function TodayListModal() {
   );
 }
 
-// to={backLinkRef.current}
-
-// onClick={() => dispatch(closeWindow())}

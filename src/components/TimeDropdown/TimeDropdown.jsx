@@ -12,33 +12,6 @@ export const TimeDropDown = () => {
     return options;
   };
 
-
-// export default function TimeDropdown() {
-//   const [selectedTime, setSelectedTime] = useState('00:00');
-
-//   // Функція для генерації опцій часу
-//   const generateTimeOptions = () => {
-//     const options = [];
-//     for (let hours = 0; hours < 24; hours++) {
-//       for (let minutes = 0; minutes < 60; minutes += 5) {
-//         const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-//         options.push(<option key={timeString} value={timeString}>{timeString}</option>);
-//       }
-//     }
-//     return options;
-//   };
-
-//   const handleTimeChange = (event) => {
-//     setSelectedTime(event.target.value);
-//   };
-
-//   return (
-//       <select className={css.timeNow} value={selectedTime} onChange={handleTimeChange}>
-//         {generateTimeOptions()}
-//       </select>
-//   );
-// }
-
 //старий функціонал
 
 // const TimeDropdown = () => {
