@@ -3,21 +3,21 @@ import AddWaterButton from "../AddWaterButton/AddWaterButton";
 
 export default function WaterRatioPanel() {
   // const { drankToday } = useSelector();
-  const drankTodayValue = 15;
+  const drankTodayValue = 80;
 
   return (
     <>
-      <div className={css.marginSection}>
-        <h2 className={css.title}>Today</h2>
-        <div className={css.wrapper}>
-          <div className={css.progressContainer}>
+      <div className={css.wrapper}>
+        <div className={css.progressContainer}>
+          <h2 className={css.title}>Today</h2>
+          <div className={css.progressBarContainer}>
             <div className={css.progressBar}>
               <div
                 className={css.progressCompleted}
                 style={{ width: `${drankTodayValue}%` }}
               >
                 <div className={css.percentageMarker}>
-                  <p className={css.percentageText}>{drankTodayValue}%</p>
+                  {/* <p className={css.percentageText}>{drankTodayValue}%</p> */}
                 </div>
               </div>
             </div>
@@ -33,8 +33,8 @@ export default function WaterRatioPanel() {
               </div>
             </div>
           </div>
-          <AddWaterButton />
         </div>
+        <AddWaterButton />
       </div>
     </>
   );
