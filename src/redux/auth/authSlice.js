@@ -4,7 +4,7 @@ import {
   logout,
   register,
   refreshUser,
-  updateDailyNorma,
+  updateUserWaterDailyNorma,
 } from "./operations.js";
 
 const handlePending = (state) => {
@@ -93,11 +93,11 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload || "Error refreshing user data";
       })
-      .addCase(updateDailyNorma.pending, handlePending)
-      .addCase(updateDailyNorma.fulfilled, (state, action) => {
+      .addCase(updateUserWaterDailyNorma.pending, handlePending)
+      .addCase(updateUserWaterDailyNorma.fulfilled, (state, action) => {
         state.user.waterRate = action.payload.data.waterRate;
       })
-      .addCase(updateDailyNorma.rejected, handleRejected);
+      .addCase(updateUserWaterDailyNorma.rejected, handleRejected);
   },
 });
 

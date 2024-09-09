@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectWaterRate } from "../../redux/auth/selectors";
+import { selectUser } from "../../redux/auth/selectors";
 import DailyNormaModal from "../DailyNormaModal/DailyNormaModal";
 import css from "./DailyNorma.module.css";
 
 const DailyNorma = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const dailyNorma = useSelector(selectWaterRate);
+  const user = useSelector(selectUser);
+  const dailyNorma = user.waterRate;
   const formatDailyNorma = dailyNorma / 1000;
   const closeModal = () => {
     setIsModalOpen(false);

@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-import { fetchMonthWater } from '../../axiosConfig/authAPI';
+import { axiosLoader } from '../../axiosConfig/axiosLoader';
 
 export const getMonthWater = createAsyncThunk(
   'monthWater/getMonthWater',
   async (selectDate, thunkAPI) => {
     try {
-      const monthWater = await fetchMonthWater(selectDate);
-      return monthWater;
+      const { data } = await axiosLoader.get(`/water/month?date=${selectDate}`);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

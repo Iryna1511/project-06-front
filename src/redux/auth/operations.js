@@ -1,21 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-axios.defaults.baseURL = "https://water-tracker-06.onrender.com/";
-
-const setAuthHeader = (token) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-const removeAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = ``;
-};
+import { axiosLoader } from "../../axiosConfig/axiosLoader";
 
 export const register = createAsyncThunk(
   "/auth/register",
   async (newUser, thunkAPI) => {
     try {
-      const response = await axios.post("/auth/register", newUser);
+      const response = await axiosLoader.post("/auth/register", newUser);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -25,11 +15,11 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
   try {
-    const response = await axios.post("/auth/login", user);
+    const response = await axiosLoader.post("/auth/login", user);
     const token = response.data.data.accessToken;
-    console.log("токен при логіні, який ми записуємо в хедер і кукі", token);
+    // console.log("токен при логіні, який ми записуємо в хедер і кукі", token);
 
-    setAuthHeader(token);
+    // setAuthHeader(token);
     localStorage.setItem("authToken", token);
 
     return response.data;
@@ -40,8 +30,8 @@ export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
 //Liza 
 export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
   try {
-    await axios.post("/auth/logout");
-    removeAuthHeader();
+    await axiosLoader.post("/auth/logout");
+    // removeAuthHeader();
     localStorage.removeItem("authToken");
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -52,30 +42,30 @@ export const refreshUser = createAsyncThunk(
   "auth/refreshUser",
   async (_, thunkAPI) => {
     try {
-      const reduxState = thunkAPI.getState();
-      const token = reduxState.auth.token || localStorage.getItem("authToken");
-      if (token) {
-        setAuthHeader(token);
-        const response = await axios.get("/user");
+      // const reduxState = thunkAPI.getState();
+      // const token = reduxState.auth.token || localStorage.getItem("authToken");
+      // if (token) {
+        // setAuthHeader(token);
+        const response = await axiosLoader.get("/user");
 
         return response.data;
-      }
-      return thunkAPI.rejectWithValue("No token available");
+      // }
+      // return thunkAPI.rejectWithValue("No token available");
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-export const updateDailyNorma = createAsyncThunk(
+export const updateUserWaterDailyNorma = createAsyncThunk(
   "user/dailyNorma",
   async (waterToDrink, thunkAPI) => {
     try {
-      const reduxState = thunkAPI.getState();
-      const token = reduxState.auth.token || localStorage.getItem("authToken");
-      if (token) {
-        setAuthHeader(token);
-      }
-      const res = await axios.patch("/user/waterRate", {
+      // const reduxState = thunkAPI.getState();
+      // const token = reduxState.auth.token || localStorage.getItem("authToken");
+      // if (token) {
+      //   setAuthHeader(token);
+      // }
+      const res = await axiosLoader.patch("/user/waterRate", {
         waterRate: waterToDrink,
       });
       return res.data;

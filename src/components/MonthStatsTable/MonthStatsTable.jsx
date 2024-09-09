@@ -27,7 +27,6 @@ import Loader from '../../components/Loader/Loader';
 
 import {
   selectIsLoadingList,
-  selectNorma,
   selectTodayWater,
 } from '../../redux/waterDetails/waterSelectors';
 
@@ -43,8 +42,6 @@ const MonthStatsTable = () => {
   const monthWater = useSelector(selectMonthWaterDetails) || [];
   const todayWater = useSelector(selectTodayWater) || [];
   const isLoadingList = useSelector(selectIsLoadingList);
-
-  const dailyNorm = useSelector(selectNorma) || 0;
 
   const currentMonth = format(currentDate, 'MMMM');
   const currentYear = format(currentDate, 'yyyy');
@@ -88,6 +85,7 @@ const MonthStatsTable = () => {
     formatDate(new Date(date.setHours(0, 0, 0, 0)));
 
   const renderPopover = data => {
+    console.log(data);
     if (!data || data.length === 0) {
       return (
         <Popover
@@ -139,6 +137,9 @@ const MonthStatsTable = () => {
       item =>
         getFormattedDateWithTime(new Date(item._id)) === formattedDateWithTime
     );
+
+    console.log(data)
+    console.log(waterInfo)
     
     if (waterInfo) {
       return (
