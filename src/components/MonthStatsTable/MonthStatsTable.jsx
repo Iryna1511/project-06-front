@@ -8,7 +8,7 @@ import {
   selectIsLoadingMonthWater,
   selectMonthWaterDetails,
 } from "../../redux/monthWater/monthWaterselectors";
-import { formatDate } from "../../redux/waterDetails/helpers";
+import { formatDate } from "../../redux/mainWater/helpers";
 import Loader from "../../components/Loader/Loader";
 import {
   // selectNorma,
