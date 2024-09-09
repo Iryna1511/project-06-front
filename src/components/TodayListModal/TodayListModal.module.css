@@ -140,8 +140,17 @@
     width: 256px;
     height: 44px;
     margin-bottom: 24px;
-
+    appearance: none;
+    border: none;
+    margin-bottom: 24px;
+    outline: none;
+    font-family: "Roboto", sans-serif;
+    color: #407BFF;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.25;
 }
+
 
 .waterAmount {
     border: 1px solid #D7E3FF;

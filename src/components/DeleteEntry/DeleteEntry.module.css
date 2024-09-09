@@ -48,6 +48,7 @@
     width: 24px;
     height: 24px;
     gap: 6px;
+    cursor: pointer;
   }
   
   h2 {
