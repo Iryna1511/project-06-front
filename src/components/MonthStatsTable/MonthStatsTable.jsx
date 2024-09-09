@@ -8,12 +8,13 @@ import {
   selectIsLoadingMonthWater,
   selectMonthWaterDetails,
 } from "../../redux/monthWater/monthWaterselectors";
-import { formatDate } from "../../redux/waterDetails/helpers";
+import { formatDate } from "../../redux/mainWater/helpers.js";
+
 import Loader from "../../components/Loader/Loader";
-import {
+/* import {
   // selectNorma,
 //  selectTodayWater,
-} from "../../redux/waterDetails/waterSelectors";
+} from "../../redux/waterDetails/waterSelectors"; */
 import { isToday } from "date-fns";
 import { DaysGeneralStats } from "../Calendar/CalendarItem/DaysGeneralStats.jsx";
 import { useTranslation } from "react-i18next";
