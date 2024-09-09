@@ -1,5 +1,3 @@
-
-
 import styled from 'styled-components';
 
 export const CalendarStyle = styled.div`
@@ -11,7 +9,7 @@ export const CalendarStyle = styled.div`
   }
 
   .sectionText {
-    color: var(--primery-color-black);
+    color: #407BFF;
     font-size: 24px;
     font-weight: 500;
     line-height: 30px;
@@ -39,12 +37,12 @@ export const CalendarStyle = styled.div`
   }
 
   .navBtn:hover {
-    background-color: var(--primery-color-white);
-    border: 1px solid var(--calendar-color-orange);
+    background-color: #ffffff; /* Замінив на формат кольору #FFFFFF */
+    border: 1px solid #FFA500; /* Замінив на помаранчевий формат кольору #FFA500 */
   }
 
   .dateText {
-    color: var(--primery-color-blue);
+    color: #407BFF;
     width: 130px;
     text-align: center;
     font-size: 16px;
@@ -57,7 +55,7 @@ export const CalendarStyle = styled.div`
     height: 34px;
     border-radius: 50%;
     border: none;
-    background-color: var(--primery-color-white);
+    background-color: #ffffff; /* Замінив на формат кольору #FFFFFF */
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
@@ -65,33 +63,33 @@ export const CalendarStyle = styled.div`
   }
 
   .calendarDayBtn:hover {
-    background-color: var(--secondary-color-blue);
+    background-color: #00BFFF; /* Замінив на блакитний колір */
   }
 
   .today {
-    background-color: var(--secondary-color-blue);
+    background-color: #00BFFF; /* Блакитний */
   }
 
   .day {
     display: flex;
     flex-direction: column;
     align-items: center;
-  position: relative; /* Додати позиціонування */
-}
+    position: relative; /* Додати позиціонування */
+  }
 
   .progressWaterText {
-    color: var(--secondary-color-blue);
+    color: #00BFFF; /* Блакитний */
     font-size: 13px;
     font-weight: 400;
     line-height: 20px;
   }
 
   .border {
-    border: 1px solid var(--calendar-color-orange);
+    border: 1px solid #FFA500; /* Помаранчевий */
   }
 
   .border-green {
-    border: 1px solid var(--calendar-color-green);
+    border: 1px solid #008000; /* Зелений */
   }
 
   @media screen and (min-width: 768px) {
@@ -125,21 +123,21 @@ export const ContentPopover = styled.div`
   }
 
   .datePopover {
-    color: var(--primery-color-blue);
+    color: #407BFF; /* Блакитний */
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
   }
 
   .datePopoverText {
-    color: var(--primery-color-black);
+    color: #000000; /* Чорний */
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
   }
 
   .popoverColorText {
-    color: var(--primery-color-blue);
+    color: #407BFF; /* Блакитний */
     font-size: 18px;
     font-weight: 500;
     line-height: 24px;
@@ -169,14 +167,14 @@ export const ContentPopoverErr = styled.div`
   }
 
   .datePopover {
-    color: var(--primery-color-blue);
+    color: #407BFF; /* Блакитний */
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
   }
 
   .errText {
-    color: var(--primery-color-black);
+    color: #000000; /* Чорний */
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
@@ -195,4 +193,3 @@ export const LoaderMonthWrapper = styled.div`
     height: 262px;
   }
 `;
-

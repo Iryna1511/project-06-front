@@ -84,7 +84,7 @@ const MonthStatsTable = () => {
   return (
     <CalendarStyle>
       <div className="header">
-        <span className="sectionText">{t("month")}</span>
+        <span className="sectionText">{t("Month")}</span>
         <div className="monthNav">
           <button className="navBtn" onClick={() => handleChangeMonth(-1)}>
             <svg width="14" height="14">
