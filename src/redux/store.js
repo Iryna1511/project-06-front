@@ -13,10 +13,11 @@ export const store = configureStore({
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/authSlice";
-import { waterReducer } from "./water/waterSlice";
-import { waterDetailsREducer } from "./waterDetails/waterSlice";
-import { dailyNormaReducer } from "./dailyNorma/dailyNormaSlice";
-import { monthWaterReducer } from "./monthWater/monthWaterSlice";
+import { irinaWaterReducer } from "./waterIrina/irinaSlice";
+// import { waterReducer } from "./water/waterSlice";
+// import { waterDetailsREducer } from "./waterDetails/waterSlice";
+// import { dailyNormaReducer } from "./dailyNorma/dailyNormaSlice";
+// import { monthWaterReducer } from "./monthWater/monthWaterSlice";
 import {
   persistStore,
   persistReducer,
@@ -38,10 +39,11 @@ const authConfig = {
 // Combining all reducers
 const rootReducer = combineReducers({
   auth: persistReducer(authConfig, authReducer), // persist auth with token whitelist
-  water: waterReducer, // from first store file
-  waterDetails: waterDetailsREducer, // from second store file
-  dailyNorma: dailyNormaReducer,
-  monthWater: monthWaterReducer,
+  // water: waterReducer, // from first store file
+  // waterDetails: waterDetailsREducer, // from second store file
+  // dailyNorma: dailyNormaReducer,
+  // monthWater: monthWaterReducer,
+  water: irinaWaterReducer,
 });
 
 // Creating the store with persisted auth and middlewares

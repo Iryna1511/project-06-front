@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import {authApi} from "../../axiosConfig/authAPI";
-
+import { authApi } from "../../axiosConfig/authAPI";
 
 axios.defaults.baseURL = "https://water-tracker-06.onrender.com/";
 
@@ -29,12 +28,11 @@ export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
   try {
     const response = await axios.post("/auth/login", user);
     const token = response.data.data.accessToken;
-     console.log("токен при логіні, який ми записуємо в хедер і кукі", token);
+    console.log("токен при логіні, який ми записуємо в хедер і кукі", token);
 
     setAuthHeader(token);
     localStorage.setItem("authToken", token);
 
-    
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);

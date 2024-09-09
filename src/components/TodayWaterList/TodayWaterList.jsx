@@ -2,25 +2,34 @@ import css from "./TodayWaterList.module.css";
 import { HiOutlineTrash, HiOutlinePencilSquare } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
+import { selectWaterToday } from "../../redux/waterIrina/irinaSelectors";
 import {
   toggleAddWaterModal,
   toggleTodayListModal,
   toggleDeleteEntryModal,
-} from "../../redux/waterDetails/waterSlice";
-import { selectTodayWater } from "../../redux/waterDetails/waterSelectors";
+} from "../../redux/waterIrina/irinaSlice";
+import { fetchTodayWater } from "../../redux/waterIrina/irinaOperations";
+import { useEffect } from "react";
 
 export default function TodayWaterList() {
   const dispatch = useDispatch();
+  useEffect(() => {
+    const data = dispatch(fetchTodayWater());
+    console.log(data);
+  }, [dispatch]);
+
   const handleOpenAdd = () => dispatch(toggleAddWaterModal());
   const handleOpenEdit = () => dispatch(toggleTodayListModal());
   const handleOpenDelete = () => dispatch(toggleDeleteEntryModal());
 
-  const waterData = useSelector(selectTodayWater);
+  const waterData = useSelector(selectWaterToday);
+  console.log(waterData);
+
   return (
     <div className={css.container}>
       <h2 className={css.title}>Today</h2>
       <ul className={css.list}>
-        {waterData.waterlist.length > 0 &&
+        {waterData.length > 0 &&
           waterData.waterlist.map(({ _id, date, waterVolume }) => {
             return (
               <li key={_id} className={css.item}>
