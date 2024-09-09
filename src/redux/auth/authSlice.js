@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, logout, register, refreshUser } from "./operations.js";
+import {
+  login,
+  logout,
+  register,
+  refreshUser,
+  updateDailyNorma,
+} from "./operations.js";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -19,6 +25,7 @@ const authSlice = createSlice({
       avatar: null,
       gender: null,
       _id: null,
+      waterRate: null,
     },
     token: null,
     isLoggedIn: false,
@@ -47,25 +54,17 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addCase(register.rejected, handleRejected)
-      // .addCase(register.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = action.payload || "Registration error!";
-      // })
 
       .addCase(login.pending, handlePending)
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.data.user;
         console.log(state.user);
-        
+
         state.token = action.payload.data.accessToken;
         state.isLoading = false;
         state.isLoggedIn = true;
       })
       .addCase(login.rejected, handleRejected)
-      // .addCase(login.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = action.payload || "Login error!";
-      // })
 
       .addCase(logout.pending, handlePending)
       .addCase(logout.fulfilled, (state) => {
@@ -79,10 +78,6 @@ const authSlice = createSlice({
         state.isLogoutModalOpen = false;
       })
       .addCase(logout.rejected, handleRejected)
-      // .addCase(logout.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = action.payload || "Logout error!";
-      // })
 
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
@@ -96,7 +91,12 @@ const authSlice = createSlice({
         state.isRefreshing = false;
         state.isLoading = false;
         state.error = action.payload || "Error refreshing user data";
-      });
+      })
+      .addCase(updateDailyNorma.pending, handlePending)
+      .addCase(updateDailyNorma.fulfilled, (state, action) => {
+        state.user.waterRate = action.payload.data.waterRate;
+      })
+      .addCase(updateDailyNorma.rejected, handleRejected);
   },
 });
 
