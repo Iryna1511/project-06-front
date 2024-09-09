@@ -5,7 +5,7 @@ const irinaWaterSlice = createSlice({
   name: "irinaWater",
   initialState: {
     todayWater: {
-      percent: 0,
+      percent: "",
       waterEntries: [],
     },
     isAddWaterModalOpen: false,
@@ -28,10 +28,13 @@ const irinaWaterSlice = createSlice({
       .addCase(fetchTodayWater.fulfilled, (state, action) => {
         state.todayWater.percent =
           action.payload.data.waterConsumptionPercentage;
-        state.todayWater.waterEntries.push(...action.payload.data.waterEntries);
+        state.todayWater.waterEntries = action.payload.data.waterEntries;
       })
       .addCase(fetchTodayWater.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error = {
+          message: action.payload.message || "An unknown error occurred",
+          status: action.payload.status,
+        };
       });
   },
 });

@@ -14,8 +14,7 @@ import { useEffect } from "react";
 export default function TodayWaterList() {
   const dispatch = useDispatch();
   useEffect(() => {
-    const data = dispatch(fetchTodayWater());
-    console.log(data);
+    dispatch(fetchTodayWater());
   }, [dispatch]);
 
   const handleOpenAdd = () => dispatch(toggleAddWaterModal());
@@ -23,21 +22,24 @@ export default function TodayWaterList() {
   const handleOpenDelete = () => dispatch(toggleDeleteEntryModal());
 
   const waterData = useSelector(selectWaterToday);
-  console.log(waterData);
+
+  const formatTime = (time) => {
+    return time.slice(11, 16);
+  };
 
   return (
     <div className={css.container}>
       <h2 className={css.title}>Today</h2>
       <ul className={css.list}>
-        {waterData.length > 0 &&
-          waterData.waterlist.map(({ _id, date, waterVolume }) => {
+        {waterData && waterData.length > 0 ? (
+          waterData.map(({ _id, date, waterVolume }) => {
             return (
               <li key={_id} className={css.item}>
                 <svg className={css.icon} width="26" height="26">
                   <use href="icons.svg#icon-glass"></use>
                 </svg>
                 <p className={css.amount}>{waterVolume}</p>
-                <p className={css.time}>{date}</p>
+                <p className={css.time}>{formatTime(date)}</p>
                 <button
                   className={css.btnEdit}
                   onClick={handleOpenEdit}
@@ -54,7 +56,10 @@ export default function TodayWaterList() {
                 </button>
               </li>
             );
-          })}
+          })
+        ) : (
+          <p>There is no enteries</p>
+        )}
       </ul>
       <button className={css.btnAdd} onClick={handleOpenAdd} type="button">
         <span>
@@ -65,81 +70,3 @@ export default function TodayWaterList() {
     </div>
   );
 }
-
-// <li className={css.item}>
-//   <svg className={css.icon} width="26" height="26">
-//     <use href="icons.svg#icon-glass"></use>
-//   </svg>
-//   <p className={css.amount}>250 ml</p>
-//   <p className={css.time}>7:00</p>
-//   <button
-//     className={css.btnEdit}
-//     onClick={handleOpenEdit}
-//     type="button"
-//   >
-//     <HiOutlinePencilSquare />
-//   </button>
-//   <button
-//     className={css.btnDelete}
-//     onClick={handleOpenDelete}
-//     type="button"
-//   >
-//     <HiOutlineTrash />
-//   </button>
-// </li>
-// <li className={css.item}>
-//   <svg className={css.icon} width="26" height="26">
-//     <use href="icons.svg#icon-glass"></use>
-//   </svg>
-//   <p className={css.amount}>250 ml</p>
-//   <p className={css.time}>7:00</p>
-//   <div className={css.buttons}></div>
-//   <button className={css.btnEdit} type="button">
-//     <HiOutlinePencilSquare />
-//   </button>
-//   <button className={css.btnDelete} type="button">
-//     <HiOutlineTrash />
-//   </button>
-// </li>
-// <li className={css.item}>
-//   <svg className={css.icon} width="26" height="26">
-//     <use href="icons.svg#icon-glass"></use>
-//   </svg>
-//   <p className={css.amount}>250 ml</p>
-//   <p className={css.time}>7:00</p>
-//   <div className={css.buttons}></div>
-//   <button className={css.btnEdit} type="button">
-//     <HiOutlinePencilSquare />
-//   </button>
-//   <button className={css.btnDelete} type="button">
-//     <HiOutlineTrash />
-//   </button>
-// </li>
-// <li className={css.item}>
-//   <svg className={css.icon} width="26" height="26">
-//     <use href="icons.svg#icon-glass"></use>
-//   </svg>
-//   <p className={css.amount}>250 ml</p>
-//   <p className={css.time}>7:00</p>
-//   <div className={css.buttons}></div>
-//   <button className={css.btnEdit} type="button">
-//     <HiOutlinePencilSquare />
-//   </button>
-//   <button className={css.btnDelete} type="button">
-//     <HiOutlineTrash />
-//   </button>
-// </li>
-// <li className={css.item}>
-//   <svg className={css.icon} width="26" height="26">
-//     <use href="icons.svg#icon-glass"></use>
-//   </svg>
-//   <p className={css.amount}>250 ml</p>
-//   <p className={css.time}>7:00</p>
-//   <div className={css.buttons}></div>
-//   <button className={css.btnEdit} type="button">
-//     <HiOutlinePencilSquare />
-//   </button>
-//   <button className={css.btnDelete} type="button">
-//     <HiOutlineTrash />
-//   </button>
-// </li>

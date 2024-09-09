@@ -12,19 +12,10 @@ const initialState = {
   percent: 0,
   notes: [],
   notesPerMonth: [],
-  // isAddWaterModalOpen: false,
-  // isTodayListModalOpen: false,
-  // isDeleteEntryOpen: false, // переношу в інший слайс
+  isAddWaterModalOpen: false,
+  isTodayListModalOpen: false,
+  isDeleteEntryOpen: false, // переношу в інший слайс
 };
-
-//  {
-//                 "_id": "66dc5613f5726efe41de2a73",
-//                 "user_id": "66d5c83627602c09f29990f3",
-//                 "date": "2024-09-07T19:30:00.000Z",
-//                 "waterVolume": 510,
-//                 "createdAt": "2024-09-07T13:33:07.353Z",
-//                 "updatedAt": "2024-09-07T13:33:07.353Z"
-//             },
 
 const slice = createSlice({
   name: "water",
