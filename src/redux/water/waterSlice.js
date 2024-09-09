@@ -27,7 +27,7 @@ const slice = createSlice({
     toggleTodayListModal: (state) => {
       state.isTodayListModalOpen = !state.isTodayListModalOpen;
     },
-    //Liza 
+
     toggleDeleteEntryModal: (state) => {
       state.isDeleteEntryOpen = !state.isDeleteEntryOpen;
     },
