@@ -2,17 +2,23 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import s from "./DaysGeneralStats.module.css";
 
 const positionMobile = {
-  firstColumn: [1, 6, 11, 16, 21, 26, 31],
-  secondColumn: [2, 7, 12, 17, 22, 27],
-  thirdColumn: [3, 8, 13, 18, 23, 28],
-  fourthColumn: [4, 9, 14, 19, 24, 29],
+  firstColumn: [0, 5, 10, 15, 20, 25, 30],
+  secondColumn: [1, 6, 11, 16, 21, 26],
+  thirdColumn: [2, 7, 12, 17, 22, 27],
+  fourthColumn: [3, 8, 13, 18, 23, 28],
 };
 
 const positionTablet = {
-  firstColumn: [1, 11, 21, 31],
-  secondColumn: [2, 12, 22],
-  thirdColumn: [3, 13, 23],
-  fourthColumn: [4, 14, 24],
+  firstColumn: [0, 10, 20, 30],
+  secondColumn: [1, 11, 21, 31],
+  thirdColumn: [2, 12, 22],
+  fourthColumn: [3, 13, 23],
+  fifthColumn: [4, 14, 24],
+  sixthColumn: [5, 15, 25],
+  seventhColumn: [6, 16, 26],
+  eighthColumn: [7, 17, 27],
+  ninthColumn: [8, 18, 28],
+  tenthColumn: [9, 19, 29],
 };
 
 export const DaysGeneralStats = ({ note, index, onClose }) => {
@@ -65,25 +71,63 @@ export const DaysGeneralStats = ({ note, index, onClose }) => {
 
   const columnKey = getColumnKey();
 
-  const positionStyle = (columnKey) => {
+  // Визначаємо позицію для мобільного екрану
+  const positionStyleMobile = (columnKey) => {
     switch (columnKey) {
       case "firstColumn":
-        return { right: "-241px" };
+        return { right: "-227px" };
       case "secondColumn":
-        return { right: "-183px" };
+        return { right: "-170px" };
       case "thirdColumn":
-        return { right: "-125px" };
+        return { right: "-117px" };
       case "fourthColumn":
-        return { right: "-67px" };
+        return { right: "-62px" };
       default:
-        return {};
+        return { right: "-9px" };
+    }
+  };
+
+  // Визначаємо позицію для планшета
+  const positionStyleTablet = (columnKey) => {
+    switch (columnKey) {
+      case "firstColumn":
+        return { right: "-220px" };
+      case "secondColumn":
+        return { right: "-220px" };
+      case "thirdColumn":
+        return { right: "-220px" };
+      case "fourthColumn":
+        return { right: "-220px" };
+      case "fifthColumn":
+        return { right: "-220px" };
+      case "sixthColumn":
+        return { right: "-220px" };
+      case "seventhColumn":
+        return { right: "-220px" };
+      case "eighthColumn":
+        return { right: "0px" };
+      case "ninthColumn":
+        return { right: "0px" };
+      default:
+        return { right: "0px" };
+    }
+  };
+
+  // Визначаємо яку позицію вибрати в залежності від розміру екрану
+  const positionStyle = () => {
+    if (screenWidth <= 767) {
+      return positionStyleMobile(columnKey);
+    } else if (screenWidth >= 768 && screenWidth <= 1439) {
+      return positionStyleTablet(columnKey);
+    } else {
+      return { right: "0px" }; // Для великих екранів
     }
   };
 
   const formatDate = (date) => {
     const newDate = new Date(date);
     const day = newDate.getDate();
-    const month = newDate.toLocaleString("en-US", { month: "short" }); // Скорочений формат місяця англійською
+    const month = newDate.toLocaleString("en-US", { month: "short" }); 
     return `${day}, ${month}`;
   };
 
@@ -91,7 +135,7 @@ export const DaysGeneralStats = ({ note, index, onClose }) => {
     <ul
       ref={modalRef}
       className={s.stats_list}
-      style={positionStyle(columnKey)}
+      style={positionStyle()} // Використовуємо відповідні стилі
     >
       <li className={s.date}>{formatDate(date)}</li>
       <li className={s.stat}>
