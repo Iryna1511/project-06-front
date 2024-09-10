@@ -106,6 +106,15 @@
   box-shadow: none;
 }
 
+.link {
+  color: var(--blue);
+}
+
+.link:hover,
+.link.focus {
+  color: var(--orange);
+}
+
 @media (min-width: 768px) {
   .wrap_form {
     width: 384px;
