@@ -2,10 +2,11 @@ import { useState } from "react";
 import css from "./AddWaterAmountModal.module.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
-import TimeDropdown, {
+import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
+import {
   roundToNearestFiveMinutes,
   getCurrentTime,
-} from "../TimeDropdown/TimeDropDown.jsx";
+} from "../TimeDropdown/helpers.js";
 
 export default function AddWaterAmountModal({
   incomeAmount,
