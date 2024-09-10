@@ -5,7 +5,7 @@ import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import TimeDropdown, {
   roundToNearestFiveMinutes,
   getCurrentTime,
-} from "../TimeDropdown/TimeDropdown.jsx";
+} from "../TimeDropdown/TimeDropDown.jsx";
 
 export default function AddWaterAmountModal({
   incomeAmount,
