@@ -9,7 +9,7 @@ export const CalendarStyle = styled.div`
   }
 
   .sectionText {
-    color: #407BFF;
+    color: #2F2F2F;
     font-size: 24px;
     font-weight: 500;
     line-height: 30px;
@@ -64,6 +64,10 @@ export const CalendarStyle = styled.div`
 
   .calendarDayBtn:hover {
     background-color: #00BFFF; /* Замінив на блакитний колір */
+  }
+
+  .border-orange {
+    border: 1px solid #FF9D43; /* помаранчевий бордер на кружечки з невиконаною нормою */
   }
 
   .today {
