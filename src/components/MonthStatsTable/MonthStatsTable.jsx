@@ -23,22 +23,30 @@ const MonthStatsTable = () => {
   const [selectedDay, setSelectedDay] = useState(null); // Додаємо стан для вибраного дня
 
   const isLoadingMonth = useSelector(selectIsLoadingMonthWater);
-
+/*
   // Filip Kavaleu: Отримуємо дані місяця, приводимо їх до масиву, якщо вони об'єкт
   const monthWater = Array.isArray(useSelector(selectMonthWaterDetails)) 
     ? useSelector(selectMonthWaterDetails) 
     : []; // Поправка: Если пришел объект {}, используем []
-
+*/
+  
+  const monthWater = useSelector(selectMonthWaterDetails);
   //const dailyNorm = useSelector(selectNorma) || 0;
 
   const currentMonth = format(currentDate, "MMMM");
   const currentYear = format(currentDate, "yyyy");
 
+
+  // Форматування дати в yyyy-MM
+  const formatDate = (date) => format(date, "yyyy-MM");
   const d = formatDate(currentDate);
+  
 
   const dispatch = useDispatch();
 
+  // Виклик данних про воду
   useEffect(() => {
+    console.log("Dispatching getMonthWater with date:", d);
     dispatch(getMonthWater(d));
   }, [dispatch, d]);
 
