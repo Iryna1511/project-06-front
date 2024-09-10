@@ -20,7 +20,7 @@ const waterSlice = createSlice({
   name: "water",
   initialState: {
     todayWater: {
-      percent: 0,
+      percent: null,
       waterEntries: [],
     },
     isLoading: false,
