@@ -23,7 +23,12 @@ const MonthStatsTable = () => {
   const [selectedDay, setSelectedDay] = useState(null); // Додаємо стан для вибраного дня
 
   const isLoadingMonth = useSelector(selectIsLoadingMonthWater);
-  const monthWater = useSelector(selectMonthWaterDetails) || [];
+
+  // Filip Kavaleu: Отримуємо дані місяця, приводимо їх до масиву, якщо вони об'єкт
+  const monthWater = Array.isArray(useSelector(selectMonthWaterDetails)) 
+    ? useSelector(selectMonthWaterDetails) 
+    : []; // Поправка: Если пришел объект {}, используем []
+
   //const dailyNorm = useSelector(selectNorma) || 0;
 
   const currentMonth = format(currentDate, "MMMM");
@@ -44,12 +49,16 @@ const MonthStatsTable = () => {
     );
   };
 
-  const handleClick = (date, index) => {
-    const dayData = monthWater.find(
-      (item) =>
-        getFormattedDateWithTime(new Date(item._id)) ===
-        getFormattedDateWithTime(date)
-    ) || { percent: 0, waterRate: 0, consumptionCount: 0 };
+
+    const handleClick = (date, index) => {
+    // Filip Kavaleu: захист від помилки, якщо monthWater не масив
+    const dayData = (Array.isArray(monthWater)
+      ? monthWater.find(
+          (item) =>
+            getFormattedDateWithTime(new Date(item._id)) ===
+            getFormattedDateWithTime(date)
+        )
+      : null) || { percent: 0, waterRate: 0, consumptionCount: 0 };
 
     // Установка вибраного дня
     setSelectedDay({
