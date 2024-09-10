@@ -4,6 +4,7 @@ import css from "./AddWaterAmountModal.module.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import { toggleAddWaterModal } from "../../redux/mainWater/slice";
+import { addWater } from "../../redux/mainWater/operations.js";
 import { useDispatch } from "react-redux";
 import TimeDropdown, {
   roundToNearestFiveMinutes,
@@ -34,6 +35,24 @@ const customStyles = {
   }),
 };
 
+function getFormattedDate(timeInput) {
+  const [inputHours, inputMinutes] = timeInput.split(":");
+
+  const date = new Date();
+
+  date.setHours(parseInt(inputHours), parseInt(inputMinutes), 0, 0);
+
+  const year = date.getUTCFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
+}
+
 export default function AddWaterAmountModal() {
   const dispatch = useDispatch();
 
@@ -55,6 +74,16 @@ export default function AddWaterAmountModal() {
   }
 
   const closeModal = () => dispatch(toggleAddWaterModal());
+
+  function sendWaterData() {
+    dispatch(
+      addWater({
+        date: getFormattedDate(currentTime),
+        waterVolume: currentAmount,
+      })
+    );
+    dispatch(toggleAddWaterModal());
+  }
 
   return (
     <div className={css.backdrop}>
@@ -87,7 +116,7 @@ export default function AddWaterAmountModal() {
         <p className={css.signaturetext}>Recording time:</p>
         <Select
           styles={customStyles}
-          defaultValue={currentTime}
+          defaultValue={{ value: currentTime, label: currentTime }}
           onChange={handleTimeChange}
           options={TimeDropdown()}
           components={{
@@ -106,7 +135,11 @@ export default function AddWaterAmountModal() {
         />
         <div className={css.footerContainer}>
           <p className={css.amountWaterIncomeFooter}>{currentAmount + "ml"}</p>
-          <button className={css.saveButton} type="button">
+          <button
+            className={css.saveButton}
+            type="button"
+            onClick={sendWaterData}
+          >
             Save
           </button>
         </div>
