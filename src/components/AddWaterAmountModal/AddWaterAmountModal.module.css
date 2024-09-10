@@ -7,23 +7,6 @@
     width: 100%;
     height: 100%;
     background-color: #000000cc;
-    /* 
-        display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center; */
-
-
-    /*         
-            padding-top: 40px;
-            padding-left: 20px;
-            padding-right: 20px; */
-
-    /* opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-
-    transition: opacity var(--transition), visibility var(--transition); */
 }
 
 .modal {
@@ -40,13 +23,6 @@
     width: 280px;
     height: auto;
     background-color: #FFFFFF;
-    /* 
-    overflow: auto; */
-
-    /* opacity: 0; */
-    /* visibility: hidden; */
-
-    /* transition: opacity var(--transition), visibility var(--transition); */
 }
 
 .titlecontainer {
@@ -64,6 +40,7 @@
 
 .closebtn {
     cursor: pointer;
+    border: none;
 }
 
 .subtitle {

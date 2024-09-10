@@ -1,24 +1,69 @@
 import { useState } from "react";
+import Select from "react-select";
 import css from "./AddWaterAmountModal.module.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
+import { toggleAddWaterModal } from "../../redux/mainWater/slice";
+import { addWater, fetchTodayWater } from "../../redux/mainWater/operations.js";
+import { useDispatch } from "react-redux";
 import TimeDropdown, {
   roundToNearestFiveMinutes,
   getCurrentTime,
 } from "../TimeDropdown/TimeDropdown.jsx";
 
-export default function AddWaterAmountModal({
-  incomeAmount,
-  incomeTime,
-  isUpdate,
-}) {
-  const [currentAmount, setCurrentAmount] = useState(incomeAmount ?? 250);
+const customStyles = {
+  control: (provided) => ({
+    ...provided,
+    border: "1px solid #D7E3FF",
+    borderRadius: "6px",
+    height: "44px",
+    marginBottom: "24px",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    scrollBehavior: "smooth",
+    border: "1px solid #D7E3FF",
+    borderRadius: "6px",
+  }),
+  option: (provided, { isSelected }) => ({
+    ...provided,
+    background: isSelected ? "#D7E3FF" : "#ffffff",
+    color: "#407BFF",
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#407BFF",
+  }),
+};
+
+function getFormattedDate(timeInput) {
+  const [inputHours, inputMinutes] = timeInput.split(":");
+
+  const date = new Date();
+
+  date.setHours(parseInt(inputHours), parseInt(inputMinutes), 0, 0);
+
+  const year = date.getUTCFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
+}
+
+export default function AddWaterAmountModal() {
+  const dispatch = useDispatch();
+
+  const [currentAmount, setCurrentAmount] = useState(250);
   const [currentTime, setCurrentTime] = useState(
-    incomeTime ?? roundToNearestFiveMinutes(getCurrentTime())
+    roundToNearestFiveMinutes(getCurrentTime())
   );
 
   function handleTimeChange(event) {
-    console.log(event.target.value);
+    setCurrentTime(event.value);
   }
 
   function addMilliliters(amount = 50) {
@@ -29,14 +74,27 @@ export default function AddWaterAmountModal({
     setCurrentAmount(currentAmount - amount);
   }
 
+  const closeModal = () => dispatch(toggleAddWaterModal());
+
+  function sendWaterData() {
+    dispatch(
+      addWater({
+        date: getFormattedDate(currentTime),
+        waterVolume: currentAmount,
+      })
+    );
+    dispatch(toggleAddWaterModal());
+    dispatch(fetchTodayWater());
+  }
+
   return (
     <div className={css.backdrop}>
       <div className={css.modal}>
         <div className={css.titlecontainer}>
           <h2 className={css.titletext}>Add water</h2>
-          <span className={css.closebtn}>
+          <button className={css.closebtn} onClick={closeModal}>
             <IoCloseOutline size="24" color="407BFF" />
-          </span>
+          </button>
         </div>
         <h3 className={css.subtitle}>Choose a value:</h3>
         <p className={css.signaturetext}>Amount of water:</p>
@@ -58,13 +116,16 @@ export default function AddWaterAmountModal({
           </button>
         </div>
         <p className={css.signaturetext}>Recording time:</p>
-        <select
-          className={css.timeDropdown}
-          value={currentTime}
+        <Select
+          styles={customStyles}
+          defaultValue={{ value: currentTime, label: currentTime }}
           onChange={handleTimeChange}
-        >
-          {TimeDropdown()}
-        </select>
+          options={TimeDropdown()}
+          components={{
+            DropdownIndicator: () => null,
+            IndicatorSeparator: () => null,
+          }}
+        />
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
         <input
           className={css.waterAmount}
@@ -76,7 +137,11 @@ export default function AddWaterAmountModal({
         />
         <div className={css.footerContainer}>
           <p className={css.amountWaterIncomeFooter}>{currentAmount + "ml"}</p>
-          <button className={css.saveButton} type="button">
+          <button
+            className={css.saveButton}
+            type="button"
+            onClick={sendWaterData}
+          >
             Save
           </button>
         </div>
