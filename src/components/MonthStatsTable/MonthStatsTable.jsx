@@ -111,16 +111,21 @@ const MonthStatsTable = () => {
             const formattedDate = format(date, "d, MMMM"); // Співставляємо з вашим форматом дати
             const dayData = findDayData(date) || { waterConsumptionPercentage: 0, waterConsumptionCount: 0, dateNorm: 0 };
 
+              // Додаємо умову для помаранчевого бордера, якщо норма води не виконана
+              const buttonClass = dayData.waterConsumptionPercentage < 100
+              ? "calendarDayBtn border-orange" // Помаранчевий бордер
+              : "calendarDayBtn"; // Звичайна кнопка
+
             return (
               <li key={formattedDate} className="day">
                 <button
-                  className={`calendarDayBtn ${isToday(date) ? "today" : ""}`}
+                  className={`${buttonClass} ${isToday(date) ? "today" : ""}`} // Встановлення класу для дня
                   onClick={() => handleClick(date, index)}
                 >
                   {format(date, "d")}
                 </button>
                 <p className="progressWaterText">
-                  {dayData.waterConsumptionPercentage ? `${dayData.waterConsumptionPercentage.toFixed(0)}%` : "N/A"}
+                  {dayData.waterConsumptionPercentage ? `${dayData.waterConsumptionPercentage.toFixed(0)}%` : "0%"}
                 </p>
                 {selectedDay && selectedDay.date === format(date, "yyyy-MM-dd") && (
                   <DaysGeneralStats
