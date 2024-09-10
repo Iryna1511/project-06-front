@@ -31,19 +31,11 @@ export const CalendarStyle = styled.div`
     display: flex;
     border: 1px solid transparent;
     background-color: transparent;
-    border-radius: 50%;
     justify-content: center;
-    transition: background-color 0.3s, border 0.3s;
-  }
-
-  .navBtn:hover {
-    background-color: #ffffff;
-    border: 1px solid #FFA500; /* Помаранчевий колір */
-  }
-
+   }
+ 
   .dateText {
     color: #407BFF;
-    width: 130px;
     text-align: center;
     font-size: 16px;
     font-weight: 400;
