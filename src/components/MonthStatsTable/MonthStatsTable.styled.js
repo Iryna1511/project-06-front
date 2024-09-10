@@ -37,8 +37,8 @@ export const CalendarStyle = styled.div`
   }
 
   .navBtn:hover {
-    background-color: #ffffff; /* Замінив на формат кольору #FFFFFF */
-    border: 1px solid #FFA500; /* Замінив на помаранчевий формат кольору #FFA500 */
+    background-color: #ffffff;
+    border: 1px solid #FFA500; /* Помаранчевий колір */
   }
 
   .dateText {
@@ -55,11 +55,12 @@ export const CalendarStyle = styled.div`
     height: 34px;
     border-radius: 50%;
     border: none;
-    background-color: #ffffff; /* Замінив на формат кольору #FFFFFF */
+    background-color: #ffffff;
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
     transition: background-color 0.3s;
+    border-color: #FF9D43;
   }
 
   .calendarDayBtn:hover {
@@ -67,7 +68,7 @@ export const CalendarStyle = styled.div`
   }
 
   .border-orange {
-    border: 1px solid #FF9D43; /* помаранчевий бордер на кружечки з невиконаною нормою */
+    border: 1px solid #FFA500; /* Помаранчевий бордер для днів з невиконаною нормою */
   }
 
   .today {
@@ -88,112 +89,20 @@ export const CalendarStyle = styled.div`
     line-height: 20px;
   }
 
-  .border {
-    border: 1px solid #FFA500; /* Помаранчевий */
-  }
-
-  .border-green {
-    border: 1px solid #008000; /* Зелений */
-  }
-
   @media screen and (min-width: 768px) {
     .month {
-      grid-template-columns: repeat(10, 1fr);
-      grid-template-rows: repeat(4, 1fr); /* Виправлено */
-    }
-    .sectionText {
-      font-size: 26px;
-      line-height: 32px;
+      grid-template-columns: repeat(7, 1fr);
     }
   }
-`;
 
-export const ContentPopover = styled.div`
-  position: relative;
-  display: inline-flex;
-  padding: 24px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-
-  .closeBtnPopover {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    border: none;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-  }
-
-  .datePopover {
-    color: #407BFF; /* Блакитний */
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-  }
-
-  .datePopoverText {
-    color: #000000; /* Чорний */
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-  }
-
-  .popoverColorText {
-    color: #407BFF; /* Блакитний */
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 24px;
-  }
-
-  @media screen and (min-width: 768px) {
-    padding: 24px 16px;
-  }
-`;
-
-export const ContentPopoverErr = styled.div`
-  position: relative;
-  display: inline-flex;
-  padding: 24px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-
-  .closeBtnPopover {
-    position: absolute;
-    top: 13px;
-    right: 13px;
-    border: none;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-  }
-
-  .datePopover {
-    color: #407BFF; /* Блакитний */
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-  }
-
-  .errText {
-    color: #000000; /* Чорний */
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-  }
-
-  @media screen and (min-width: 768px) {
-    padding: 30px 24px;
+  .activeStats {
+    display: block;
   }
 `;
 
 export const LoaderMonthWrapper = styled.div`
-  position: relative;
-  height: 437px;
-
-  @media screen and (min-width: 768px) {
-    height: 262px;
-  }
+  height: 340px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
