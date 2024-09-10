@@ -1,87 +1,92 @@
 .userSection {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
 }
 
 .LoinedUser {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
 }
 
 .settings {
-    color: #407BFF;
-    box-sizing: border-box;
-    padding: 0;
-    border: none;
-    background-color: transparent;
+  color: #407bff;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  background-color: transparent;
 }
 
 .nameOfUser {
-    color: #2F2F2F;
-    font-weight: 400;
-    font-size: 18px;
-    margin-right: 8px;
+  color: #2f2f2f;
+  font-weight: 400;
+  font-size: 18px;
+  margin-right: 8px;
 }
 
 .FotoOfUser {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    margin-right: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-right: 4px;
 }
 
 .avatarLetter {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: #D7E3FF;
-    margin-right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #d7e3ff;
+  margin-right: 8px;
 }
 
 .modal {
-    position: absolute;
-    top: 100%;
-    left: -50px;
-    background: white;
-    padding: 16px;
-    box-shadow: 0 4px 8px rgba(64, 123, 255, 0.2);
-    z-index: 1000;
-    width: 118px;
-    height: 88px;
-    border-radius: 10px;
-    margin-top: 8px;
+  position: absolute;
+  top: 100%;
+  left: -50px;
+  background: white;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(64, 123, 255, 0.2);
+  z-index: 1000;
+  width: 118px;
+  height: 88px;
+  border-radius: 10px;
+  margin-top: 8px;
 }
 
 .userSectionUnregistredUser {
-    display: flex;
-        flex-direction: row;
-        cursor: pointer;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  align-items: center;
+  gap: 8px;
 }
 
 .signInButton {
-    color: #407BFF;
-    border: 0px;
-    background-color: transparent;
-    font-size: 18px;
+  color: #407bff;
+  border: 0px;
+  background-color: transparent;
+  font-size: 18px;
+}
+
+.signInButton:hover,
+.signInButton:focus {
+  color: var(--orange);
 }
 
 .userIcon {
-    width: 28px;
-    height: 28px;
+  width: 28px;
+  height: 28px;
 }
 
 .defaultAvatar {
-    width: 28px;
-    height: 28px;
+  width: 28px;
+  height: 28px;
 }
