@@ -10,10 +10,9 @@ import {
 } from "../../redux/monthWater/monthWaterselectors";
 import { formatDate } from "../../redux/mainWater/helpers";
 import Loader from "../../components/Loader/Loader";
-import {
-  // selectNorma,
+import // selectNorma,
 //  selectTodayWater,
-} from "../../redux/waterDetails/waterSelectors";
+"../../redux/mainWater/selectors.js";
 import { isToday } from "date-fns";
 import { DaysGeneralStats } from "../Calendar/CalendarItem/DaysGeneralStats.jsx";
 import { useTranslation } from "react-i18next";
