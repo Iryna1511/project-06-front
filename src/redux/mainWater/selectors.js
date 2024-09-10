@@ -1,13 +1,14 @@
-export const selectLoading = (state) => state.water.isLoading;
-export const selectWaterList = (state) => state.water.todayWater.waterEntries;
+export const selectLoading = (state) => state.mainWater.isLoading;
+export const selectError = (state) => state.mainWater.error;
 
 export const selectIsAddWaterMdOpen = (state) =>
-  state.water.isAddWaterModalOpen;
+  state.mainWater.isAddWaterModalOpen;
 export const selectIsTodayListMdOpen = (state) =>
-  state.water.isTodayListModalOpen;
-export const selectIsDeleteEntryOpen = (state) => state.water.isDeleteEntryOpen;
+  state.mainWater.isTodayListModalOpen;
+export const selectIsDeleteEntryOpen = (state) =>
+  state.mainWater.isDeleteEntryOpen;
 
 export const selectWaterToday = (state) =>
-  state.water.todayWater?.waterEntries || [];
-
-export const selectWaterConsumptionPercentage = (state) => state.water.percent;
+  state.mainWater.todayWater.waterEntries;
+export const selectWaterConsumptionPercentage = (state) =>
+  state.mainWater.todayWater.percent;
