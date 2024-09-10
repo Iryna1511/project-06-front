@@ -34,7 +34,7 @@ function App() {
           await dispatch(refreshUser()).unwrap();
         } catch (error) {
           console.error("Token is invalid or expired:", error);
-          toast.error("Token is invalid or expired. Redirecting to login...");
+          toast.error("Token is invalid or expired!");
           navigate("/signin");
         }
       }
