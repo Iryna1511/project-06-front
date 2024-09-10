@@ -51,7 +51,7 @@ const waterSlice = createSlice({
       })
       .addCase(addWater.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.todayWater.waterEntries.push(action.payload);
+        state.todayWater.waterEntries.push(action.payload.data);
       })
       .addCase(addWater.rejected, handleRejected)
 

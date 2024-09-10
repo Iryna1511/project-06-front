@@ -4,7 +4,7 @@ import css from "./AddWaterAmountModal.module.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import { toggleAddWaterModal } from "../../redux/mainWater/slice";
-import { addWater } from "../../redux/mainWater/operations.js";
+import { addWater, fetchTodayWater } from "../../redux/mainWater/operations.js";
 import { useDispatch } from "react-redux";
 import TimeDropdown, {
   roundToNearestFiveMinutes,
@@ -25,8 +25,9 @@ const customStyles = {
     border: "1px solid #D7E3FF",
     borderRadius: "6px",
   }),
-  option: (provided) => ({
+  option: (provided, { isSelected }) => ({
     ...provided,
+    background: isSelected ? "#D7E3FF" : "#ffffff",
     color: "#407BFF",
   }),
   singleValue: (provided) => ({
@@ -83,6 +84,7 @@ export default function AddWaterAmountModal() {
       })
     );
     dispatch(toggleAddWaterModal());
+    dispatch(fetchTodayWater());
   }
 
   return (

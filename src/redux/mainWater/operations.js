@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosLoader } from "../../axiosConfig/axiosLoader";
+import axios from "axios";
 
 function createDay() {
   const date = new Date();
