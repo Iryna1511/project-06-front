@@ -6,7 +6,10 @@ import TimeDropDown from "../TimeDropdown/TimeDropDown.jsx";
 import { useDispatch } from "react-redux";
 import { toggleTodayListModal } from "../../redux/mainWater/slice.js";
 
-import { editWaterConsumption } from "../../redux/mainWater/operations.js";
+import {
+  editWaterConsumption,
+  fetchTodayWater,
+} from "../../redux/mainWater/operations.js";
 
 function createIsoDate(time) {
   const [hours, minutes] = time.split(":").map(Number);
@@ -14,16 +17,15 @@ function createIsoDate(time) {
   currentDate.setHours(hours);
   currentDate.setMinutes(minutes);
   currentDate.setSeconds(0);
-  currentDate.setMilliseconds(0);
-  const isoString = currentDate.toISOString();
-  console.log(isoString);
+  currentDate.setMilliseconds(null);
+  const isoString = currentDate.toISOString().slice(0, 19);
+  return `${isoString}Z`;
 }
 
 export default function TodayListModal({ waterObj, onClose }) {
   const { _id, date, waterVolume } = useMemo(() => {
     return waterObj;
   }, [waterObj]);
-  console.log({ _id, date, waterVolume });
 
   const formatTime = (time) => {
     return time.slice(11, 16);
@@ -72,6 +74,7 @@ export default function TodayListModal({ waterObj, onClose }) {
           },
         })
       ).unwrap();
+      dispatch(fetchTodayWater());
       console.log({ _id, amount, isoDate });
     } catch (error) {
       console.error("Помилка оновлення:", error);
