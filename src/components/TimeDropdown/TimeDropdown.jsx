@@ -1,59 +1,45 @@
-// import { useState } from 'react';
-// import css from './TimeDropdown.module.css'
+export const getCurrentTime = () => {
+  const now = new Date();
 
-export const TimeDropDown = () => {
-    const options = [];
-    for (let hours = 0; hours < 24; hours++) {
-      for (let minutes = 0; minutes < 60; minutes += 5) {
-        const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-        options.push(<option key={timeString} value={timeString}>{timeString}</option>);
-      }
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+
+  let formattedHours = String(hours).padStart(2, "0");
+  let formattedMinutes = String(minutes).padStart(2, "0");
+
+  return `${formattedHours}:${formattedMinutes}`;
+};
+
+export const roundToNearestFiveMinutes = (time) => {
+  let [hours, minutes] = time.split(":").map(Number);
+
+  minutes = Math.round(minutes / 5) * 5;
+  if (minutes === 60) {
+    minutes = 0;
+    hours = (hours + 1) % 24;
+  }
+
+  let formattedHours = String(hours).padStart(2, "0");
+  let formattedMinutes = String(minutes).padStart(2, "0");
+
+  return `${formattedHours}:${formattedMinutes}`;
+};
+
+const TimeDropdown = () => {
+  const options = [];
+  for (let hours = 0; hours < 24; hours++) {
+    for (let minutes = 0; minutes < 60; minutes += 5) {
+      const timeString = `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}`;
+      options.push(
+        <option key={timeString} value={timeString}>
+          {timeString}
+        </option>
+      );
     }
-    return options;
-  };
+  }
+  return options;
+};
 
-//старий функціонал
-
-// const TimeDropdown = () => {
-//     const [times, setTimes] = useState([]);
-//     const [currentTime, setCurrentTime] = useState('');
-
-//     const getRoundedCurrentTime = () => {
-//         const now = new Date();
-//         const minutes = Math.round(now.getMinutes() / 5) * 5;
-//         now.setMinutes(minutes);
-//         now.setSeconds(0, 0);
-//         const hourStr = now.getHours().toString().padStart(2, '0');
-//         const minuteStr = now.getMinutes().toString().padStart(2, '0');
-//         return `${hourStr}:${minuteStr}`;
-//     };
-
-//     const generateTimes = () => {
-//         const timeOptions = [];
-//         for (let hour = 0; hour < 24; hour++) {
-//             for (let minute = 0; minute < 60; minute += 5) {
-//                 const hourStr = hour.toString().padStart(2, '0');
-//                 const minuteStr = minute.toString().padStart(2, '0');
-//                 timeOptions.push(`${hourStr}:${minuteStr}`);
-//             }
-//         }
-//         setTimes(timeOptions);
-//     };
-
-//     useEffect(() => {
-//         generateTimes();
-//         setCurrentTime(getRoundedCurrentTime());
-//     }, []);
-
-//     return (
-//         <select className={css.timeNow} id="timePicker" value={currentTime} onChange={(e) => setCurrentTime(e.target.value)}>
-//                 {times.map((time, index) => (
-//                     <option key={index} value={time}>
-//                         {time}
-//                     </option>
-//                 ))}
-//         </select>        
-//     );
-// };
-
-// export default TimeDropdown;
+export default TimeDropdown;

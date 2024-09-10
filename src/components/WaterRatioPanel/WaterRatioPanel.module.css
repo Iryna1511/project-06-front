@@ -24,40 +24,40 @@
 }
 
 .progressBar {
-  width: inherit;
+  width: 100%;
   height: 8px;
-  border-radius: 10px;
   background: rgba(215, 227, 255, 1);
-  position: relative;
+  border-radius: 10px;
+  /* overflow: hidden; */
   margin-bottom: 4px;
 }
 
-.progressCompleted {
-  height: 8px;
-  border-radius: 10px;
+.progressBarFill {
+  position: relative;
+  width: inherit;
+  height: 100%;
   background: rgba(158, 187, 255, 1);
+  border-radius: 10px;
+  margin-bottom: 4px;
+  transition: width 0.5s ease-in-out; /* Плавний перехід для наповнення */
+}
+
+.progressBarThumb {
   position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 100%;
+  background-color: var(--white);
+  border: 1px solid var(--blue);
 }
 
 .percentageMarker {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background-color: #ffffff;
-  border: 1px solid #407bff;
   position: absolute;
   top: -3px;
-  right: -7px;
-}
-
-.percentageText {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.3;
-  color: #2f3875;
-  position: absolute;
-  bottom: 15px;
-  right: -50%;
+  right: 0;
 }
 
 .scaleContainer {

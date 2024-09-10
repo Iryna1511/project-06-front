@@ -124,10 +124,15 @@ const MonthStatsTable = () => {
                 getFormattedDateWithTime(date)
             ) || { percent: 0, waterRate: 0, consumptionCount: 0 };
 
+              // Визначити, чи є норма невиконаною
+              const isUnfulfilled = dayData.percent < 100;
+              
             return (
               <li key={format(date, "yyyy-MM-dd")} className="day">
-                <button
-                  className={`calendarDayBtn ${isToday(date) ? "today" : ""}`}
+               <button
+                  className={`calendarDayBtn ${isToday(date) ? "today" : ""} ${
+                    isUnfulfilled ? "border-orange" : ""
+                  }`}
                   onClick={() => handleClick(date, index)}
                 >
                   {format(date, "d")}
