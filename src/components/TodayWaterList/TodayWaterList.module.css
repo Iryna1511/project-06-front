@@ -67,6 +67,11 @@
   font-size: 16px;
 }
 
+.btnAdd:hover,
+.btnAdd:focus {
+  color: var(--orange);
+}
+
 .btnAdd,
 .btnDelete,
 .btnEdit {
