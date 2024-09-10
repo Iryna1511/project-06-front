@@ -1,9 +1,11 @@
 import css from "./WaterRatioPanel.module.css";
 import AddWaterButton from "../AddWaterButton/AddWaterButton";
+import { useSelector } from "react-redux";
+import { selectWaterConsumptionPercentage } from "../../redux/mainWater/selectors";
 
 export default function WaterRatioPanel() {
-  // const { drankToday } = useSelector();
-  const drankTodayValue = 80;
+  const todayPercent = useSelector(selectWaterConsumptionPercentage);
+  // console.log(todayPercent);
 
   return (
     <>
@@ -14,7 +16,7 @@ export default function WaterRatioPanel() {
             <div className={css.progressBar}>
               <div
                 className={css.progressCompleted}
-                style={{ width: `${drankTodayValue}%` }}
+                style={{ width: `${todayPercent}%` }}
               >
                 <div className={css.percentageMarker}>
                   {/* <p className={css.percentageText}>{drankTodayValue}%</p> */}

@@ -20,7 +20,7 @@ const waterSlice = createSlice({
   name: "water",
   initialState: {
     todayWater: {
-      percent: "",
+      percent: 0,
       waterEntries: [],
     },
     isLoading: false,
@@ -31,7 +31,6 @@ const waterSlice = createSlice({
     isDeleteEntryOpen: false,
   },
   reducers: {
-    //   поки залишила ці штуки, бо у нас вони були у вотерслайсі, може комусь були потрібні
     toggleAddWaterModal: (state) => {
       state.isAddWaterModalOpen = !state.isAddWaterModalOpen;
     },
@@ -91,6 +90,8 @@ const waterSlice = createSlice({
       .addCase(fetchTodayWater.fulfilled, (state, action) => {
         state.todayWater.percent =
           action.payload.data.waterConsumptionPercentage;
+        // console.log(action.payload.data.waterConsumptionPercentage);
+
         state.todayWater.waterEntries = action.payload.data.waterEntries;
       })
       .addCase(fetchTodayWater.rejected, (state, action) => {
