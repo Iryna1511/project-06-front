@@ -53,12 +53,18 @@ const MonthStatsTable = () => {
     setSelectedDay({
       ...dayData,
       date: format(date, "yyyy-MM-dd"),
+      waterRate: dayData.dateNorm, // Передаємо норму води
+      percent: dayData.waterConsumptionPercentage, // Передаємо відсоток виконання норми
+      consumptionCount: dayData.waterConsumptionCount, // Передаємо кількість порцій
       index,
     });
 
     console.log("Selected Day:", {
       ...dayData,
       date: format(date, "yyyy-MM-dd"),
+      waterRate: dayData.dateNorm, // Передаємо норму води
+      percent: dayData.waterConsumptionPercentage, // Передаємо відсоток виконання норми
+      consumptionCount: dayData.waterConsumptionCount, // Передаємо кількість порцій
       index,
     });
   };
