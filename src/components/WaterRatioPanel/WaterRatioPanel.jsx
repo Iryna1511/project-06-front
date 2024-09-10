@@ -5,7 +5,6 @@ import { selectWaterConsumptionPercentage } from "../../redux/mainWater/selector
 
 export default function WaterRatioPanel() {
   const todayPercent = useSelector(selectWaterConsumptionPercentage);
-  // console.log(todayPercent);
 
   return (
     <>
