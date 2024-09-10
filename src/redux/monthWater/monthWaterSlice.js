@@ -15,10 +15,7 @@ const monthWaterSlice = createSlice({
       .addCase(getMonthWater.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        console.log(action.payload.data);
-        
-        
-       //  state.month = []//action.payload.data;
+        state.month = action.payload.data;
       })
 
       .addMatcher(isAnyOf(getMonthWater.pending), state => {
