@@ -143,7 +143,7 @@ export const DaysGeneralStats = ({ note, index, onClose }) => {
       </li>
       <li className={s.stat}>
         Fulfillment of the daily norm:{" "}
-        <span className={s.accent}>{percent}</span>
+        <span className={s.accent}>{percent}%</span>
       </li>
       <li className={s.stat}>
         How many servings of water:{" "}

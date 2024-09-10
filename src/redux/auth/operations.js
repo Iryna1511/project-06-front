@@ -42,15 +42,15 @@ export const refreshUser = createAsyncThunk(
   "auth/refreshUser",
   async (_, thunkAPI) => {
     try {
-      // const reduxState = thunkAPI.getState();
-      // const token = reduxState.auth.token || localStorage.getItem("authToken");
-      // if (token) {
-        // setAuthHeader(token);
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token || localStorage.getItem("authToken");
+      if (token) {
+        setAuthHeader(token);
         const response = await axiosLoader.get("/user");
 
         return response.data;
-      // }
-      // return thunkAPI.rejectWithValue("No token available");
+      }
+      return thunkAPI.rejectWithValue("No token available");
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
