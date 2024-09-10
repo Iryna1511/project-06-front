@@ -1,15 +1,14 @@
 import css from "./HomePage.module.css";
 import TodayWaterList from "../../components/TodayWaterList/TodayWaterList";
-// import { useSelector } from "react-redux";
-import // selectIsAddWaterMdOpen,
-"../../redux/mainWater/selectors";
-// import AddWaterAmountModal from "../../components/AddWaterAmountModal/AddWaterAmountModal";
+import { useSelector } from "react-redux";
+import { selectIsAddWaterMdOpen } from "../../redux/mainWater/selectors";
+import AddWaterAmountModal from "../../components/AddWaterAmountModal/AddWaterAmountModal";
 import DailyNorma from "../../components/DailyNorma/DailyNorma";
 import WaterRatioPanel from "../../components/WaterRatioPanel/WaterRatioPanel";
 import MonthStatsTable from "../../components/MonthStatsTable/MonthStatsTable";
 
 export default function HomePage() {
-  // const isAddModalOpen = useSelector(selectIsAddWaterMdOpen);
+  const isAddModalOpen = useSelector(selectIsAddWaterMdOpen);
 
   return (
     <>
@@ -26,7 +25,7 @@ export default function HomePage() {
           <MonthStatsTable />
         </div>
       </div>
-      {/* {isAddModalOpen && <AddWaterAmountModal />} */}
+      {isAddModalOpen && <AddWaterAmountModal />}
     </>
   );
 }

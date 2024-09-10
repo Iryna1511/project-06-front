@@ -4,7 +4,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 import { toggleTodayListModal } from "../../redux/mainWater/slice.js";
-import TimeDropDown from "../TimeDropdown/TimeDropDown.jsx";
+import TimeDropDown from "../TimeDropdown/TimeDropdown.jsx";
 
 import {
   editWaterConsumption,
