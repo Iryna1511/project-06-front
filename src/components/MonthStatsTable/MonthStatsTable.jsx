@@ -11,6 +11,9 @@ import {
 import Loader from "../../components/Loader/Loader";
 import { DaysGeneralStats } from "../Calendar/CalendarItem/DaysGeneralStats.jsx";
 import { useTranslation } from "react-i18next";
+import { selectUser } from "../../redux/auth/selectors.js"
+import {selectWaterToday, selectWaterConsumptionPercentage} from "../../redux/mainWater/selectors.js"
+
 
 const MonthStatsTable = () => {
   const { t } = useTranslation();
@@ -22,6 +25,16 @@ const MonthStatsTable = () => {
 
   const currentMonth = format(currentDate, "MMMM");
   const currentYear = format(currentDate, "yyyy");
+
+ // Сьогоднішні данні по нормі води, процентах відношення випитої до норми, кількість прийомів
+
+  const user = useSelector(selectUser);
+  const dayNormaWater = user.waterRate/1000;
+  const amountOfDrunkWater = useSelector(selectWaterToday);
+  const numberOfWaterIntakes = amountOfDrunkWater.length;
+  const prercentOfDailyNorma = useSelector(selectWaterConsumptionPercentage);
+  console.log(dayNormaWater, numberOfWaterIntakes, prercentOfDailyNorma);
+    
 
   // Форматування дати для відображення
   const formatDateForDispatch = (date) => format(date, "yyyy-MM");
