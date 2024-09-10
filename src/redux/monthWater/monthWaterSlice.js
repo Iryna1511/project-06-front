@@ -15,11 +15,7 @@ const monthWaterSlice = createSlice({
       .addCase(getMonthWater.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-
-        //потрібно правильно розпарсити дані або змінити на фронті
-        
-        console.log("Fix me!!!!");
-        state.month = []//action.payload.data;
+        state.month = action.payload.data;
       })
 
       .addMatcher(isAnyOf(getMonthWater.pending), state => {
