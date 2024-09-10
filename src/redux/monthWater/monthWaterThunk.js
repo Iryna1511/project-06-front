@@ -1,5 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosLoader } from "../../axiosConfig/axiosLoader";
+// import { axiosLoader } from "../../axiosConfig/axiosLoader";
+import axios from "axios";
+
+axios.defaults.baseURL = "https://water-tracker-06.onrender.com";
+
+const setAuthHeader = (token) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
 
 // запит працює повертає обєкт з обєктами даних
 // {
@@ -14,16 +21,21 @@ import { axiosLoader } from "../../axiosConfig/axiosLoader";
 //       "updatedAt": "2024-09-09T14:01:53.296Z"
 //   }
 // }
+
 // Визначаємо асинхронний екшн для отримання даних про споживання води за місяць
 export const getMonthWater = createAsyncThunk(
   "monthWater/getMonthWater", // Назва екшну
   async (selectDate, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+
+    if (token) {
+      setAuthHeader(token);
+    }
     // selectDate - дата місяця для запиту
     try {
       // Виконуємо GET запит для отримання даних про споживання води
-      const { data } = await axiosLoader.get(
-        `/water/month?month=${selectDate}`
-      );
+      const { data } = await axios.get(`/water/month?month=${selectDate}`);
       return data; // Повертаємо отримані дані
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message); // У разі помилки повертаємо повідомлення про помилку
