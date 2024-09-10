@@ -6,6 +6,7 @@ import {
   selectWaterToday,
   selectIsTodayListMdOpen,
   selectIsDeleteEntryOpen,
+  selectLoading,
 } from "../../redux/mainWater/selectors";
 import {
   toggleAddWaterModal,
@@ -15,6 +16,7 @@ import {
 import { fetchTodayWater } from "../../redux/mainWater/operations";
 import { useEffect, useState } from "react";
 
+import Loader from "../Loader/Loader";
 import DeleteEntry from "../DeleteEntry/DeleteEntry";
 import TodayListModal from "../../components/TodayListModal/TodayListModal";
 
@@ -23,6 +25,7 @@ export default function TodayWaterList() {
   const [selectedId, setSelectedId] = useState(null);
   const [waterInfo, setWaterInfo] = useState(null);
 
+  const isLoading = useSelector(selectLoading);
   const isOpenEdit = useSelector(selectIsTodayListMdOpen);
   const isOpenDelete = useSelector(selectIsDeleteEntryOpen);
 
@@ -46,6 +49,15 @@ export default function TodayWaterList() {
   const formatTime = (time) => {
     return time.slice(11, 16);
   };
+
+  if (isLoading) {
+    return (
+      <div className={css.loading}>
+        <h2 className={css.title}>Today</h2>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <>

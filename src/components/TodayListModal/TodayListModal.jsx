@@ -1,25 +1,35 @@
 import css from "./TodayListModal.module.css";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
-import { TimeDropDown } from "../TimeDropdown/TimeDropDown.jsx";
+import TimeDropDown from "../TimeDropdown/TimeDropDown.jsx";
 import { useDispatch } from "react-redux";
 import { toggleTodayListModal } from "../../redux/mainWater/slice.js";
 
-// export const selectWaterIntake = (state) => state.water.waterIntake.amount;
+import { editWaterConsumption } from "../../redux/mainWater/operations.js";
 
-// export const selectUpdateTime = (state) => state.water.waterIntake.time;
+function createIsoDate(time) {
+  const [hours, minutes] = time.split(":").map(Number);
+  const currentDate = new Date();
+  currentDate.setHours(hours);
+  currentDate.setMinutes(minutes);
+  currentDate.setSeconds(0);
+  currentDate.setMilliseconds(0);
+  const isoString = currentDate.toISOString();
+  console.log(isoString);
+}
 
 export default function TodayListModal({ waterObj, onClose }) {
-  console.log(waterObj);
-  const { _id, date, waterVolume } = waterObj;
+  const { _id, date, waterVolume } = useMemo(() => {
+    return waterObj;
+  }, [waterObj]);
+  console.log({ _id, date, waterVolume });
+
   const formatTime = (time) => {
     return time.slice(11, 16);
   };
   const time = formatTime(date);
 
-  // const waterActual = useSelector(selectWaterIntake);
-  // const currentTime = useSelector(selectUpdateTime);
   const [amount, setAmount] = useState(waterVolume);
   const [selectedTime, setSelectedTime] = useState(time);
   const dispatch = useDispatch();
@@ -50,9 +60,24 @@ export default function TodayListModal({ waterObj, onClose }) {
     }
   };
 
-  // const handleSubmit = () => {
-  //   dispatch(updateTime(selectedTime), dispatch(updateWaterAmount(amount)));
-  // };
+  const handleSubmit = async () => {
+    const isoDate = createIsoDate(selectedTime);
+    try {
+      await dispatch(
+        editWaterConsumption({
+          id: _id,
+          updates: {
+            waterVolume: amount,
+            date: isoDate,
+          },
+        })
+      ).unwrap();
+      console.log({ _id, amount, isoDate });
+    } catch (error) {
+      console.error("Помилка оновлення:", error);
+    }
+    handleCloseModal();
+  };
 
   return (
     <div className={css.backdrop} onClick={handleBackdropClick}>
@@ -96,24 +121,21 @@ export default function TodayListModal({ waterObj, onClose }) {
           value={selectedTime}
           onChange={handleTimeChange}
         >
-          {TimeDropDown}
+          {TimeDropDown()}
         </select>
-        {/* <div className={css.timeDropdown}><TimeDropdown/></div> */}
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
         <input
           className={css.waterAmount}
-          type="number"
+          type="text"
           value={amount}
           onChange={changeWaterAmount}
-          min={0}
-          step={50}
         />
         <div className={css.footerContainer}>
           <p className={css.amountWaterIncomeFooter}>{amount}ml</p>
           <button
             className={css.saveButton}
             type="submit"
-            // onClick={handleSubmit}
+            onClick={handleSubmit}
           >
             Save
           </button>
