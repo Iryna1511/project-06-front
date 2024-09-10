@@ -5,21 +5,25 @@ import { selectWaterConsumptionPercentage } from "../../redux/mainWater/selector
 
 export default function WaterRatioPanel() {
   const todayPercent = useSelector(selectWaterConsumptionPercentage);
+  // console.log(todayPercent);
+
+  const validatedProgress = Math.min(todayPercent, 100);
 
   return (
     <>
       <div className={css.wrapper}>
         <div className={css.progressContainer}>
           <h2 className={css.title}>Today</h2>
+
           <div className={css.progressBarContainer}>
             <div className={css.progressBar}>
               <div
-                className={css.progressCompleted}
-                style={{ width: `${todayPercent}%` }}
+                className={css.progressBarFill}
+                style={{
+                  width: `${validatedProgress}%`,
+                }}
               >
-                <div className={css.percentageMarker}>
-                  {/* <p className={css.percentageText}>{drankTodayValue}%</p> */}
-                </div>
+                <div className={css.progressBarThumb}></div>
               </div>
             </div>
             <div className={css.scaleContainer}>
