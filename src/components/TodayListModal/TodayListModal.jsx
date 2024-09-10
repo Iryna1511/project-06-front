@@ -2,9 +2,9 @@ import css from "./TodayListModal.module.css";
 import { useMemo, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
-import TimeDropDown from "../TimeDropdown/TimeDropDown.jsx";
 import { useDispatch } from "react-redux";
 import { toggleTodayListModal } from "../../redux/mainWater/slice.js";
+import TimeDropDown from "../TimeDropdown/TimeDropDown.jsx";
 
 import {
   editWaterConsumption,
