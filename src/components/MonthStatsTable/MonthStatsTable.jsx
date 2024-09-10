@@ -120,7 +120,7 @@ const MonthStatsTable = () => {
                   {format(date, "d")}
                 </button>
                 <p className="progressWaterText">
-                  {dayData.waterConsumptionPercentage ? `${dayData.waterConsumptionPercentage.toFixed(0)}%` : "N/A"}
+                  {dayData.waterConsumptionPercentage ? `${dayData.waterConsumptionPercentage.toFixed(0)}%` : "0%"}
                 </p>
                 {selectedDay && selectedDay.date === format(date, "yyyy-MM-dd") && (
                   <DaysGeneralStats
