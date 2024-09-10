@@ -99,13 +99,18 @@
 }
 
 .timeDropdown {
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #FFFF;
+    scroll-behavior: smooth;
     border: 1px solid #D7E3FF;
     border-radius: 6px;
     padding: 12px 10px;
     width: 120px;
     height: 44px;
     margin-bottom: 24px;
-
+    color: #407BFF;
 }
 
 .amountWaterIncome {

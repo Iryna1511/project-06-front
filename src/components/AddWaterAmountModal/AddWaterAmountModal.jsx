@@ -1,58 +1,40 @@
+import { useState } from "react";
 import css from "./AddWaterAmountModal.module.css";
-import { useDispatch, useSelector } from "react-redux";
-// import ErrorMsg from "../ErrorMsg/ErrorMsg";
-// import Loader from "../Loader/Loader.jsx"
-// import { NavLink } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
-import TimeDropdown from "../TimeDropdown/TimeDropDown.jsx";
-import { toggleAddWaterModal } from "../../redux/mainWater/slice.js";
+import TimeDropdown, {
+  roundToNearestFiveMinutes,
+  getCurrentTime,
+} from "../TimeDropdown/TimeDropdown.jsx";
 
-// function waterAmount(
-//     const waterLog = useSelector(state => state.water.waterLog)
-// );
+export default function AddWaterAmountModal({
+  incomeAmount,
+  incomeTime,
+  isUpdate,
+}) {
+  const [currentAmount, setCurrentAmount] = useState(incomeAmount ?? 250);
+  const [currentTime, setCurrentTime] = useState(
+    incomeTime ?? roundToNearestFiveMinutes(getCurrentTime())
+  );
 
-// const dispatch = useDispatch();
+  function handleTimeChange(event) {
+    console.log(event.target.value);
+  }
 
-// const handleAddwater = (amount) => {
-//     dispatch(addWaterLog({ amount, time: newDate().getTime() }));
-// };
+  function addMilliliters(amount = 50) {
+    setCurrentAmount(currentAmount + amount);
+  }
 
-export default function AddWaterAmountModal() {
-  const [amount, setAmount] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const dispatch = useDispatch();
-
-  const handleIncrement = () => {
-    setAmount(Math.max(amount, 50) + 50);
-    dispatch(setWaterIntake(amount));
-  };
-
-  const handleDecrement = () => {
-    setAmount(Math.max(amount, 50) - 50);
-    dispatch(setWaterIntake(amount));
-  };
-
-  const handleWaterAmountChange = (event) => {
-    setAmount(event.target.value);
-  };
-
-  const handleTimeChange = (event) => {
-    setSelectedTime(event.target.value);
-  };
-
-  const handleSubmit = () => {
-    dispatch(addWaterIntake({ amount, time }));
-  };
-
-  const handleCloseModal = () => dispatch(toggleTodayListModal());
+  function subtractMilliliters(amount = 50) {
+    setCurrentAmount(currentAmount - amount);
+  }
 
   return (
-    <div className={css.backdrop} onClick={handleCloseModal}>
+    <div className={css.backdrop}>
       <div className={css.modal}>
         <div className={css.titlecontainer}>
           <h2 className={css.titletext}>Add water</h2>
-          <span className={css.closebtn} onClick={handleCloseModal}>
+          <span className={css.closebtn}>
             <IoCloseOutline size="24" color="407BFF" />
           </span>
         </div>
@@ -62,40 +44,39 @@ export default function AddWaterAmountModal() {
           <button
             className={css.amountButton}
             type="button"
-            onClick={handleDecrement}
+            onClick={() => subtractMilliliters()}
           >
             <HiOutlineMinusSmall size="24" color="407BFF" />
           </button>
-          <p className={css.amountWaterIncome}>{amount}</p>
+          <p className={css.amountWaterIncome}>{currentAmount + "ml"}</p>
           <button
             className={css.amountButton}
             type="button"
-            onClick={handleIncrement}
+            onClick={() => addMilliliters()}
           >
             <HiOutlinePlusSmall size="24" color="407BFF" />
           </button>
         </div>
         <p className={css.signaturetext}>Recording time:</p>
-        <div
+        <select
           className={css.timeDropdown}
-          value={selectedTime}
+          value={currentTime}
           onChange={handleTimeChange}
         >
           {TimeDropdown()}
-        </div>
+        </select>
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
         <input
           className={css.waterAmount}
           type="text"
-          onChange={handleWaterAmountChange}
+          value={currentAmount}
+          onChange={(event) => {
+            setCurrentAmount(event.target.value);
+          }}
         />
         <div className={css.footerContainer}>
-          <p className={css.amountWaterIncomeFooter}>{amount}</p>
-          <button
-            className={css.saveButton}
-            type="button"
-            onClick={handleSubmit}
-          >
+          <p className={css.amountWaterIncomeFooter}>{currentAmount + "ml"}</p>
+          <button className={css.saveButton} type="button">
             Save
           </button>
         </div>
