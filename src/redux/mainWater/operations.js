@@ -28,6 +28,7 @@ export const editWaterConsumption = createAsyncThunk(
   async ({ id, updates }, thunkAPI) => {
     try {
       const response = await axiosLoader.patch(`/water/${id}`, updates);
+      console.log(response);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);

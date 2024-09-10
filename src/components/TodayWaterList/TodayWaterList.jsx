@@ -4,7 +4,9 @@ import { FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectWaterToday,
+  selectIsTodayListMdOpen,
   selectIsDeleteEntryOpen,
+  selectLoading,
 } from "../../redux/mainWater/selectors";
 import {
   toggleAddWaterModal,
@@ -14,12 +16,18 @@ import {
 import { fetchTodayWater } from "../../redux/mainWater/operations";
 import { useEffect, useState } from "react";
 
-import DeleteEntry from "../../components/DeleteEntry/DeleteEntry";
+import Loader from "../Loader/Loader";
+import DeleteEntry from "../DeleteEntry/DeleteEntry";
+import TodayListModal from "../../components/TodayListModal/TodayListModal";
 
 export default function TodayWaterList() {
   const dispatch = useDispatch();
   const [selectedId, setSelectedId] = useState(null);
-  const isOpen = useSelector(selectIsDeleteEntryOpen);
+  const [waterInfo, setWaterInfo] = useState(null);
+
+  const isLoading = useSelector(selectLoading);
+  const isOpenEdit = useSelector(selectIsTodayListMdOpen);
+  const isOpenDelete = useSelector(selectIsDeleteEntryOpen);
 
   useEffect(() => {
     dispatch(fetchTodayWater());
@@ -27,7 +35,12 @@ export default function TodayWaterList() {
   const waterData = useSelector(selectWaterToday);
 
   const handleOpenAdd = () => dispatch(toggleAddWaterModal());
-  const handleOpenEdit = () => dispatch(toggleTodayListModal());
+
+  const handleOpenEdit = (waterObj) => {
+    setWaterInfo(waterObj);
+    dispatch(toggleTodayListModal());
+  };
+
   const handleOpenDelete = (id) => {
     setSelectedId(id);
     dispatch(toggleDeleteEntryModal());
@@ -36,6 +49,15 @@ export default function TodayWaterList() {
   const formatTime = (time) => {
     return time.slice(11, 16);
   };
+
+  if (isLoading) {
+    return (
+      <div className={css.loading}>
+        <h2 className={css.title}>Today</h2>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -53,7 +75,7 @@ export default function TodayWaterList() {
                   <p className={css.time}>{formatTime(date)}</p>
                   <button
                     className={css.btnEdit}
-                    onClick={handleOpenEdit}
+                    onClick={() => handleOpenEdit({ _id, waterVolume, date })}
                     type="button"
                   >
                     <HiOutlinePencilSquare />
@@ -79,8 +101,15 @@ export default function TodayWaterList() {
           Add water
         </button>
       </div>
-      {selectedId && isOpen && (
+      {selectedId && isOpenDelete && (
         <DeleteEntry id={selectedId} onClose={() => setSelectedId(null)} />
+      )}
+
+      {waterInfo && isOpenEdit && (
+        <TodayListModal
+          waterObj={waterInfo}
+          onClose={() => setWaterInfo(null)}
+        />
       )}
     </>
   );

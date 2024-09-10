@@ -60,10 +60,11 @@ const waterSlice = createSlice({
       .addCase(editWaterConsumption.fulfilled, (state, action) => {
         state.isLoading = false;
         const array = state.todayWater.waterEntries;
-        const idx = array.findIndex((item) => item.id === action.payload.id);
+        const idx = array.findIndex((item) => item._id === action.payload.id);
         if (idx !== -1) {
           array[idx] = action.payload;
         }
+        console.log(array[idx]);
         //для обновлення денної випитої води можливо буде потрібно
         // state.dailyDrank = array.reduce((acc, item) => acc + item.waterVolume, 0);
       })
@@ -88,6 +89,7 @@ const waterSlice = createSlice({
       //fetchTodayWater
       .addCase(fetchTodayWater.pending, handlePending)
       .addCase(fetchTodayWater.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.todayWater.percent =
           action.payload.data.waterConsumptionPercentage;
         // console.log(action.payload.data.waterConsumptionPercentage);
@@ -95,6 +97,7 @@ const waterSlice = createSlice({
         state.todayWater.waterEntries = action.payload.data.waterEntries;
       })
       .addCase(fetchTodayWater.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = {
           message: action.payload.message || "An unknown error occurred",
           status: action.payload.status,

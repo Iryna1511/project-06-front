@@ -27,10 +27,10 @@ const DeleteEntry = ({ id, onClose }) => {
     try {
       await dispatch(deleteWaterEntry(id)).unwrap();
       dispatch(fetchTodayWater());
-      closeModal();
     } catch (error) {
       console.error("Помилка видалення:", error);
     }
+    closeModal();
   };
 
   return (
