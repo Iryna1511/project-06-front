@@ -28,7 +28,8 @@
 }
 
 .normaEditButton {
-  all: unset;
+  background: none;
+  border: none;
   color: #8baeff;
   font-size: 16px;
   line-height: 1.25;
@@ -36,9 +37,7 @@
 
 .normaEditButton:hover,
 .normaEditButton:focus {
-  all: unset;
-  color: #8baeff;
-  text-decoration: underline;
+  color: var(--orange);
 }
 
 @media screen and (min-width: 768px) {
