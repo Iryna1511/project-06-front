@@ -63,7 +63,7 @@ export const CalendarStyle = styled.div`
   }
 
   .calendarDayBtn:hover {
-    background-color: #00BFFF; /* Замінив на блакитний колір */
+    box-shadow: 0 2px 4px 0 rgba(64,123,255,0.3);
   }
 
   .border-orange {
@@ -71,7 +71,7 @@ export const CalendarStyle = styled.div`
   }
 
   .today {
-    background-color: #00BFFF; /* Блакитний */
+    background-color: #FFFFFF; /* Блакитний */
   }
 
   .day {
