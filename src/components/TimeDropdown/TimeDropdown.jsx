@@ -32,11 +32,7 @@ const TimeDropdown = () => {
       const timeString = `${hours.toString().padStart(2, "0")}:${minutes
         .toString()
         .padStart(2, "0")}`;
-      options.push(
-        <option key={timeString} value={timeString}>
-          {timeString}
-        </option>
-      );
+      options.push({ value: timeString, label: timeString });
     }
   }
   return options;
