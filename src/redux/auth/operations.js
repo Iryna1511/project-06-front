@@ -19,7 +19,7 @@ export const register = createAsyncThunk(
       const response = await axios.post("/auth/register", newUser);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -32,7 +32,7 @@ export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
     setAuthHeader(token);
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.response.data.message);
   }
 });
 
