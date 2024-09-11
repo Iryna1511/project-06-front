@@ -128,7 +128,6 @@ export default function ModalSetting({ isOpen, closeModal }) {
     }
 
     try {
-      console.log(token);
       let updateResponse;
       if (Object.keys(updatedData).length > 0) {
         updateResponse = await fetch(
