@@ -78,6 +78,7 @@
   outline: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
   background-color: #ffff;
   scroll-behavior: smooth;
   border: 1px solid #d7e3ff;
@@ -142,7 +143,7 @@
   padding: 8px 30px;
   width: 256px;
   height: 36px;
-  box-shadow: 0 4px 8px 0 #407bff57;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   background: #407bff;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -151,6 +152,12 @@
   text-align: center;
   color: #ffffff;
   cursor: pointer;
+}
+.saveButton:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+.saveButton:active {
+  box-shadow: none;
 }
 
 @media screen and (min-width: 768px) {

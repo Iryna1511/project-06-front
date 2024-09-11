@@ -38,7 +38,7 @@
 .closebtn {
   cursor: pointer;
   border: none;
-  background-color: #FFFF;
+  background-color: transparent;
 }
 
 .amountofwaterContainer {
@@ -110,39 +110,20 @@
   background-color: #d7e3ff;
 }
 
-/* Прибрати при заміні */
 .timeDropdown {
-  border: 1px solid #d7e3ff;
-  border-radius: 6px;
-  padding: 12px 10px;
-  width: 256px;
-  height: 44px;
-  margin-bottom: 24px;
-  appearance: none;
-  border: none;
-  margin-bottom: 24px;
-  outline: none;
-  font-family: "Roboto", sans-serif;
-  color: #407bff;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.25;
-}
-
-/* З AddWaterAmount Modal */
-.timeDropdown {
-  outline: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-color: #FFFF;
+  appearance: none;
+  outline: none;
+  background-color: #ffff;
   scroll-behavior: smooth;
-  border: 1px solid #D7E3FF;
+  border: 1px solid #d7e3ff;
   border-radius: 6px;
   padding: 12px 10px;
   width: 120px;
   height: 44px;
   margin-bottom: 24px;
-  color: #407BFF;
+  color: #407bff;
 }
 
 .waterAmount {
@@ -185,7 +166,7 @@
   padding: 8px 30px;
   width: 256px;
   height: 36px;
-  box-shadow: 0 4px 8px 0 #407bff57;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   background: #407bff;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -194,6 +175,12 @@
   text-align: center;
   color: #ffffff;
   cursor: pointer;
+}
+.saveButton:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+.saveButton:active {
+  box-shadow: none;
 }
 
 @media screen and (min-width: 768px) {

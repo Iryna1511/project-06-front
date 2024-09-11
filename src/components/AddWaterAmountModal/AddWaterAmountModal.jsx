@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useRef } from "react";
+import { useState } from "react";
 import Select from "react-select";
 import css from "./AddWaterAmountModal.module.css";
 import { IoCloseOutline } from "react-icons/io5";
@@ -66,8 +65,6 @@ export default function AddWaterAmountModal() {
   // Значення змінюються лише після втрати фокусу?? Це так і не змогла реалізувати
   // const [isFocused, setFocused] = useState(false);
   // onfocus, onBlur ???
-  
-  
 
   function handleTimeChange(event) {
     setCurrentTime(event.value);
@@ -78,7 +75,7 @@ export default function AddWaterAmountModal() {
   }
 
   function subtractMilliliters(amount = 50) {
-    setCurrentAmount(Math.max(0, currentAmount - amount)); 
+    setCurrentAmount(Math.max(0, currentAmount - amount));
     // запобігаємо негативним значенням
   }
 
@@ -101,7 +98,7 @@ export default function AddWaterAmountModal() {
         <div className={css.titlecontainer}>
           <h2 className={css.titletext}>Add water</h2>
           <button className={css.closebtn} onClick={closeModal}>
-            <IoCloseOutline size="24" color="407BFF"/>
+            <IoCloseOutline size="24" color="407BFF" />
           </button>
         </div>
         <h3 className={css.subtitle}>Choose a value:</h3>
