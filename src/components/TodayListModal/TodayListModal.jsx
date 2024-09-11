@@ -4,26 +4,51 @@ import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 import { toggleTodayListModal } from "../../redux/mainWater/slice.js";
+import TimeDropDown, {roundToNearestFiveMinutes, getCurrentTime} from "../TimeDropdown/TimeDropdown.jsx";
 
-import Select from "react-select";
-import { customStyles } from "../AddWaterAmountModal/AddWaterAmountModal.jsx";
-import TimeDropdown from "../TimeDropdown/TimeDropdown.jsx";
-import { getFormattedDate } from "../AddWaterAmountModal/AddWaterAmountModal.jsx";
 import {
   editWaterConsumption,
   fetchTodayWater,
 } from "../../redux/mainWater/operations.js";
 
-// function createIsoDate(time) {
-//   const [hours, minutes] = time.split(":").map(Number);
-//   const currentDate = new Date();
-//   currentDate.setHours(hours);
-//   currentDate.setMinutes(minutes);
-//   currentDate.setSeconds(0);
-//   currentDate.setMilliseconds(null);
-//   const isoString = currentDate.toISOString().slice(0, 19);
-//   return `${isoString}Z`;
-// }
+
+// З AddWaterAmount Modal
+const customStyles = {
+  control: (provided) => ({
+    ...provided,
+    border: "1px solid #D7E3FF",
+    borderRadius: "6px",
+    height: "44px",
+    marginBottom: "24px",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    scrollBehavior: "smooth",
+    border: "1px solid #D7E3FF",
+    borderRadius: "6px",
+  }),
+  option: (provided, { isSelected }) => ({
+    ...provided,
+    background: isSelected ? "#D7E3FF" : "#ffffff",
+    color: "#407BFF",
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#407BFF",
+  }),
+};
+
+
+function createIsoDate(time) {
+  const [hours, minutes] = time.split(":").map(Number);
+  const currentDate = new Date();
+  currentDate.setHours(hours);
+  currentDate.setMinutes(minutes);
+  currentDate.setSeconds(0);
+  currentDate.setMilliseconds(null);
+  const isoString = currentDate.toISOString().slice(0, 19);
+  return `${isoString}Z`;
+}
 
 export default function TodayListModal({ waterObj, onClose }) {
   const { _id, date, waterVolume } = useMemo(() => {
@@ -57,7 +82,7 @@ export default function TodayListModal({ waterObj, onClose }) {
   };
 
   const handleTimeChange = (event) => {
-    setSelectedTime(event.value);
+    setSelectedTime(event.target.value);
   };
 
   // З AddWaterAmount Modal
@@ -76,7 +101,7 @@ export default function TodayListModal({ waterObj, onClose }) {
   };
 
   const handleSubmit = async () => {
-    const isoDate = getFormattedDate(selectedTime);
+    const isoDate = createIsoDate(selectedTime);
     try {
       await dispatch(
         editWaterConsumption({
@@ -132,7 +157,15 @@ export default function TodayListModal({ waterObj, onClose }) {
         </div>
 
         <p className={css.signaturetext}>Recording time:</p>
-        <Select
+        <select
+          className={css.timeDropdown}
+          value={selectedTime}
+          onChange={handleTimeChange}
+        >
+          {TimeDropDown()}
+        </select>
+        {/* З AddWaterAmount Modal */}
+        {/* <Select
           styles={customStyles}
           defaultValue={{ value: selectedTime, label: selectedTime }}
           onChange={handleTimeChange}
@@ -141,19 +174,13 @@ export default function TodayListModal({ waterObj, onClose }) {
             DropdownIndicator: () => null,
             IndicatorSeparator: () => null,
           }}
-        />
+        /> */}
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
         <input
           className={css.waterAmount}
-          type="text"
+          type="number"
           value={amount}
-          onChange={(event) => {
-            const newValue = event.target.value.replace(/[^0-9]/g, ' ');
-            const parcedValue = parseInt(newValue);
-            if (!isNaN(parcedValue) && parcedValue <= 5000)
-            { setAmount(parcedValue); }
-            
-          }}
+          onChange={changeWaterAmount}
         />
         <div className={css.footerContainer}>
           <p className={css.amountWaterIncomeFooter}>{amount + "ml"}</p>

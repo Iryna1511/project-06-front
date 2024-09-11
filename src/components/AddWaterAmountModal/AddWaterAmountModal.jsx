@@ -11,7 +11,7 @@ import TimeDropdown, {
   getCurrentTime,
 } from "../TimeDropdown/TimeDropdown.jsx";
 
-export const customStyles = {
+const customStyles = {
   control: (provided) => ({
     ...provided,
     border: "1px solid #D7E3FF",
@@ -36,7 +36,7 @@ export const customStyles = {
   }),
 };
 
-export function getFormattedDate(timeInput) {
+function getFormattedDate(timeInput) {
   const [inputHours, inputMinutes] = timeInput.split(":");
 
   const date = new Date();
@@ -57,14 +57,10 @@ export function getFormattedDate(timeInput) {
 export default function AddWaterAmountModal() {
   const dispatch = useDispatch();
 
-  const [currentAmount, setCurrentAmount] = useState('0');
+  const [currentAmount, setCurrentAmount] = useState(250);
   const [currentTime, setCurrentTime] = useState(
     roundToNearestFiveMinutes(getCurrentTime())
   );
-
-  // Значення змінюються лише після втрати фокусу?? Це так і не змогла реалізувати
-  // const [isFocused, setFocused] = useState(false);
-  // onfocus, onBlur ???
 
   function handleTimeChange(event) {
     setCurrentTime(event.value);
@@ -75,8 +71,7 @@ export default function AddWaterAmountModal() {
   }
 
   function subtractMilliliters(amount = 50) {
-    setCurrentAmount(Math.max(0, currentAmount - amount));
-    // запобігаємо негативним значенням
+    setCurrentAmount(currentAmount - amount);
   }
 
   const closeModal = () => dispatch(toggleAddWaterModal());
