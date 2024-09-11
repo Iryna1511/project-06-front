@@ -41,6 +41,7 @@
 .closebtn {
     cursor: pointer;
     border: none;
+    background-color: #FFFF;
 }
 
 .subtitle {
@@ -104,6 +105,9 @@
 }
 
 .waterAmount {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
     border: 1px solid #D7E3FF;
     border-radius: 6px;
     padding: 12px 10px;

@@ -35,10 +35,10 @@
   line-height: 1.23;
 }
 
-.defaulttext {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.25;
+.closebtn {
+  cursor: pointer;
+  border: none;
+  background-color: #FFFF;
 }
 
 .amountofwaterContainer {
@@ -110,6 +110,7 @@
   background-color: #d7e3ff;
 }
 
+/* Прибрати при заміні */
 .timeDropdown {
   border: 1px solid #d7e3ff;
   border-radius: 6px;
@@ -128,7 +129,26 @@
   line-height: 1.25;
 }
 
+/* З AddWaterAmount Modal */
+.timeDropdown {
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #FFFF;
+  scroll-behavior: smooth;
+  border: 1px solid #D7E3FF;
+  border-radius: 6px;
+  padding: 12px 10px;
+  width: 120px;
+  height: 44px;
+  margin-bottom: 24px;
+  color: #407BFF;
+}
+
 .waterAmount {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  appearance: textfield;
   border: 1px solid #d7e3ff;
   border-radius: 6px;
   padding: 12px 10px;
