@@ -11,7 +11,7 @@ import TimeDropdown, {
   getCurrentTime,
 } from "../TimeDropdown/TimeDropdown.jsx";
 
-const customStyles = {
+export const customStyles = {
   control: (provided) => ({
     ...provided,
     border: "1px solid #D7E3FF",
@@ -36,7 +36,7 @@ const customStyles = {
   }),
 };
 
-function getFormattedDate(timeInput) {
+export function getFormattedDate(timeInput) {
   const [inputHours, inputMinutes] = timeInput.split(":");
 
   const date = new Date();
