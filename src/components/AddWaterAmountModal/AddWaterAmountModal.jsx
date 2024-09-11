@@ -106,7 +106,7 @@ export default function AddWaterAmountModal() {
           >
             <HiOutlineMinusSmall size="24" color="407BFF" />
           </button>
-          <p className={css.amountWaterIncome}>{currentAmount + "ml"}</p>
+          <p className={css.amountWaterIncome}>{currentAmount + " ml"}</p>
           <button
             className={css.amountButton}
             type="button"
@@ -140,7 +140,7 @@ export default function AddWaterAmountModal() {
           }}
         />
         <div className={css.footerContainer}>
-          <p className={css.amountWaterIncomeFooter}>{currentAmount + "ml"}</p>
+          <p className={css.amountWaterIncomeFooter}>{currentAmount + " ml"}</p>
           <button
             className={css.saveButton}
             type="button"

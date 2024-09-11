@@ -71,7 +71,7 @@ export default function TodayWaterList() {
                   <svg className={css.icon} width="26" height="26">
                     <use href="icons.svg#icon-glass"></use>
                   </svg>
-                  <p className={css.amount}>{waterVolume}</p>
+                  <p className={css.amount}>{waterVolume + " ml"}</p>
                   <p className={css.time}>{formatTime(date)}</p>
                   <button
                     className={css.btnEdit}
