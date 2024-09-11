@@ -7,14 +7,17 @@ import { RxCross1 } from "react-icons/rx";
 import { updateUserData } from "../../redux/auth/authSlice.js";
 import { refreshUser } from "../../redux/auth/operations.js";
 import { toast } from "react-hot-toast";
-import {selectUser} from "../../redux/auth/selectors.js"
+import { selectUser } from "../../redux/auth/selectors.js"
+import { selectToken } from '../../redux/auth/selectors.js';
 
 export default function ModalSetting({ isOpen, closeModal }) {
   // Хуки
   const dispatch = useDispatch();
   // Витягуємо дані користувача з Redux-стейту
   const user = useSelector(selectUser);
-  const token = localStorage.getItem("authToken");
+  const token = useSelector(selectToken);
+  
+  
 
   useEffect(() => {
     if (isOpen && user) {
@@ -128,6 +131,7 @@ export default function ModalSetting({ isOpen, closeModal }) {
     }
 
     try {
+      console.log(token);
       let updateResponse;
       if (Object.keys(updatedData).length > 0) {
         updateResponse = await fetch(
@@ -170,6 +174,7 @@ export default function ModalSetting({ isOpen, closeModal }) {
   };
 
   const handleAvatarUpdate = async (avatar) => {
+    console.log(token);
     try {
       const formData = new FormData();
       formData.append("avatar", avatar);
@@ -184,6 +189,7 @@ export default function ModalSetting({ isOpen, closeModal }) {
           body: formData,
         }
       );
+      console.log(token);
       const data = await response.json();
       if (response.ok) {
         // Оновлення аватара у Redux-стейті
