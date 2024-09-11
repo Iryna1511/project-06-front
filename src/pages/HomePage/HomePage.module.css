@@ -8,7 +8,7 @@
 }
 
 .infoContainer {
-  background-image: url("../../images/mobile/bottle-home-screen-1x.png");
+  background-image: url("../../images/mobile/bottle-home-screen-1x.png") ,url("../../images/mobile/bg-element-sign-in-1x.png");;
   background-size: inherit;
   background-position: center 90px;
   background-repeat: no-repeat;
@@ -35,7 +35,7 @@
   }
 
   .infoContainer {
-    background-image: url("../../images/tablet/bottle-home-screen-1x.png");
+    background-image: url("../../images/tablet/bottle-home-screen-1x.png"),url("../../images/tablet/bg-element-main-page-1x.png");
     background-position: center 20px;
   }
 
@@ -46,18 +46,24 @@
 
 @media screen and (min-width: 1440px) {
   .infoContainer {
-    background-image: url("../../images/desktop/bottle-home-screen-1x.png");
+    background-image: url("../../images/desktop/bottle-home-screen-1x.png"), url("../../images/desktop/bg-element-main-page-1x.png");
+    background-size: inherit;
     background-position: center -30px;
   }
 
   .tables {
     width: 592px;
+    max-block-size: 720px;
+    height: fit-content;
   }
 
   .generalContainer {
     flex-direction: row;
     gap: 32px;
     padding-bottom: 40px;
+    background-image:url("../../images/desktop/bg-element-main-page-1x.png");
+    background-size: inherit;
+    background-position: center -30px;
   }
 
   .tables {

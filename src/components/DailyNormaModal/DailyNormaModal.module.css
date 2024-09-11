@@ -1,37 +1,49 @@
 .modal {
+  display: block;
   position: fixed;
-  top: 0;
+  z-index: 1000;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #000000cc;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
 }
 
 .BoxModal {
-  /* padding: 0 12px 24px; */
-  background-color: white;
-  /* width: 280px; */
-  /* height: 260px; */
-  padding: 32px 24px;
-  gap: 24px;
-  border-radius: 10px;
-  position: fixed;
-  left: 50%;
-  top: 80px;
-  transform: translateX(-50%);
-  opacity: 1;
-  display: flex;
-  flex-direction: column;
+  background-color: #fefefe;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: auto;
+
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90vw;
+  padding-right: 12px;
+  padding-left: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .modalHeader {
-  margin-top: 12px;
+  /* margin-top: 12px; */
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
+}
+
+h2.normaTitleModal{
+  color: rgb(47, 47, 47);
+font-family: Roboto;
+font-size: 26px;
+font-weight: 500;
+line-height: 32px;
+letter-spacing: 0%;
+text-align: left;
 }
 
 .normaFormula {
@@ -42,14 +54,38 @@
 }
 
 .normaFormula span {
+ 
   color: #407bff;
 }
 
 .offBtn {
+  /* display: flex; */
+ 
   cursor: pointer;
 }
 
+.normaExplanation{
+  box-sizing: border-box;
+border: 1px solid rgb(215, 227, 255);
+border-radius: 10px;
+}
+
+.normaInput {
+  border: 1px solid rgb(215, 227, 255);}
+
+  .normaFormResult{
+    position: static;
+/* width: 190px;
+height: 40px; */
+  }
 @media screen and (min-width: 768px) {
+
+  .modalHeader {
+    margin-top: 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
   .normaFormula {
     flex-direction: row;
     gap: 24px;
@@ -85,7 +121,7 @@
   font-weight: 400;
   line-height: 1.33;
   border-radius: 10px;
-  border: 1px solid #ff9d43;
+  border: 1px solid rgb(215, 227, 255);
   color: #2f2f2f;
 }
 
@@ -145,7 +181,7 @@
 }
 
 .normaInput {
-  border: 1px solid #ff9d43;
+  border: 1px solid rgb(215, 227, 255);
   border-radius: 6px;
   display: flex;
   padding: 12px 10px;
@@ -192,6 +228,8 @@
 
   font-weight: 400;
   line-height: 20px;
+
+  padding: 10px;
 }
 
 .normaFormResult strong {

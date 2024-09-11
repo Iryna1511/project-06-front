@@ -87,7 +87,7 @@ useEffect(() => {
     try {
       dispatch(updateUserWaterDailyNorma(waterToDrink * 1000));
     
-      dispatch(fetchTodayWater(waterToDrink))
+      dispatch(fetchTodayWater())
     
       onClose();
     } catch (error) {
@@ -106,7 +106,7 @@ useEffect(() => {
     <div className={css.modal} onClick={handleOutsideClick}>
       <div className={css.BoxModal} onClick={(e) => e.stopPropagation()}>
         <div className={css.modalHeader}>
-          <h2>My daily norma</h2>
+          <h2 className={css.normaTitleModal}>My daily norma</h2>
           <div className={css.offBtn} onClick={onClose}>
             <Icons id="x-mark" width={24} height={24} className="icon-blue" />
           </div>
