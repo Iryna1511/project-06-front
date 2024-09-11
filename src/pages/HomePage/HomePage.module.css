@@ -7,10 +7,6 @@
   box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
 }
 
-.month {
-  height: 506px;
-}
-
 .infoContainer {
   background-image: url("../../images/mobile/bottle-home-screen-1x.png");
   background-size: inherit;

@@ -63,8 +63,8 @@ const AuthForm = () => {
             navigate("/signin");
           })
           .catch((e) => {
-            console.log("Registration error! ", e);
-            alert("Registration error!");
+            console.error("Registration error: ", e);
+            toast.error(`Registration error: ${e}`);
           });
         break;
       case "Sign In":
@@ -72,8 +72,11 @@ const AuthForm = () => {
           .unwrap()
           .then(() => {
             toast.success("Login success!");
+          })
+          .catch((e) => {
+            console.error("Login error: ", e);
+            toast.error(`Login error: ${e}`);
           });
-
         break;
       default:
         break;

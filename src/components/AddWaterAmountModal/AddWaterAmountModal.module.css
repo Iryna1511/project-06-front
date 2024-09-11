@@ -1,213 +1,221 @@
 .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
 
-    width: 100%;
-    height: 100%;
-    background-color: #000000cc;
+  width: 100%;
+  height: 100%;
+  background-color: #000000cc;
 }
 
 .modal {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    z-index: 1;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
 
-
-
-    border-radius: 10px;
-    padding: 24px 12px;
-    width: 280px;
-    height: auto;
-    background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 24px 12px;
+  width: 280px;
+  height: auto;
+  background-color: #ffffff;
 }
 
 .titlecontainer {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    width: 256px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  width: 256px;
 }
 
 .titletext {
-    font-weight: 500;
-    font-size: 26px;
-    line-height: 1.23;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.23;
 }
 
 .closebtn {
-    cursor: pointer;
-    border: none;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
 .subtitle {
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 1.11;
-    margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  margin-bottom: 20px;
 }
 
 .signaturetext {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.25;
-    margin-bottom: 16px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  margin-bottom: 16px;
 }
 
 .waterInputcontainer {
-    display: flex;
-    margin-bottom: 24px;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  margin-bottom: 24px;
+  align-items: center;
+  gap: 8px;
 }
 
 .amountButton {
-    border: 1px solid #9EBBFF;
-    border-radius: 30px;
-    padding: 10px;
-    width: 44px;
-    height: 44px;
-    background-color: #FFFF;
-    box-shadow: 0 2px 4px 0 #407bff33;
-    cursor: pointer;
+  border: 1px solid #9ebbff;
+  border-radius: 30px;
+  padding: 10px;
+  width: 44px;
+  height: 44px;
+  background-color: #ffff;
+  box-shadow: 0 2px 4px 0 #407bff33;
+  cursor: pointer;
 }
 
 .timeDropdown {
-    outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: #FFFF;
-    scroll-behavior: smooth;
-    border: 1px solid #D7E3FF;
-    border-radius: 6px;
-    padding: 12px 10px;
-    width: 120px;
-    height: 44px;
-    margin-bottom: 24px;
-    color: #407BFF;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #ffff;
+  scroll-behavior: smooth;
+  border: 1px solid #d7e3ff;
+  border-radius: 6px;
+  padding: 12px 10px;
+  width: 120px;
+  height: 44px;
+  margin-bottom: 24px;
+  color: #407bff;
 }
 
 .amountWaterIncome {
-    border-radius: 40px;
-    padding: 6px 10px;
-    width: 92px;
-    height: 36px;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 1.33;
-    text-align: center;
-    color: #407BFF;
-    background-color: #D7E3FF;
+  border-radius: 40px;
+  padding: 6px 10px;
+  width: 92px;
+  height: 36px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.33;
+  text-align: center;
+  color: #407bff;
+  background-color: #d7e3ff;
 }
 
 .waterAmount {
-    border: 1px solid #D7E3FF;
-    border-radius: 6px;
-    padding: 12px 10px;
-    width: 120px;
-    height: 44px;
-    margin-bottom: 24px;
-    outline: none;
-    font-family: "Roboto", sans-serif;
-    color: #407BFF;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.25;
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  appearance: textfield;
+  border: 1px solid #d7e3ff;
+  border-radius: 6px;
+  padding: 12px 10px;
+  width: 120px;
+  height: 44px;
+  margin-bottom: 24px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  color: #407bff;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
 }
 
 .footerContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    width: 256px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 256px;
 }
 
 .amountWaterIncomeFooter {
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 1.33;
-    color: #407BFF;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.33;
+  color: #407bff;
 }
 
 .saveButton {
-    border-radius: 10px;
-    border: none;
-    padding: 8px 30px;
-    width: 256px;
-    height: 36px;
-    box-shadow: 0 4px 8px 0 #407bff57;
-    background: #407BFF;
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.25;
-    text-align: center;
-    color: #FFFFFF;
-    cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  padding: 8px 30px;
+  width: 256px;
+  height: 36px;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background: #407bff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  text-align: center;
+  color: #ffffff;
+  cursor: pointer;
+}
+.saveButton:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+.saveButton:active {
+  box-shadow: none;
 }
 
 @media screen and (min-width: 768px) {
-    .modal {
-        padding: 32px 24px;
-        width: 704px;
-        height: 504px;
-    }
+  .modal {
+    padding: 32px 24px;
+    width: 704px;
+    height: 504px;
+  }
 
-    .titlecontainer {
-        display: flex;
-        justify-content: space-between;
-        width: 656px;
-    }
+  .titlecontainer {
+    display: flex;
+    justify-content: space-between;
+    width: 656px;
+  }
 
-    .timeDropdown {
-        width: 656px;
-    }
+  .timeDropdown {
+    width: 656px;
+  }
 
-    .waterAmount {
-        width: 656px;
-    }
+  .waterAmount {
+    width: 656px;
+  }
 
-    .footerContainer {
-        flex-direction: row;
-        justify-content: flex-end;
-        gap: 32px;
-        width: 656px;
-    }
+  .footerContainer {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 32px;
+    width: 656px;
+  }
 
-    .saveButton {
-        padding: 10px 30px;
-        width: 160px;
-        height: 44px;
-        font-size: 18px;
-        line-height: 1.33;
-    }
+  .saveButton {
+    padding: 10px 30px;
+    width: 160px;
+    height: 44px;
+    font-size: 18px;
+    line-height: 1.33;
+  }
 }
 
 @media screen and (min-width: 1440px) {
-    .modal {
-        width: 592px;
-        top: 50%;
-    }
+  .modal {
+    width: 592px;
+    top: 50%;
+  }
 
-    .titlecontainer {
-        width: 544px;
-    }
+  .titlecontainer {
+    width: 544px;
+  }
 
-    .timeDropdown {
-        width: 544px;
-    }
+  .timeDropdown {
+    width: 544px;
+  }
 
-    .waterAmount {
-        width: 544px;
-    }
+  .waterAmount {
+    width: 544px;
+  }
 
-    .footerContainer {
-        width: 544px;
-    }
-
+  .footerContainer {
+    width: 544px;
+  }
 }

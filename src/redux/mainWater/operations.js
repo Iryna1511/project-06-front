@@ -27,7 +27,7 @@ export const addWater = createAsyncThunk(
     }
 
     try {
-      const response = await axiosLoader.post("/water", newWater);
+      const response = await axios.post("/water", newWater);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

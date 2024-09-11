@@ -1,7 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const CalendarStyle = styled.div`
-
   .header {
     display: flex;
     justify-content: space-between;
@@ -9,7 +8,7 @@ export const CalendarStyle = styled.div`
   }
 
   .sectionText {
-    color: #2F2F2F;
+    color: #2f2f2f;
     font-size: 24px;
     font-weight: 500;
     line-height: 30px;
@@ -18,7 +17,10 @@ export const CalendarStyle = styled.div`
   .month {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(7, 1fr); /* Встановлено 1fr для рівномірного розподілу */
+    grid-template-rows: repeat(
+      7,
+      1fr
+    ); /* Встановлено 1fr для рівномірного розподілу */
     gap: 10px;
   }
 
@@ -29,21 +31,13 @@ export const CalendarStyle = styled.div`
 
   .navBtn {
     display: flex;
-    border: 1px solid transparent;
-    background-color: transparent;
-    border-radius: 50%;
     justify-content: center;
-    transition: background-color 0.3s, border 0.3s;
-  }
-
-  .navBtn:hover {
-    background-color: #ffffff;
-    border: 1px solid #FFA500; /* Помаранчевий колір */
+    background-color: transparent;
+    border: none;
   }
 
   .dateText {
-    color: #407BFF;
-    width: 130px;
+    color: #407bff;
     text-align: center;
     font-size: 16px;
     font-weight: 400;
@@ -60,19 +54,19 @@ export const CalendarStyle = styled.div`
     font-weight: 400;
     line-height: 20px;
     transition: background-color 0.3s;
-    border-color: #FF9D43;
+    border-color: #ff9d43;
   }
 
   .calendarDayBtn:hover {
-    box-shadow: 0 2px 4px 0 rgba(64,123,255,0.3);
+    box-shadow: 0 2px 4px 0 rgba(64, 123, 255, 0.3);
   }
 
   .border-orange {
-    border: 1px solid #FFA500; /* Помаранчевий бордер для днів з невиконаною нормою */
+    border: 1px solid #ffa500; /* Помаранчевий бордер для днів з невиконаною нормою */
   }
 
   .today {
-    background-color: #FFFFFF; /* Блакитний */
+    background-color: #ffffff; /* Блакитний */
   }
 
   .day {
@@ -83,7 +77,7 @@ export const CalendarStyle = styled.div`
   }
 
   .progressWaterText {
-    color: #00BFFF; /* Блакитний */
+    color: #00bfff; /* Блакитний */
     font-size: 13px;
     font-weight: 400;
     line-height: 20px;

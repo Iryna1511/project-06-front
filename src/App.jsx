@@ -2,7 +2,6 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
 
 import RestrictedRoute from "./routes/RestrictedRoute.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
@@ -34,7 +33,6 @@ function App() {
           await dispatch(refreshUser()).unwrap();
         } catch (error) {
           console.error("Token is invalid or expired:", error);
-          toast.error("Token is invalid or expired!");
           navigate("/signin");
         }
       }
