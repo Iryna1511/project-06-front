@@ -17,7 +17,7 @@ import {
 import Loader from "../../components/Loader/Loader";
 import { DaysGeneralStats } from "../Calendar/CalendarItem/DaysGeneralStats.jsx";
 import { useTranslation } from "react-i18next";
-import { selectUser } from "../../redux/auth/selectors.js";
+import { selectUser, selectWaterRate } from "../../redux/auth/selectors.js";
 import {
   selectWaterToday,
   selectWaterConsumptionPercentage,
@@ -27,6 +27,8 @@ const MonthStatsTable = () => {
   const { t } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState(null);
+
+  const waterRate = useSelector(selectWaterRate);
 
   const isLoadingMonth = useSelector(selectIsLoadingMonthWater);
   const monthWater = Object.entries(useSelector(selectMonthWaterDetails)).map(
@@ -53,7 +55,7 @@ const MonthStatsTable = () => {
   // Викликаємо дані про воду при зміні місяця
   useEffect(() => {
     dispatch(getMonthWater(d));
-  }, [dispatch, d]);
+  }, [dispatch, d,waterRate]);
 
   const handleChangeMonth = (offset) => {
     setCurrentDate(
