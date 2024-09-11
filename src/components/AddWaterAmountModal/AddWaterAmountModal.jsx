@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Select from "react-select";
 import css from "./AddWaterAmountModal.module.css";
@@ -11,7 +12,7 @@ import TimeDropdown, {
   getCurrentTime,
 } from "../TimeDropdown/TimeDropdown.jsx";
 
-const customStyles = {
+export const customStyles = {
   control: (provided) => ({
     ...provided,
     border: "1px solid #D7E3FF",
@@ -36,7 +37,7 @@ const customStyles = {
   }),
 };
 
-function getFormattedDate(timeInput) {
+export function getFormattedDate(timeInput) {
   const [inputHours, inputMinutes] = timeInput.split(":");
 
   const date = new Date();
@@ -72,6 +73,7 @@ export default function AddWaterAmountModal() {
 
   function subtractMilliliters(amount = 50) {
     setCurrentAmount(Math.max(0, currentAmount - amount));
+    // запобігаємо негативним значенням
   }
 
   const closeModal = () => dispatch(toggleAddWaterModal());
@@ -127,7 +129,7 @@ export default function AddWaterAmountModal() {
           }}
         />
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
-        <input
+         <input
           className={css.waterAmount}
           type="text"
           value={currentAmount}
