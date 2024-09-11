@@ -52,9 +52,9 @@ export default function TodayListModal({ waterObj, onClose }) {
     setAmount(Math.max(0, amount - value));
   };
 
-  const changeWaterAmount = (e) => {
-    setAmount(Number(e.target.value));
-  };
+  // const changeWaterAmount = (e) => {
+  //   setAmount(Number(e.target.value));
+  // }; прибираємо при валідації інпуту
 
   const handleTimeChange = (event) => {
     setSelectedTime(event.value);
@@ -147,7 +147,12 @@ export default function TodayListModal({ waterObj, onClose }) {
           className={css.waterAmount}
           type="number"
           value={amount}
-          onChange={changeWaterAmount}
+          onChange={(event) => {
+            const newValue = event.target.value.replace(/[^0-9]/g, ' ');
+            const parcedValue = parseInt(newValue);
+            if (!isNaN(parcedValue) && parcedValue <= 5000)
+            { setAmount(parcedValue); }
+          }}
         />
         <div className={css.footerContainer}>
           <p className={css.amountWaterIncomeFooter}>{amount + "ml"}</p>
