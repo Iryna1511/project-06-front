@@ -7,8 +7,8 @@ import { RxCross1 } from "react-icons/rx";
 import { updateUserData } from "../../redux/auth/authSlice.js";
 import { refreshUser } from "../../redux/auth/operations.js";
 import { toast } from "react-hot-toast";
-import { selectUser } from "../../redux/auth/selectors.js"
-import { selectToken } from '../../redux/auth/selectors.js';
+import { selectUser } from "../../redux/auth/selectors.js";
+import { selectToken } from "../../redux/auth/selectors.js";
 
 export default function ModalSetting({ isOpen, closeModal }) {
   // Хуки
@@ -16,17 +16,14 @@ export default function ModalSetting({ isOpen, closeModal }) {
   // Витягуємо дані користувача з Redux-стейту
   const user = useSelector(selectUser);
   const token = useSelector(selectToken);
-  
-  
 
   useEffect(() => {
     if (isOpen && user) {
       const { name, email, gender, avatar } = user;
-      
 
       setFormData((prevData) => ({
         ...prevData,
-       name: name,
+        name: name,
         email: email,
         gender: gender === "female" ? "Woman" : "Man",
         avatar: avatar || "",
@@ -174,7 +171,6 @@ export default function ModalSetting({ isOpen, closeModal }) {
   };
 
   const handleAvatarUpdate = async (avatar) => {
-    console.log(token);
     try {
       const formData = new FormData();
       formData.append("avatar", avatar);
@@ -189,7 +185,6 @@ export default function ModalSetting({ isOpen, closeModal }) {
           body: formData,
         }
       );
-      console.log(token);
       const data = await response.json();
       if (response.ok) {
         // Оновлення аватара у Redux-стейті
