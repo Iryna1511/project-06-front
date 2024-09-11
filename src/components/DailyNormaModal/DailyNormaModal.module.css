@@ -85,7 +85,7 @@
   font-weight: 400;
   line-height: 1.33;
   border-radius: 10px;
-  border: 1px solid #ff9d43;
+  border: 1px solid rgba(215, 227, 255, 1);
   color: #2f2f2f;
 }
 
@@ -145,7 +145,7 @@
 }
 
 .normaInput {
-  border: 1px solid #ff9d43;
+  border: 1px solid rgba(215, 227, 255, 1);
   border-radius: 6px;
   display: flex;
   padding: 12px 10px;
@@ -165,12 +165,12 @@
 
 .normaInput:hover {
   color: #2f2f2f;
-  border: 1px solid #ff9d43;
+  border: 1px solid #407bff;
 }
 
 .normaInput:focus {
   outline: none;
-  border: 1px solid #ff9d43;
+  border: 2px solid #407bff;
 }
 
 .normaInput:not(:placeholder-shown) {

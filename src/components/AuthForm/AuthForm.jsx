@@ -13,9 +13,6 @@ import { login, register } from "../../redux/auth/operations.js";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { selectUser } from "../../redux/auth/selectors";
 
-//<PiEyeLight />
-// <PiEyeSlash />
-
 const signUpValidationSchema = yup.object().shape({
   email: yup.string().email("Must be a valid email!").required("Required"),
   password: yup
@@ -63,8 +60,8 @@ const AuthForm = () => {
             navigate("/signin");
           })
           .catch((e) => {
-            console.log("Registration error! ", e);
-            alert("Registration error!");
+            console.error("Registration error! ", e);
+            toast.error("Registration error! Please try again.");
           });
         break;
       case "Sign In":
@@ -72,8 +69,12 @@ const AuthForm = () => {
           .unwrap()
           .then(() => {
             toast.success("Login success!");
+            navigate("/dashboard"); // Перенаправлення на сторінку після входу
+          })
+          .catch((e) => {
+            console.error("Login error! ", e);
+            toast.error("Login failed! Please check your email and password.");
           });
-
         break;
       default:
         break;
@@ -151,7 +152,7 @@ const AuthForm = () => {
                   </label>
                   <Field
                     className={`${css.field} ${
-                      touched.password && errors.password ? css.errorField : ""
+                      touched.repeatPassword && errors.repeatPassword ? css.errorField : ""
                     }`}
                     type={showPassword ? "text" : "password"}
                     name='repeatPassword'

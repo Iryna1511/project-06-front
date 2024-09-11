@@ -11,27 +11,21 @@
   height: 506px;
 }
 
-.infoContainer {
-  background-image: url("../../images/mobile/bottle-home-screen-1x.png");
-  background-size: inherit;
-  background-position: center 90px;
-  background-repeat: no-repeat;
-}
 
-/* .containerWater {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.2);
-  border-radius: 10px;
-  padding: 24px 8px;
-} */
+.infoContainer {
+  position: relative;
+  background-image: url("../../img/desk-bubbles.svg"), url("../../img/bottle-home-mob.svg");
+  background-size:contain, contain;
+  background-position: center center, center 90px;
+  background-repeat: repeat, no-repeat;
+}
 
 .generalContainer {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
+
 @media screen and (min-width: 768px) {
   .tables {
     width: 704px;
@@ -39,19 +33,23 @@
   }
 
   .infoContainer {
-    background-image: url("../../images/tablet/bottle-home-screen-1x.png");
-    background-position: center 20px;
+    background-image: url("../../img/desk-bubbles.svg"), url("../../img/bottle-home-tab.svg");
+    background-size: contain, contain;
+    background-position: center 20px, center 20px;
   }
 
-  /* .containerWater {
+  .containerWater {
     padding: 32px 24px;
-  } */
+    background-image: none;
+    /* Видаляємо фон для WaterRatioPanel */
+  }
 }
 
 @media screen and (min-width: 1440px) {
   .infoContainer {
-    background-image: url("../../images/desktop/bottle-home-screen-1x.png");
-    background-position: center -30px;
+    background-image: url("../../img/desk-bubbles.svg"), url("../../img/bottle-home-desk.svg");
+    background-size: contain, contain;
+    background-position: center -30px, center -30px;
   }
 
   .tables {
@@ -67,10 +65,6 @@
   .tables {
     margin-left: 0;
   }
-
-  /* .containerWater {
-    width: 704px;
-  } */
 
   .infoContainer {
     margin: auto 0;

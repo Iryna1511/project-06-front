@@ -170,8 +170,8 @@ const DailyNormaModal = ({ onClose }) => {
               />
             </div>
             <div className={css.normaFormResult}>
-              The required amount of water in liters per day:
-              <strong>{dailyNorm} L</strong>
+              The required amount of water in liters per day: 
+              <strong> {dailyNorm} L</strong>
             </div>
             <div>
               <p className={css.normaTitleModal}>
