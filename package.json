@@ -22,7 +22,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "formik": "^2.4.6",
-    "i18next": "^23.14.0",
+    "i18next": "^23.15.1",
     "modern-normalize": "^3.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",

@@ -11,7 +11,7 @@ import TimeDropdown, {
   getCurrentTime,
 } from "../TimeDropdown/TimeDropdown.jsx";
 
-const customStyles = {
+export const customStyles = {
   control: (provided) => ({
     ...provided,
     border: "1px solid #D7E3FF",
@@ -36,7 +36,7 @@ const customStyles = {
   }),
 };
 
-function getFormattedDate(timeInput) {
+export function getFormattedDate(timeInput) {
   const [inputHours, inputMinutes] = timeInput.split(":");
 
   const date = new Date();
@@ -57,10 +57,14 @@ function getFormattedDate(timeInput) {
 export default function AddWaterAmountModal() {
   const dispatch = useDispatch();
 
-  const [currentAmount, setCurrentAmount] = useState(250);
+  const [currentAmount, setCurrentAmount] = useState(0);
   const [currentTime, setCurrentTime] = useState(
     roundToNearestFiveMinutes(getCurrentTime())
   );
+
+  // Значення змінюються лише після втрати фокусу?? Це так і не змогла реалізувати
+  // const [isFocused, setFocused] = useState(false);
+  // onfocus, onBlur ???
 
   function handleTimeChange(event) {
     setCurrentTime(event.value);
@@ -71,7 +75,8 @@ export default function AddWaterAmountModal() {
   }
 
   function subtractMilliliters(amount = 50) {
-    setCurrentAmount(currentAmount - amount);
+    setCurrentAmount(Math.max(0, currentAmount - amount));
+    // запобігаємо негативним значенням
   }
 
   const closeModal = () => dispatch(toggleAddWaterModal());
@@ -129,7 +134,7 @@ export default function AddWaterAmountModal() {
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
         <input
           className={css.waterAmount}
-          type="text"
+          type="number"
           value={currentAmount}
           onChange={(event) => {
             setCurrentAmount(event.target.value);
