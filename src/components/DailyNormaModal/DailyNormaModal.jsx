@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import css from "./DailyNormaModal.module.css";
 import Icons from "../Icons/Iсons.jsx";
-import { useDispatch } from "react-redux";
-import { updateUserWaterDailyNorma } from "../../redux/auth/operations";
+import { useDispatch, useSelector } from "react-redux";
+import { refreshUser, updateUserWaterDailyNorma } from "../../redux/auth/operations";
+import { fetchTodayWater } from "../../redux/mainWater/operations";
+import { getMonthWater } from "../../redux/monthWater/monthWaterThunk";
+import { selectWaterRate } from "../../redux/auth/selectors";
 const DailyNormaModal = ({ onClose }) => {
   const [gender, setGender] = useState("female");
   const [weight, setWeight] = useState("");
@@ -10,6 +13,12 @@ const DailyNormaModal = ({ onClose }) => {
   const [dailyNorm, setDailyNorm] = useState(0.0);
   const [waterToDrink, setWaterToDrink] = useState("");
   const dispatch = useDispatch();
+
+  const waterRate = useSelector(selectWaterRate);
+
+useEffect(() => {
+  // Цей useEffect спрацює після оновлення waterNorma в Redux-стані
+}, [waterRate]);
 
   useEffect(() => {
     const mass = parseFloat(weight);
@@ -74,8 +83,12 @@ const DailyNormaModal = ({ onClose }) => {
       return;
     }
 
+
     try {
       dispatch(updateUserWaterDailyNorma(waterToDrink * 1000));
+    
+      dispatch(fetchTodayWater(waterToDrink))
+    
       onClose();
     } catch (error) {
       console.error("Error saving daily norma:", error);
