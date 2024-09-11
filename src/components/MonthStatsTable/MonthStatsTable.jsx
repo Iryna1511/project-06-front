@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { CalendarStyle, LoaderMonthWrapper } from "./MonthStatsTable.styled";
 import icons from "../../img/icons.svg";
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isToday } from "date-fns";
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  isToday,
+} from "date-fns";
 import { getMonthWater } from "../../redux/monthWater/monthWaterThunk";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,6 +17,11 @@ import {
 import Loader from "../../components/Loader/Loader";
 import { DaysGeneralStats } from "../Calendar/CalendarItem/DaysGeneralStats.jsx";
 import { useTranslation } from "react-i18next";
+import { selectUser } from "../../redux/auth/selectors.js";
+import {
+  selectWaterToday,
+  selectWaterConsumptionPercentage,
+} from "../../redux/mainWater/selectors.js";
 
 const MonthStatsTable = () => {
   const { t } = useTranslation();
@@ -18,10 +29,20 @@ const MonthStatsTable = () => {
   const [selectedDay, setSelectedDay] = useState(null);
 
   const isLoadingMonth = useSelector(selectIsLoadingMonthWater);
-  const monthWater = Object.entries(useSelector(selectMonthWaterDetails)).map(([date, details]) => details);
+  const monthWater = Object.entries(useSelector(selectMonthWaterDetails)).map(
+    ([date, details]) => details
+  );
 
   const currentMonth = format(currentDate, "MMMM");
   const currentYear = format(currentDate, "yyyy");
+
+  // Сьогоднішні данні по нормі води, процентах відношення випитої до норми, кількість прийомів
+
+  const user = useSelector(selectUser);
+  const dayNormaWater = user.waterRate / 1000;
+  const amountOfDrunkWater = useSelector(selectWaterToday);
+  const numberOfWaterIntakes = amountOfDrunkWater.length;
+  const prercentOfDailyNorma = useSelector(selectWaterConsumptionPercentage);
 
   // Форматування дати для відображення
   const formatDateForDispatch = (date) => format(date, "yyyy-MM");
@@ -36,7 +57,8 @@ const MonthStatsTable = () => {
 
   const handleChangeMonth = (offset) => {
     setCurrentDate(
-      (prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() + offset)
+      (prevDate) =>
+        new Date(prevDate.getFullYear(), prevDate.getMonth() + offset)
     );
   };
 
@@ -48,7 +70,23 @@ const MonthStatsTable = () => {
 
   // Обробка кліку на день календаря
   const handleClick = (date, index) => {
-    const dayData = findDayData(date) || { waterConsumptionPercentage: 0, waterConsumptionCount: 0, dateNorm: 0 };
+    let dayData;
+
+    if (isToday(date)) {
+      // Якщо день є сьогоднішнім, використовуємо дані з редаксу
+      dayData = {
+        waterConsumptionPercentage: prercentOfDailyNorma,
+        waterConsumptionCount: numberOfWaterIntakes,
+        dateNorm: dayNormaWater,
+      };
+    } else {
+      // Для інших днів використовуємо дані з бекенду
+      dayData = findDayData(date) || {
+        waterConsumptionPercentage: 0,
+        waterConsumptionCount: 0,
+        dateNorm: 0,
+      };
+    }
 
     setSelectedDay({
       ...dayData,
@@ -58,15 +96,7 @@ const MonthStatsTable = () => {
       consumptionCount: dayData.waterConsumptionCount, // Передаємо кількість порцій
       index,
     });
-
-    console.log("Selected Day:", {
-      ...dayData,
-      date: format(date, "yyyy-MM-dd"),
-      waterRate: dayData.dateNorm, // Передаємо норму води
-      percent: dayData.waterConsumptionPercentage, // Передаємо відсоток виконання норми
-      consumptionCount: dayData.waterConsumptionCount, // Передаємо кількість порцій
-      index,
-    });
+    
   };
 
   const getMonthBounds = (date) => ({
@@ -108,32 +138,51 @@ const MonthStatsTable = () => {
       ) : (
         <ul className="month">
           {getMonthDays(currentDate).map((date, index) => {
-            const formattedDate = format(date, "d, MMMM"); // Співставляємо з вашим форматом дати
-            const dayData = findDayData(date) || { waterConsumptionPercentage: 0, waterConsumptionCount: 0, dateNorm: 0 };
+            let dayData;
 
-              // Додаємо умову для помаранчевого бордера, якщо норма води не виконана
-              const buttonClass = dayData.waterConsumptionPercentage < 100
-              ? "calendarDayBtn border-orange" // Помаранчевий бордер
-              : "calendarDayBtn"; // Звичайна кнопка
+            if (isToday(date)) {
+              // Якщо день є сьогоднішнім, використовуємо дані з редаксу
+              dayData = {
+                waterConsumptionPercentage: prercentOfDailyNorma,
+                waterConsumptionCount: numberOfWaterIntakes,
+                dateNorm: dayNormaWater,
+              };
+            } else {
+              // Для інших днів використовуємо дані з бекенду
+              dayData = findDayData(date) || {
+                waterConsumptionPercentage: 0,
+                waterConsumptionCount: 0,
+                dateNorm: 0,
+              };
+            }
+
+            // Додаємо умову для помаранчевого бордера, якщо норма води не виконана
+            const buttonClass =
+              dayData.waterConsumptionPercentage < 100
+                ? "calendarDayBtn border-orange"
+                : "calendarDayBtn";
 
             return (
-              <li key={formattedDate} className="day">
+              <li key={format(date, "d, MMMM")} className="day">
                 <button
-                  className={`${buttonClass} ${isToday(date) ? "today" : ""}`} // Встановлення класу для дня
+                  className={`${buttonClass} ${isToday(date) ? "today" : ""}`}
                   onClick={() => handleClick(date, index)}
                 >
                   {format(date, "d")}
                 </button>
                 <p className="progressWaterText">
-                  {dayData.waterConsumptionPercentage ? `${dayData.waterConsumptionPercentage.toFixed(0)}%` : "0%"}
+                  {dayData.waterConsumptionPercentage
+                    ? `${dayData.waterConsumptionPercentage.toFixed(0)}%`
+                    : "0%"}
                 </p>
-                {selectedDay && selectedDay.date === format(date, "yyyy-MM-dd") && (
-                  <DaysGeneralStats
-                    note={selectedDay}
-                    index={index}
-                    onClose={() => setSelectedDay(null)}
-                  />
-                )}
+                {selectedDay &&
+                  selectedDay.date === format(date, "yyyy-MM-dd") && (
+                    <DaysGeneralStats
+                      note={selectedDay}
+                      index={index}
+                      onClose={() => setSelectedDay(null)}
+                    />
+                  )}
               </li>
             );
           })}
