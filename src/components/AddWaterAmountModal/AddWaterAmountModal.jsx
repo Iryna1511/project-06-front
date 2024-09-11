@@ -57,7 +57,7 @@ export function getFormattedDate(timeInput) {
 export default function AddWaterAmountModal() {
   const dispatch = useDispatch();
 
-  const [currentAmount, setCurrentAmount] = useState(0);
+  const [currentAmount, setCurrentAmount] = useState('0');
   const [currentTime, setCurrentTime] = useState(
     roundToNearestFiveMinutes(getCurrentTime())
   );
@@ -134,10 +134,14 @@ export default function AddWaterAmountModal() {
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
         <input
           className={css.waterAmount}
-          type="number"
+          type="text"
           value={currentAmount}
           onChange={(event) => {
-            setCurrentAmount(event.target.value);
+            const newValue = event.target.value.replace(/[^0-9]/g, '');
+            const parcedValue = parseInt(newValue);
+            if (!isNaN(parcedValue) && parcedValue <= 5000)
+            { setCurrentAmount(parcedValue); }
+            
           }}
         />
         <div className={css.footerContainer}>
