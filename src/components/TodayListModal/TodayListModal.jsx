@@ -37,14 +37,19 @@ export default function TodayListModal({ waterObj, onClose }) {
 
   const [amount, setAmount] = useState(waterVolume);
   const [selectedTime, setSelectedTime] = useState(time);
+
+  // З AddWaterAmount Modal
+  // const [selectedTime, setSelectedTime] = useState(
+  //   roundToNearestFiveMinutes(getCurrentTime())
+  // );
   const dispatch = useDispatch();
 
   const handleIncrement = () => {
     setAmount(Math.max(amount, 50) + 50);
   };
 
-  const handleDecrement = () => {
-    setAmount(Math.max(amount, 50) - 50);
+  const handleDecrement = (value = 50) => {
+    setAmount(Math.max(0, amount - value));
   };
 
   const changeWaterAmount = (e) => {
@@ -54,6 +59,11 @@ export default function TodayListModal({ waterObj, onClose }) {
   const handleTimeChange = (event) => {
     setSelectedTime(event.value);
   };
+
+  // З AddWaterAmount Modal
+  // function handleTimeChange(event) {
+  //   setSelectedTime(event.value);
+  // }
 
   const handleCloseModal = () => {
     onClose();
@@ -111,7 +121,7 @@ export default function TodayListModal({ waterObj, onClose }) {
           >
             <HiOutlineMinusSmall size="24" color="407BFF" />
           </button>
-          <p className={css.amountWaterIncome}>{amount}ml</p>
+          <p className={css.amountWaterIncome}>{amount + "ml"}</p>
           <button
             className={css.amountButton}
             type="button"
@@ -135,12 +145,12 @@ export default function TodayListModal({ waterObj, onClose }) {
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
         <input
           className={css.waterAmount}
-          type="text"
+          type="number"
           value={amount}
           onChange={changeWaterAmount}
         />
         <div className={css.footerContainer}>
-          <p className={css.amountWaterIncomeFooter}>{amount}ml</p>
+          <p className={css.amountWaterIncomeFooter}>{amount + "ml"}</p>
           <button
             className={css.saveButton}
             type="submit"
