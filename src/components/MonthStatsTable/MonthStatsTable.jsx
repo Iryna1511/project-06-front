@@ -120,7 +120,7 @@ const MonthStatsTable = () => {
             </svg>
           </button>
           <h2 className="dateText">
-            {t(`monthNames.${currentMonth}`, { defaultValue: currentMonth })},
+            {t(`monthNames.${currentMonth}`, { defaultValue: currentMonth })}, {" "}
             {currentYear}
           </h2>
           <button className="navBtn" onClick={() => handleChangeMonth(1)}>
