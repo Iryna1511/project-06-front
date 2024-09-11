@@ -57,7 +57,7 @@ function getFormattedDate(timeInput) {
 export default function AddWaterAmountModal() {
   const dispatch = useDispatch();
 
-  const [currentAmount, setCurrentAmount] = useState(250);
+  const [currentAmount, setCurrentAmount] = useState("0");
   const [currentTime, setCurrentTime] = useState(
     roundToNearestFiveMinutes(getCurrentTime())
   );
