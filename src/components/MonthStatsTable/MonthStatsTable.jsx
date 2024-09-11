@@ -96,7 +96,6 @@ const MonthStatsTable = () => {
       consumptionCount: dayData.waterConsumptionCount, // Передаємо кількість порцій
       index,
     });
-    
   };
 
   const getMonthBounds = (date) => ({
@@ -109,6 +108,10 @@ const MonthStatsTable = () => {
     return eachDayOfInterval({ start, end });
   };
 
+  const isCurrentMonth =
+    currentDate.getMonth() === new Date().getMonth() &&
+    currentDate.getFullYear() === new Date().getFullYear();
+
   return (
     <CalendarStyle>
       <div className="header">
@@ -120,14 +123,16 @@ const MonthStatsTable = () => {
             </svg>
           </button>
           <h2 className="dateText">
-            {t(`monthNames.${currentMonth}`, { defaultValue: currentMonth })}, {" "}
+            {t(`monthNames.${currentMonth}`, { defaultValue: currentMonth })},{" "}
             {currentYear}
           </h2>
-          <button className="navBtn" onClick={() => handleChangeMonth(1)}>
-            <svg width="14" height="14">
-              <use href={icons + "#icon-arrow-right"}></use>
-            </svg>
-          </button>
+          {!isCurrentMonth && (
+            <button className="navBtn" onClick={() => handleChangeMonth(1)}>
+              <svg width="14" height="14">
+                <use href={icons + "#icon-arrow-right"}></use>
+              </svg>
+            </button>
+          )}
         </div>
       </div>
 
