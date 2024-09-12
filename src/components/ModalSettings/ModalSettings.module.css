@@ -9,13 +9,15 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
+  
 }
 
 .modalcontent {
   background-color: #fefefe;
+  margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-bottom: 544px;
   padding: 20px;
   border: 1px solid #888;
   width: 280px;
@@ -23,7 +25,6 @@
   padding-left: 12px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-bottom: 544px;
 }
 
 .close {
@@ -77,6 +78,7 @@ form {
   display: flex;
   gap: 8px;
   margin: 12px 0 24px;
+  
 }
 
 .genderOption {
@@ -168,6 +170,7 @@ input[type="password"]::placeholder {
   cursor: pointer;
 }
 
+
 .hiddenFileInput {
   display: none;
   /* Приховуємо інпут */
@@ -207,11 +210,11 @@ input[type="password"]::placeholder {
 @media (min-width: 768px) {
   .modalcontent {
     width: 704px;
-    margin-top: 42px;
     padding-left: 24px;
     padding-right: 24px;
     padding-top: 32px;
     padding-bottom: 32px;
+    margin-top: 40px;
     margin-bottom: 464px;
   }
 
@@ -221,12 +224,13 @@ input[type="password"]::placeholder {
 
   .wrapperForInput {
     width: 392px;
+    
   }
 
-  .saveButton {
-    width: 160px;
-    margin-left: auto;
-  }
+    .saveButton {
+      width: 160px;
+      margin-left: auto;
+    }
 }
 
 /* Десктопи (1024px і більше) */
@@ -235,7 +239,9 @@ input[type="password"]::placeholder {
     width: 1008px;
     min-width: 1008px;
     max-width: 65%;
-    margin-top: 102px;
+    margin-top: 104px;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 104px;
   }
 
