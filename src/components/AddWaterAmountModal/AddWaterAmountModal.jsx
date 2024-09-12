@@ -4,7 +4,7 @@ import css from "./AddWaterAmountModal.module.css";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import { toggleAddWaterModal } from "../../redux/mainWater/slice";
-import { addWater, fetchTodayWater } from "../../redux/mainWater/operations.js";
+import { addWater } from "../../redux/mainWater/operations.js";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import TimeDropdown, {
@@ -75,16 +75,16 @@ export default function AddWaterAmountModal() {
   }
 
   function subtractMilliliters(amount = 50) {
-    setButtonBlockAmount(Math.max(0, buttonBlockAmount - amount));
+    setButtonBlockAmount(Math.max(50, buttonBlockAmount - amount));
     // запобігаємо негативним значенням
   }
 
   const closeModal = () => dispatch(toggleAddWaterModal());
 
   function sendWaterData() {
-    if (currentAmount === 0) {
+    if (currentAmount < 50) {
       toast.error(
-        "Please enter the amount of water used. Amount should be more than 0 ml."
+        "Please enter the amount of water used. Amount should be more than 50 ml."
       );
       return;
     }
