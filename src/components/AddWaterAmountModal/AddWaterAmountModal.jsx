@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Select from "react-select";
 import css from "./AddWaterAmountModal.module.css";
@@ -57,14 +58,10 @@ export function getFormattedDate(timeInput) {
 export default function AddWaterAmountModal() {
   const dispatch = useDispatch();
 
-  const [currentAmount, setCurrentAmount] = useState("0");
+  const [currentAmount, setCurrentAmount] = useState(0);
   const [currentTime, setCurrentTime] = useState(
     roundToNearestFiveMinutes(getCurrentTime())
   );
-
-  // Значення змінюються лише після втрати фокусу?? Це так і не змогла реалізувати
-  // const [isFocused, setFocused] = useState(false);
-  // onfocus, onBlur ???
 
   function handleTimeChange(event) {
     setCurrentTime(event.value);
@@ -111,7 +108,7 @@ export default function AddWaterAmountModal() {
           >
             <HiOutlineMinusSmall size="24" color="407BFF" />
           </button>
-          <p className={css.amountWaterIncome}>{currentAmount + "ml"}</p>
+          <p className={css.amountWaterIncome}>{currentAmount + " ml"}</p>
           <button
             className={css.amountButton}
             type="button"
@@ -132,20 +129,20 @@ export default function AddWaterAmountModal() {
           }}
         />
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
-        <input
+         <input
           className={css.waterAmount}
-          type="number"
+          type="text"
           value={currentAmount}
           onChange={(event) => {
-            const newValue = event.target.value.replace(/[^0-9]/g, "");
-            const parcedValue = parseInt(newValue);
-            if (!isNaN(parcedValue) && parcedValue <= 5000) {
-              setCurrentAmount(parcedValue);
+            const newValue = event.target.value.replace(/[^0-9]/g, '');
+            if (newValue === '') { setCurrentAmount(0) } else {
+              const parcedValue = parseInt(newValue);
+              if (!isNaN(parcedValue) && parcedValue <= 5000) { setCurrentAmount(parcedValue); }
             }
           }}
         />
         <div className={css.footerContainer}>
-          <p className={css.amountWaterIncomeFooter}>{currentAmount + "ml"}</p>
+          <p className={css.amountWaterIncomeFooter}>{currentAmount + " ml"}</p>
           <button
             className={css.saveButton}
             type="button"

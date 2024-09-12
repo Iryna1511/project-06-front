@@ -121,7 +121,7 @@ export default function TodayListModal({ waterObj, onClose }) {
           >
             <HiOutlineMinusSmall size="24" color="407BFF" />
           </button>
-          <p className={css.amountWaterIncome}>{amount + "ml"}</p>
+          <p className={css.amountWaterIncome}>{amount + " ml"}</p>
           <button
             className={css.amountButton}
             type="button"
@@ -145,17 +145,19 @@ export default function TodayListModal({ waterObj, onClose }) {
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
         <input
           className={css.waterAmount}
-          type="number"
+          type="text"
           value={amount}
           onChange={(event) => {
             const newValue = event.target.value.replace(/[^0-9]/g, ' ');
-            const parcedValue = parseInt(newValue);
-            if (!isNaN(parcedValue) && parcedValue <= 5000)
-            { setAmount(parcedValue); }
+            if (newValue === '') { setAmount(0) } else {
+              const parcedValue = parseInt(newValue);
+              if (!isNaN(parcedValue) && parcedValue <= 5000)
+              { setAmount(parcedValue); }
+            }
           }}
         />
         <div className={css.footerContainer}>
-          <p className={css.amountWaterIncomeFooter}>{amount + "ml"}</p>
+          <p className={css.amountWaterIncomeFooter}>{amount + " ml"}</p>
           <button
             className={css.saveButton}
             type="submit"
