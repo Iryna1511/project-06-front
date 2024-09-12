@@ -33,6 +33,13 @@ const DeleteEntry = ({ id, onClose }) => {
     closeModal();
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  };
+  document.addEventListener("keydown", handleKeyDown);
+
   return (
     <>
       {isDeleteEntryOpen && (
