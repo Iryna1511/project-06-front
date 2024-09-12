@@ -11,6 +11,7 @@ import TimeDropdown, {
   roundToNearestFiveMinutes,
   getCurrentTime,
 } from "../TimeDropdown/TimeDropdown.jsx";
+import { fetchTodayWater } from "../../redux/mainWater/operations.js";
 
 export const customStyles = {
   control: (provided) => ({
@@ -105,7 +106,7 @@ export default function AddWaterAmountModal() {
 
     dispatch(toggleAddWaterModal());
 
-    // dispatch(fetchTodayWater());
+    dispatch(fetchTodayWater());
     //не потрібно викликати fetchTodayWater(), так як на addWater ми вже зберігаємо в redux нові дані
   }
 
