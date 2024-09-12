@@ -12,17 +12,20 @@
 .welcomeBackground {
   padding-bottom: 0;
   height: fit-content;
-  background-image: url("../../images/mobile/bg-element-main-page-1x.png"),
-    url("../../images/mobile/bg-main-page-1x.png");
-  background-size: contain;
+  background: url("../../images/mobile/bg-element-main-page-1x.png"),
+    url("../../images/mobile/bg-main-page-1x.png") contain bottom no-repeat;
+  /* background-size: contain;
   background-position: bottom;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   overflow-y: auto;
 }
 .signBackground {
   padding-bottom: 240px;
   background: url("../../images/mobile/bg-element-main-page-1x.png"),
     url("../../images/mobile/bottle-sign-in-1x.png") no-repeat bottom;
+}
+.homeBackground {
+  background: url("../../images/mobile/bg-element-main-page-1x.png");
 }
 .container {
   max-width: 312px;
@@ -43,6 +46,9 @@
     background: url("../../images/mobile/bg-element-main-page-2x.png"),
       url("../../images/mobile/bottle-sign-in-2x.png") no-repeat bottom;
   }
+  .homeBackground {
+    background: url("../../images/mobile/bg-element-main-page-2x.png");
+  }
 }
 
 /* ---------- TABLET STYLES------- */
@@ -57,12 +63,18 @@
     background: url("../../images/tablet/bottle-sign-in-1x.png") no-repeat
       bottom right;
   }
+  .homeBackground {
+    background: url("../../images/tablet/bg-element-main-page-1x.png");
+  }
   @media screen and (min-resolution: 192dpi),
     screen and (min-resolution: 2dppx),
     screen and (min-device-pixel-ratio: 2) {
     .welcomeBackground {
       background-image: url("../../images/tablet/bg-element-main-page-2x.png"),
         url("../../images/tablet/bg-main-page-2x.png");
+    }
+    .homeBackground {
+      background: url("../../images/tablet/bg-element-main-page-2x.png");
     }
   }
   .container {
@@ -82,10 +94,9 @@
     background: url("../../images/desktop/bg-element-main-page-1x.png"),
       url("../../images/desktop/bottle-sign-in-1x.png") no-repeat left bottom;
   }
-  /* .homeBackground {
-    background: url("../../images/desktop/bg-element-main-page-1x.png"),
-      url("../../images/desktop/bottle-sign-in-1x.png") no-repeat left bottom;
-  } */
+  .homeBackground {
+    background: url("../../images/desktop/bg-element-main-page-1x.png");
+  }
   @media screen and (min-resolution: 192dpi),
     screen and (min-resolution: 2dppx),
     screen and (min-device-pixel-ratio: 2) {
