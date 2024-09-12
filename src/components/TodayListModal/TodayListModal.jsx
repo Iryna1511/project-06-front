@@ -89,6 +89,13 @@ export default function TodayListModal({ waterObj, onClose }) {
     setAmount(inputBlockAmount);
   }, [inputBlockAmount]);
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      handleCloseModal();
+    }
+  };
+  document.addEventListener("keydown", handleKeyDown);
+
   return (
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <div className={css.modal}>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import Select from "react-select";
 import css from "./AddWaterAmountModal.module.css";
@@ -67,7 +66,7 @@ export default function AddWaterAmountModal() {
     roundToNearestFiveMinutes(getCurrentTime())
   );
 
-    useEffect(() => {
+  useEffect(() => {
     document.body.classList.add("modal-open");
     return () => {
       document.body.classList.remove("modal-open");
@@ -117,6 +116,13 @@ export default function AddWaterAmountModal() {
   useEffect(() => {
     setCurrentAmount(inputBlockAmount);
   }, [inputBlockAmount]);
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  };
+  document.addEventListener("keydown", handleKeyDown);
 
   return (
     <div className={css.backdrop}>
