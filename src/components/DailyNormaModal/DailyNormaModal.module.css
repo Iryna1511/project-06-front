@@ -1,5 +1,5 @@
 .modal {
-  display: block;
+
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -10,15 +10,14 @@
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;  
 }
-
 .BoxModal {
   background-color: #fefefe;
   margin-left: auto;
   margin-right: auto;
   margin-top: 40px;
-  margin-bottom: auto;
+  margin-bottom: 40px;
 
   padding: 20px;
   border: 1px solid #888;
@@ -92,11 +91,11 @@ margin-bottom: 20px;
 .normaInput {
   border: 1px solid rgb(215, 227, 255);}
 
-  .normaFormResult{
-    position: static;
+.normaFormResult{
+  position: static;
 /* width: 190px;
 height: 40px; */
-  }
+}
 
 .normaForm {
   display: flex;
@@ -227,23 +226,19 @@ height: 40px; */
 
 .normaFormResult {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 20px;
   font-size: 16px;
-
+  padding-left: 10px;
   font-weight: 400;
   line-height: 20px;
-
-  padding: 10px;
 }
 
 .normaFormResult strong {
   font-size: 18px;
-
   font-weight: 700;
   line-height: 24px;
-
   white-space: nowrap;
   color: #407bff;
 }
