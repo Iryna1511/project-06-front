@@ -1,10 +1,10 @@
 import css from "./TodayListModal.module.css";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 import { toggleTodayListModal } from "../../redux/mainWater/slice.js";
-
+import { toast } from "react-hot-toast";
 import Select from "react-select";
 import { customStyles } from "../AddWaterAmountModal/AddWaterAmountModal.jsx";
 import TimeDropdown from "../TimeDropdown/TimeDropdown.jsx";
@@ -13,17 +13,6 @@ import {
   editWaterConsumption,
   fetchTodayWater,
 } from "../../redux/mainWater/operations.js";
-
-// function createIsoDate(time) {
-//   const [hours, minutes] = time.split(":").map(Number);
-//   const currentDate = new Date();
-//   currentDate.setHours(hours);
-//   currentDate.setMinutes(minutes);
-//   currentDate.setSeconds(0);
-//   currentDate.setMilliseconds(null);
-//   const isoString = currentDate.toISOString().slice(0, 19);
-//   return `${isoString}Z`;
-// }
 
 export default function TodayListModal({ waterObj, onClose }) {
   const { _id, date, waterVolume } = useMemo(() => {
@@ -35,35 +24,25 @@ export default function TodayListModal({ waterObj, onClose }) {
   };
   const time = formatTime(date);
 
+  const [buttonBlockAmount, setButtonBlockAmount] = useState(waterVolume);
+  const [inputBlockAmount, setInputBlockAmount] = useState(waterVolume);
+
   const [amount, setAmount] = useState(waterVolume);
   const [selectedTime, setSelectedTime] = useState(time);
 
-  // З AddWaterAmount Modal
-  // const [selectedTime, setSelectedTime] = useState(
-  //   roundToNearestFiveMinutes(getCurrentTime())
-  // );
   const dispatch = useDispatch();
 
   const handleIncrement = () => {
-    setAmount(Math.max(amount, 50) + 50);
+    setButtonBlockAmount(Math.min(5000, buttonBlockAmount + 50));
   };
 
-  const handleDecrement = (value = 50) => {
-    setAmount(Math.max(0, amount - value));
+  const handleDecrement = () => {
+    setButtonBlockAmount(Math.max(50, buttonBlockAmount - 50));
   };
-
-  // const changeWaterAmount = (e) => {
-  //   setAmount(Number(e.target.value));
-  // }; прибираємо при валідації інпуту
 
   const handleTimeChange = (event) => {
     setSelectedTime(event.value);
   };
-
-  // З AddWaterAmount Modal
-  // function handleTimeChange(event) {
-  //   setSelectedTime(event.value);
-  // }
 
   const handleCloseModal = () => {
     onClose();
@@ -76,6 +55,13 @@ export default function TodayListModal({ waterObj, onClose }) {
   };
 
   const handleSubmit = async () => {
+    if (amount < 50) {
+      toast.error(
+        "Please enter the amount of water used. Amount should be more than 50 ml."
+      );
+      return;
+    }
+
     const isoDate = getFormattedDate(selectedTime);
     try {
       await dispatch(
@@ -95,6 +81,14 @@ export default function TodayListModal({ waterObj, onClose }) {
     handleCloseModal();
   };
 
+  useEffect(() => {
+    setAmount(buttonBlockAmount);
+  }, [buttonBlockAmount]);
+
+  useEffect(() => {
+    setAmount(inputBlockAmount);
+  }, [inputBlockAmount]);
+
   return (
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <div className={css.modal}>
@@ -106,7 +100,7 @@ export default function TodayListModal({ waterObj, onClose }) {
         </div>
         <div className={css.amountofwaterContainer}>
           <svg width={23} height={32}>
-            <use href="icons.svg#icon-Glass"></use>
+            <use href="icons.svg#icon-glass"></use>
           </svg>
           <p className={css.wateramount}>{amount} ml</p>
           <p className={css.time}>{selectedTime}</p>
@@ -118,14 +112,16 @@ export default function TodayListModal({ waterObj, onClose }) {
             className={css.amountButton}
             type="button"
             onClick={handleDecrement}
+            onBlur={() => setInputBlockAmount(buttonBlockAmount)}
           >
             <HiOutlineMinusSmall size="24" color="407BFF" />
           </button>
-          <p className={css.amountWaterIncome}>{amount + " ml"}</p>
+          <p className={css.amountWaterIncome}>{buttonBlockAmount + " ml"}</p>
           <button
             className={css.amountButton}
             type="button"
             onClick={handleIncrement}
+            onBlur={() => setInputBlockAmount(buttonBlockAmount)}
           >
             <HiOutlinePlusSmall size="24" color="407BFF" />
           </button>
@@ -146,15 +142,19 @@ export default function TodayListModal({ waterObj, onClose }) {
         <input
           className={css.waterAmount}
           type="text"
-          value={amount}
+          value={inputBlockAmount}
           onChange={(event) => {
-            const newValue = event.target.value.replace(/[^0-9]/g, ' ');
-            if (newValue === '') { setAmount(0) } else {
+            const newValue = event.target.value.replace(/[^0-9]/g, " ");
+            if (newValue === "") {
+              setInputBlockAmount(0);
+            } else {
               const parcedValue = parseInt(newValue);
-              if (!isNaN(parcedValue) && parcedValue <= 5000)
-              { setAmount(parcedValue); }
+              if (!isNaN(parcedValue) && parcedValue <= 5000) {
+                setInputBlockAmount(parcedValue);
+              }
             }
           }}
+          onBlur={() => setButtonBlockAmount(inputBlockAmount)}
         />
         <div className={css.footerContainer}>
           <p className={css.amountWaterIncomeFooter}>{amount + " ml"}</p>
