@@ -50,7 +50,6 @@
   .generalContainer {
     flex-direction: row;
     gap: 32px;
-    padding-bottom: 40px;
     background-image: url("../../images/desktop/bg-element-main-page-1x.png");
     background-size: inherit;
     background-position: center -30px;

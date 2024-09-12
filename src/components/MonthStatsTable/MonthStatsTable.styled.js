@@ -93,6 +93,7 @@ export const CalendarStyle = styled.div`
   @media screen and (min-width: 768px) {
     .month {
       grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(5, 1fr);
     }
   }
 
