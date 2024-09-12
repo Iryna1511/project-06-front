@@ -227,7 +227,7 @@ const handleSave = async (e) => {
                 className={css.normaInput}
                 type="number"
                 placeholder="0"
-                value={waterToDrink}
+                // value={waterToDrink}
                 onChange={handleWaterToDrinkChange}
               />
             </div>
