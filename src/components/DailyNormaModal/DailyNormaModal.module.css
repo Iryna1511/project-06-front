@@ -73,7 +73,7 @@ text-align: left;
   color: #407bff;
 }
 
-.normaFormResult_1v1ra_76 strong{
+.normaFormResult strong{
   padding-left: 10px;
 }
 .offBtn {
@@ -236,7 +236,7 @@ height: 40px; */
   align-items: center;
   gap: 20px;
   font-size: 16px;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   font-weight: 400;
   line-height: 20px;
 }
