@@ -17,27 +17,41 @@ const DailyNormaModal = ({ onClose }) => {
   const waterRate = useSelector(selectWaterRate);
 
 useEffect(() => {
+  console.log("Modal is open, blocking scroll");
+  document.body.classList.add("modal-open");
+
+  return () => {
+    console.log("Modal is closed, unblocking scroll");
+    document.body.classList.remove("modal-open");
+  };
+}, []);
+
+
+
+useEffect(() => {
   // Цей useEffect спрацює після оновлення waterNorma в Redux-стані
 }, [waterRate]);
 
-  useEffect(() => {
-    const mass = parseFloat(weight);
-    const time = parseFloat(activityTime);
+useEffect(() => {
+  const mass = parseFloat(weight);
+  const time = parseFloat(activityTime) || 0; 
+  if (!isNaN(mass) && mass > 0) {
+    let volume = 0;
 
-    if (gender && !isNaN(mass) && !isNaN(time)) {
-      let volume = 0;
-      if (gender === "female") {
-        volume = (mass * 0.03 + time * 0.4) * 1000;
-      } else if (gender === "male") {
-        volume = (mass * 0.04 + time * 0.6) * 1000;
-      }
-      setDailyNorm(volume.toFixed(1) / 1000);
-      setWaterToDrink(volume.toFixed(1) / 1000);
-    } else {
-      setDailyNorm(0.0);
-      setWaterToDrink(0.0);
+    if (gender === "female") {
+      volume = (mass * 0.03 + time * 0.4) * 1000;  
+    } else if (gender === "male") {
+      volume = (mass * 0.04 + time * 0.6) * 1000;
     }
-  }, [gender, weight, activityTime]);
+
+    setDailyNorm((volume / 1000).toFixed(1));  
+    setWaterToDrink((volume / 1000).toFixed(1));
+  } else {
+    setDailyNorm(0.0);
+    setWaterToDrink(0.0);
+  }
+}, [gender, weight, activityTime]);
+
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -64,37 +78,56 @@ useEffect(() => {
     }
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    if (!gender) {
-      alert("Please select your gender.");
-      return;
-    }
-    if (!weight || isNaN(weight) || weight <= 0) {
-      alert("Please enter a valid weight.");
-      return;
-    }
-    if (isNaN(activityTime) || activityTime < 0) {
-      alert("Please enter a valid activity time.");
-      return;
-    }
-    if (isNaN(waterToDrink) || waterToDrink < 0) {
-      alert("Please enter a valid amount of water to drink.");
-      return;
-    }
+const handleSave = async (e) => {
+  e.preventDefault();
 
-
+  if (waterToDrink) {
     try {
       dispatch(updateUserWaterDailyNorma(waterToDrink * 1000));
-    
-      dispatch(fetchTodayWater())
-    
+      dispatch(fetchTodayWater());
       onClose();
     } catch (error) {
       console.error("Error saving daily norma:", error);
       alert("Failed to save daily norma. Please try again.");
     }
-  };
+    return;
+  }
+
+  if (!gender) {
+    alert("Please select your gender.");
+    return;
+  }
+  if (!weight || isNaN(weight) || weight <= 0) {
+    alert("Please enter a valid weight.");
+    return;
+  }
+  if (isNaN(activityTime) || activityTime < 0) {
+    alert("Please enter a valid activity time.");
+    return;
+  }
+
+  try {
+    const mass = parseFloat(weight);
+    const time = parseFloat(activityTime) || 0; 
+    let volume = 0;
+    
+    if (gender === "female") {
+      volume = (mass * 0.03 + time * 0.4) * 1000;  
+    } else if (gender === "male") {
+      volume = (mass * 0.04 + time * 0.6) * 1000;
+    }
+
+    const calculatedNorm = (volume / 1000).toFixed(1);
+
+    dispatch(updateUserWaterDailyNorma(calculatedNorm * 1000));
+    dispatch(fetchTodayWater());
+    onClose();
+  } catch (error) {
+    console.error("Error saving daily norma:", error);
+    alert("Failed to save daily norma. Please try again.");
+  }
+};
+
 
   const handleOutsideClick = (event) => {
     if (event.target.classList.contains(css.modal)) {
