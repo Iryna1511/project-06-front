@@ -78,37 +78,56 @@ useEffect(() => {
     }
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    if (!gender) {
-      alert("Please select your gender.");
-      return;
-    }
-    if (!weight || isNaN(weight) || weight <= 0) {
-      alert("Please enter a valid weight.");
-      return;
-    }
-    if (isNaN(activityTime) || activityTime < 0) {
-      alert("Please enter a valid activity time.");
-      return;
-    }
-    if (isNaN(waterToDrink) || waterToDrink < 0) {
-      alert("Please enter a valid amount of water to drink.");
-      return;
-    }
+const handleSave = async (e) => {
+  e.preventDefault();
 
-
+  if (waterToDrink) {
     try {
       dispatch(updateUserWaterDailyNorma(waterToDrink * 1000));
-    
-      dispatch(fetchTodayWater())
-    
+      dispatch(fetchTodayWater());
       onClose();
     } catch (error) {
       console.error("Error saving daily norma:", error);
       alert("Failed to save daily norma. Please try again.");
     }
-  };
+    return;
+  }
+
+  if (!gender) {
+    alert("Please select your gender.");
+    return;
+  }
+  if (!weight || isNaN(weight) || weight <= 0) {
+    alert("Please enter a valid weight.");
+    return;
+  }
+  if (isNaN(activityTime) || activityTime < 0) {
+    alert("Please enter a valid activity time.");
+    return;
+  }
+
+  try {
+    const mass = parseFloat(weight);
+    const time = parseFloat(activityTime) || 0; 
+    let volume = 0;
+    
+    if (gender === "female") {
+      volume = (mass * 0.03 + time * 0.4) * 1000;  
+    } else if (gender === "male") {
+      volume = (mass * 0.04 + time * 0.6) * 1000;
+    }
+
+    const calculatedNorm = (volume / 1000).toFixed(1);
+
+    dispatch(updateUserWaterDailyNorma(calculatedNorm * 1000));
+    dispatch(fetchTodayWater());
+    onClose();
+  } catch (error) {
+    console.error("Error saving daily norma:", error);
+    alert("Failed to save daily norma. Please try again.");
+  }
+};
+
 
   const handleOutsideClick = (event) => {
     if (event.target.classList.contains(css.modal)) {
