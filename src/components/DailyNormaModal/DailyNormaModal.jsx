@@ -135,6 +135,14 @@ const handleSave = async (e) => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      onClose();
+    }
+  };
+  
+  document.addEventListener('keydown', handleKeyDown);
+
   return (
     <div className={css.modal} onClick={handleOutsideClick}>
       <div className={css.BoxModal} onClick={(e) => e.stopPropagation()}>
@@ -227,7 +235,7 @@ const handleSave = async (e) => {
                 className={css.normaInput}
                 type="number"
                 placeholder="0"
-                value={waterToDrink}
+                // value={waterToDrink}
                 onChange={handleWaterToDrinkChange}
               />
             </div>
