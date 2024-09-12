@@ -135,6 +135,14 @@ const handleSave = async (e) => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      onClose();
+    }
+  };
+  
+  document.addEventListener('keydown', handleKeyDown);
+
   return (
     <div className={css.modal} onClick={handleOutsideClick}>
       <div className={css.BoxModal} onClick={(e) => e.stopPropagation()}>
