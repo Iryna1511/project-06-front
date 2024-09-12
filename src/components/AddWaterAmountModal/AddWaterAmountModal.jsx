@@ -58,10 +58,10 @@ export function getFormattedDate(timeInput) {
 export default function AddWaterAmountModal() {
   const dispatch = useDispatch();
 
-  const [buttonBlockAmount, setButtonBlockAmount] = useState(0);
-  const [inputBlockAmount, setInputBlockAmount] = useState(0);
+  const [buttonBlockAmount, setButtonBlockAmount] = useState(50);
+  const [inputBlockAmount, setInputBlockAmount] = useState(50);
 
-  const [currentAmount, setCurrentAmount] = useState(0);
+  const [currentAmount, setCurrentAmount] = useState(50);
   const [currentTime, setCurrentTime] = useState(
     roundToNearestFiveMinutes(getCurrentTime())
   );
