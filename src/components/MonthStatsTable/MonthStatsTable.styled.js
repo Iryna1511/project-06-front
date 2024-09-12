@@ -44,7 +44,14 @@ export const CalendarStyle = styled.div`
     line-height: 20px;
   }
 
+  .step {
+    width: 26px;
+  }
+
   .calendarDayBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 34px;
     height: 34px;
     border-radius: 50%;
