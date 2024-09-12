@@ -64,7 +64,10 @@ const AuthForm = () => {
           })
           .catch((e) => {
             console.error("Registration error: ", e);
-            toast.error(`Registration error: ${e}`);
+            // toast.error(`Registration error: ${e}`);
+            toast.error(
+              `Registration failed. Please check your information and try again.`
+            );
           });
         break;
       case "Sign In":
@@ -75,7 +78,7 @@ const AuthForm = () => {
           })
           .catch((e) => {
             console.error("Login error: ", e);
-            toast.error(`Login error: ${e}`);
+            toast.error(`Incorrect login or password. Please try again`);
           });
         break;
       default:
@@ -105,14 +108,14 @@ const AuthForm = () => {
                   className={`${css.field} ${
                     errors.email && touched.email ? css.errorField : ""
                   }`}
-                  type='email'
-                  name='email'
+                  type="email"
+                  name="email"
                   id={emailFieldId}
-                  placeholder='Email'
+                  placeholder="Email"
                 />
                 <ErrorMessage
-                  name='email'
-                  component='div'
+                  name="email"
+                  component="div"
                   className={css.errorText}
                 />
               </div>
@@ -126,9 +129,9 @@ const AuthForm = () => {
                     touched.password && errors.password ? css.errorField : ""
                   }`}
                   type={showPassword ? "text" : "password"}
-                  name='password'
+                  name="password"
                   id={passwordFieldId}
-                  placeholder='Password'
+                  placeholder="Password"
                 />
                 <div
                   className={css.iconWrapper}
@@ -141,8 +144,8 @@ const AuthForm = () => {
                   )}
                 </div>
                 <ErrorMessage
-                  name='password'
-                  component='div'
+                  name="password"
+                  component="div"
                   className={css.errorText}
                 />
               </div>
@@ -157,9 +160,9 @@ const AuthForm = () => {
                       touched.password && errors.password ? css.errorField : ""
                     }`}
                     type={showPassword ? "text" : "password"}
-                    name='repeatPassword'
+                    name="repeatPassword"
                     id={repeatPasswordFieldId}
-                    placeholder='Repeat password'
+                    placeholder="Repeat password"
                   />
 
                   <div
@@ -174,14 +177,14 @@ const AuthForm = () => {
                   </div>
 
                   <ErrorMessage
-                    name='repeatPassword'
-                    component='div'
+                    name="repeatPassword"
+                    component="div"
                     className={css.errorText}
                   />
                 </div>
               )}
 
-              <button className={css.btn} type='submit'>
+              <button className={css.btn} type="submit">
                 {action}
               </button>
             </Form>

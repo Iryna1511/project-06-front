@@ -22,7 +22,7 @@
   max-width: 312px;
   padding-left: 16px;
   padding-right: 16px;
-  margin: 0 auto;
+  margin: 0 auto 48px;
 }
 
 @media screen and (min-resolution: 192dpi) and (max-width: 767px),
@@ -70,6 +70,7 @@
   }
   .container {
     max-width: 736px;
+    margin: 0 auto 44px;
   }
 }
 
@@ -98,5 +99,6 @@
   }
   .container {
     max-width: 1248px;
+    margin: 0 auto 40px;
   }
 }
