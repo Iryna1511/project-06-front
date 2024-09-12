@@ -6,6 +6,7 @@ import { HiOutlinePlusSmall, HiOutlineMinusSmall } from "react-icons/hi2";
 import { toggleAddWaterModal } from "../../redux/mainWater/slice";
 import { addWater, fetchTodayWater } from "../../redux/mainWater/operations.js";
 import { useDispatch } from "react-redux";
+import { toast } from "react-hot-toast";
 import TimeDropdown, {
   roundToNearestFiveMinutes,
   getCurrentTime,
@@ -81,13 +82,22 @@ export default function AddWaterAmountModal() {
   const closeModal = () => dispatch(toggleAddWaterModal());
 
   function sendWaterData() {
+    if (currentAmount === 0) {
+      toast.error(
+        "Please enter the amount of water used. Amount should be more than 0 ml."
+      );
+      return;
+    }
+
     dispatch(
       addWater({
         date: getFormattedDate(currentTime),
         waterVolume: currentAmount,
       })
     );
+
     dispatch(toggleAddWaterModal());
+
     // dispatch(fetchTodayWater());
     //не потрібно викликати fetchTodayWater(), так як на addWater ми вже зберігаємо в redux нові дані
   }
