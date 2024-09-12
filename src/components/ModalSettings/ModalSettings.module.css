@@ -9,15 +9,15 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
+  
 }
 
 .modalcontent {
   background-color: #fefefe;
+  margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
-  margin-bottom: auto;
-
+  margin-bottom: 40px;
   padding: 20px;
   border: 1px solid #888;
   width: 280px;
@@ -210,11 +210,12 @@ input[type="password"]::placeholder {
 @media (min-width: 768px) {
   .modalcontent {
     width: 704px;
-    margin-top: 42px;
     padding-left: 24px;
     padding-right: 24px;
     padding-top: 32px;
     padding-bottom: 32px;
+    margin-top: 40px;
+    margin-bottom: 40px;
   }
 
   .genderradiobutton {
@@ -238,7 +239,10 @@ input[type="password"]::placeholder {
     width: 1008px;
     min-width: 1008px;
     max-width: 65%;
-    margin-top: 102px;
+    margin-top: 104px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
   }
 
   .wrapperForNameAndPassword {

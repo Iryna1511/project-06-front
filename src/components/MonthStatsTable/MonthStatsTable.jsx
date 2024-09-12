@@ -55,7 +55,7 @@ const MonthStatsTable = () => {
   // Викликаємо дані про воду при зміні місяця
   useEffect(() => {
     dispatch(getMonthWater(d));
-  }, [dispatch, d,waterRate]);
+  }, [dispatch, d, waterRate]);
 
   const handleChangeMonth = (offset) => {
     setCurrentDate(
@@ -128,12 +128,14 @@ const MonthStatsTable = () => {
             {t(`monthNames.${currentMonth}`, { defaultValue: currentMonth })},{" "}
             {currentYear}
           </h2>
-          {!isCurrentMonth && (
+          {!isCurrentMonth ? (
             <button className="navBtn" onClick={() => handleChangeMonth(1)}>
               <svg width="14" height="14">
                 <use href={icons + "#icon-arrow-right"}></use>
               </svg>
             </button>
+          ) : (
+            <div className="step"></div>
           )}
         </div>
       </div>
