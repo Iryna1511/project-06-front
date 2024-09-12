@@ -51,6 +51,14 @@
   line-height: 2;
   color: var(--black);
 }
+.btnAdd,
+.btnDelete,
+.btnEdit {
+  display: block;
+  padding: 2px;
+  border: none;
+  background-color: transparent;
+}
 .btnEdit {
   margin-left: auto;
   margin-right: 12px;
@@ -58,6 +66,14 @@
 }
 .btnDelete {
   color: var(--red);
+}
+.btnDelete:hover,
+.btnDelete:focus {
+  border-bottom: 1px solid var(--red);
+}
+.btnEdit:hover,
+.btnEdit:focus {
+  border-bottom: 1px solid var(--medium-blue);
 }
 .btnAdd {
   display: flex;
@@ -70,13 +86,6 @@
 .btnAdd:hover,
 .btnAdd:focus {
   color: var(--orange);
-}
-
-.btnAdd,
-.btnDelete,
-.btnEdit {
-  border: none;
-  background-color: transparent;
 }
 
 @media screen and (min-width: 768px) {
