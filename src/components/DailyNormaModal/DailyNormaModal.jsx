@@ -20,24 +20,26 @@ useEffect(() => {
   // Цей useEffect спрацює після оновлення waterNorma в Redux-стані
 }, [waterRate]);
 
-  useEffect(() => {
-    const mass = parseFloat(weight);
-    const time = parseFloat(activityTime);
+useEffect(() => {
+  const mass = parseFloat(weight);
+  const time = parseFloat(activityTime) || 0; 
+  if (!isNaN(mass) && mass > 0) {
+    let volume = 0;
 
-    if (gender && !isNaN(mass) && !isNaN(time)) {
-      let volume = 0;
-      if (gender === "female") {
-        volume = (mass * 0.03 + time * 0.4) * 1000;
-      } else if (gender === "male") {
-        volume = (mass * 0.04 + time * 0.6) * 1000;
-      }
-      setDailyNorm(volume.toFixed(1) / 1000);
-      setWaterToDrink(volume.toFixed(1) / 1000);
-    } else {
-      setDailyNorm(0.0);
-      setWaterToDrink(0.0);
+    if (gender === "female") {
+      volume = (mass * 0.03 + time * 0.4) * 1000;  
+    } else if (gender === "male") {
+      volume = (mass * 0.04 + time * 0.6) * 1000;
     }
-  }, [gender, weight, activityTime]);
+
+    setDailyNorm((volume / 1000).toFixed(1));  
+    setWaterToDrink((volume / 1000).toFixed(1));
+  } else {
+    setDailyNorm(0.0);
+    setWaterToDrink(0.0);
+  }
+}, [gender, weight, activityTime]);
+
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
