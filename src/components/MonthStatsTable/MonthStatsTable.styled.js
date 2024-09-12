@@ -4,7 +4,7 @@ export const CalendarStyle = styled.div`
   .header {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 16px;
+    margin-bottom: 16px;
   }
 
   .sectionText {
