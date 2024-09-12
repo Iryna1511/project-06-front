@@ -121,7 +121,7 @@ useEffect(() => {
             </p>
           </div>
           <div className={css.normaExplanation}>
-            <p>
+            <p className={css.explanationText}>
               <span>*</span> V is the volume of the water norm in liters per
               day, M is your body weight in kilograms, T is the time of active
               sports or other high-physical-load activities in hours (set to 0
@@ -129,7 +129,7 @@ useEffect(() => {
             </p>
           </div>
         </div>
-        <div>
+        <div className={css.normaFormCont}>
           <form className={css.normaForm} onSubmit={handleSave}>
             <div className={css.normaFormRadio}>
               <p className={css.normaTitleModal}>Calculate your rate:</p>
@@ -184,7 +184,7 @@ useEffect(() => {
             </div>
             <div className={css.normaFormResult}>
               The required amount of water in liters per day:
-              <strong>{dailyNorm} L</strong>
+              <strong>{" " + dailyNorm + " L"}</strong>
             </div>
             <div>
               <p className={css.normaTitleModal}>

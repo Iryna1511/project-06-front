@@ -30,14 +30,13 @@
 }
 
 .modalHeader {
-  /* margin-top: 12px; */
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 }
 
 h2.normaTitleModal{
-  color: rgb(47, 47, 47);
+color: rgb(47, 47, 47);
 font-family: Roboto;
 font-size: 26px;
 font-weight: 500;
@@ -51,6 +50,20 @@ text-align: left;
   flex-direction: column;
   gap: 10px;
   margin-bottom: 12px;
+}
+
+.normaParagraph {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: #2f2f2f;
+}
+
+.explanationText {
+  font-weight: 400;
+    font-size: 12px;
+    line-height: 1.33;
+  color: #8f8f8f;
 }
 
 .normaFormula span {
@@ -68,6 +81,12 @@ text-align: left;
   box-sizing: border-box;
 border: 1px solid rgb(215, 227, 255);
 border-radius: 10px;
+padding: 10px;
+margin-bottom: 20px;
+}
+
+.normaFormCont {
+  margin-bottom: 20px;
 }
 
 .normaInput {
@@ -78,19 +97,6 @@ border-radius: 10px;
 /* width: 190px;
 height: 40px; */
   }
-@media screen and (min-width: 768px) {
-
-  .modalHeader {
-    margin-top: 24px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-  .normaFormula {
-    flex-direction: row;
-    gap: 24px;
-  }
-}
 
 .normaForm {
   display: flex;
@@ -265,6 +271,14 @@ height: 40px; */
 }
 
 @media screen and (min-width: 768px) {
+    
+  .modalHeader {
+        margin-top: 24px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      
   .BoxModal {
     width: 704px;
     padding: 0 24px 32px;
