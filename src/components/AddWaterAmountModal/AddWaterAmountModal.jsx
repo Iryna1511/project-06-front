@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Select from "react-select";
 import css from "./AddWaterAmountModal.module.css";
 import { IoCloseOutline } from "react-icons/io5";
@@ -62,6 +62,13 @@ export default function AddWaterAmountModal() {
   const [currentTime, setCurrentTime] = useState(
     roundToNearestFiveMinutes(getCurrentTime())
   );
+
+    useEffect(() => {
+    document.body.classList.add("modal-open");
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
+  }, []);
 
   function handleTimeChange(event) {
     setCurrentTime(event.value);

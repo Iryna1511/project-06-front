@@ -17,6 +17,18 @@ const DailyNormaModal = ({ onClose }) => {
   const waterRate = useSelector(selectWaterRate);
 
 useEffect(() => {
+  console.log("Modal is open, blocking scroll");
+  document.body.classList.add("modal-open");
+
+  return () => {
+    console.log("Modal is closed, unblocking scroll");
+    document.body.classList.remove("modal-open");
+  };
+}, []);
+
+
+
+useEffect(() => {
   // Цей useEffect спрацює після оновлення waterNorma в Redux-стані
 }, [waterRate]);
 

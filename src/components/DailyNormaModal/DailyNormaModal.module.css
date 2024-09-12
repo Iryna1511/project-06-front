@@ -1,5 +1,4 @@
 .modal {
-  display: block;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -10,9 +9,8 @@
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;  
 }
-
 .BoxModal {
   background-color: #fefefe;
   margin-left: auto;

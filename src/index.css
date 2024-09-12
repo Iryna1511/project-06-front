@@ -49,3 +49,7 @@ img {
   height: auto;
   object-fit: cover;
 }
+
+body.modal-open {
+  overflow: hidden;
+}
