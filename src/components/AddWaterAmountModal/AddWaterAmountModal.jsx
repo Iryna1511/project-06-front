@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Select from "react-select";
 import css from "./AddWaterAmountModal.module.css";
 import { IoCloseOutline } from "react-icons/io5";
@@ -58,6 +57,9 @@ export function getFormattedDate(timeInput) {
 export default function AddWaterAmountModal() {
   const dispatch = useDispatch();
 
+  const [buttonBlockAmount, setButtonBlockAmount] = useState(0);
+  const [inputBlockAmount, setInputBlockAmount] = useState(0);
+
   const [currentAmount, setCurrentAmount] = useState(0);
   const [currentTime, setCurrentTime] = useState(
     roundToNearestFiveMinutes(getCurrentTime())
@@ -68,11 +70,11 @@ export default function AddWaterAmountModal() {
   }
 
   function addMilliliters(amount = 50) {
-    setCurrentAmount(currentAmount + amount);
+    setButtonBlockAmount(Math.min(5000, buttonBlockAmount + amount));
   }
 
   function subtractMilliliters(amount = 50) {
-    setCurrentAmount(Math.max(0, currentAmount - amount));
+    setButtonBlockAmount(Math.max(0, buttonBlockAmount - amount));
     // запобігаємо негативним значенням
   }
 
@@ -86,8 +88,17 @@ export default function AddWaterAmountModal() {
       })
     );
     dispatch(toggleAddWaterModal());
-    dispatch(fetchTodayWater());
+    // dispatch(fetchTodayWater());
+    //не потрібно викликати fetchTodayWater(), так як на addWater ми вже зберігаємо в redux нові дані
   }
+
+  useEffect(() => {
+    setCurrentAmount(buttonBlockAmount);
+  }, [buttonBlockAmount]);
+
+  useEffect(() => {
+    setCurrentAmount(inputBlockAmount);
+  }, [inputBlockAmount]);
 
   return (
     <div className={css.backdrop}>
@@ -105,14 +116,16 @@ export default function AddWaterAmountModal() {
             className={css.amountButton}
             type="button"
             onClick={() => subtractMilliliters()}
+            onBlur={() => setInputBlockAmount(buttonBlockAmount)}
           >
             <HiOutlineMinusSmall size="24" color="407BFF" />
           </button>
-          <p className={css.amountWaterIncome}>{currentAmount + " ml"}</p>
+          <p className={css.amountWaterIncome}>{buttonBlockAmount + " ml"}</p>
           <button
             className={css.amountButton}
             type="button"
             onClick={() => addMilliliters()}
+            onBlur={() => setInputBlockAmount(buttonBlockAmount)}
           >
             <HiOutlinePlusSmall size="24" color="407BFF" />
           </button>
@@ -129,17 +142,22 @@ export default function AddWaterAmountModal() {
           }}
         />
         <h3 className={css.subtitle}>Enter the value of the water used:</h3>
-         <input
+        <input
           className={css.waterAmount}
           type="text"
-          value={currentAmount}
+          value={inputBlockAmount}
           onChange={(event) => {
-            const newValue = event.target.value.replace(/[^0-9]/g, '');
-            if (newValue === '') { setCurrentAmount(0) } else {
+            const newValue = event.target.value.replace(/[^0-9]/g, "");
+            if (newValue === "") {
+              setInputBlockAmount(0);
+            } else {
               const parcedValue = parseInt(newValue);
-              if (!isNaN(parcedValue) && parcedValue <= 5000) { setCurrentAmount(parcedValue); }
+              if (!isNaN(parcedValue) && parcedValue <= 5000) {
+                setInputBlockAmount(parcedValue);
+              }
             }
           }}
+          onBlur={() => setButtonBlockAmount(inputBlockAmount)}
         />
         <div className={css.footerContainer}>
           <p className={css.amountWaterIncomeFooter}>{currentAmount + " ml"}</p>
